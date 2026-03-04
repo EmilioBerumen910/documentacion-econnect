@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Emilio Bravo" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Dependencias - Econnect AWS Documentation</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Dependencias";
+        var mkdocs_page_input_path = "09-dependencias.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> Econnect AWS Documentation
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Inicio</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">EC2</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../index-EC2/">Inicio EC2</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../01-contexto/">Contexto</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../02-inventario/">Inventario EC2</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../03-red/">Red y conectividad</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../04-balanceadores/">Balanceadores y DNS</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../05-ensamblaje/">Recreación / IaC</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../06-runtime/">OS y runtime</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../07-config/">Config externa (SSM/Secrets)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../08-iam/">IAM</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Dependencias</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#bases-de-datos">Bases de datos</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#1-rds-principal-mariadb">1) RDS principal (MariaDB)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#2-mongodb-self-hosted-ec2">2) MongoDB self-hosted (EC2)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#3-sql-server-self-hosted-ec2">3) SQL Server self-hosted (EC2)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#4-mongodb-self-hosted-us-east-2">4) MongoDB self-hosted (us-east-2)</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#mensajeria-colas">Mensajería / colas</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#sqs">SQS</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#redis-rabbitmq-sns">Redis / RabbitMQ / SNS</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#almacenamiento-s3">Almacenamiento (S3)</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#auditoria-y-configuracion">Auditoría y configuración</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#deploy-tooling">Deploy / tooling</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#web-estatica-cloudfront">Web estática / CloudFront</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#descargas-documentos">Descargas / documentos</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#batchreportes">Batch/reportes</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#sftp-por-naming">SFTP (por naming)</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#contenedores">Contenedores</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../10-observabilidad/">Observabilidad</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../11-seguridad/">Seguridad</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">RDS</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../index-RDS/">Inicio RDS</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../01-inventory/">Inventario</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../02-network-access/">Red y acceso</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../03-security/">Seguridad</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../04-configuration/">Configuración</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../05-backup-recovery/">Backups y recuperación</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../06-performance-ops/">Performance y operación</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../07-ha-dr/">Alta disponibilidad y DR</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../08-migration-plan/">Plan de migración</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../09-appendix/">Apéndice</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Lambda</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../index-lambda/">Inicio Lambda</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../01-inventory-lambda/">Inventario</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../02-triggers-lambda/">Triggers e integraciones</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../03-networking-lambda/">Networking (VPC)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../04-runtime-deploy-lambda/">Runtime y despliegue</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../05-iam-security-lambda/">IAM y seguridad</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../06-observability-lambda/">Observabilidad</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../07-migration-plan-lambda/">Plan de migración</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../08-appendix-lambda/">Apéndice</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">Econnect AWS Documentation</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">EC2</li>
+      <li class="breadcrumb-item active">Dependencias</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="dependencias-de-la-plataforma-servicios-aws-y-componentes-externos">Dependencias de la plataforma (servicios AWS y componentes externos)</h1>
+<blockquote>
+<p>Fuente: <a href="../assets/EC2-Documentacion-Econnect.pdf">assets/EC2-Documentacion-Econnect.pdf</a><br />
+Generado: <strong>2026-03-03</strong></p>
+</blockquote>
+<h2 id="bases-de-datos">Bases de datos</h2>
+<h3 id="1-rds-principal-mariadb">1) RDS principal (MariaDB)</h3>
+<ul>
+<li>Tipo: <strong>RDS</strong></li>
+<li>Engine: <strong>MariaDB 10.11.13</strong></li>
+<li>Endpoint: <code>econnectds1.ck6nep3j6xwz.us-east-1.rds.amazonaws.com</code></li>
+<li>Puerto: 3306</li>
+<li>HA: <strong>No Multi-AZ</strong>, sin read replicas</li>
+<li>Backups: automated backups habilitados (retención 1 día)</li>
+<li>Otros: <strong>publicly accessible = Sí</strong>, deletion protection habilitado<br />
+  VPC <code>vpc-0cda6f6b</code> (default), SG <code>sg-fc671187</code>, DB name <code>econnect_ds</code></li>
+</ul>
+<h3 id="2-mongodb-self-hosted-ec2">2) MongoDB self-hosted (EC2)</h3>
+<ul>
+<li>Tipo: <strong>EC2 self-hosted</strong></li>
+<li>Engine: MongoDB</li>
+<li>Nodo primario: <code>Mongo-Primary</code> (<code>i-0fba1627118e40ac9</code>)</li>
+<li>Nodo adicional: <code>Mongo-Reports</code> (<code>i-096c5970aa84088af</code>)</li>
+<li>Puertos reportados: <strong>27017–27030</strong> (ojo: rango)</li>
+<li>HA: Sí (replica/cluster)</li>
+<li>Backups: no detectado (probable manual vía snapshots/EBS o scripts)</li>
+</ul>
+<h3 id="3-sql-server-self-hosted-ec2">3) SQL Server self-hosted (EC2)</h3>
+<ul>
+<li>Tipo: <strong>EC2 self-hosted</strong></li>
+<li>Engine: SQL Server (Windows)</li>
+<li>Instancia: <code>Windows</code> (<code>i-0ef1204ed1c03a849</code>)</li>
+<li>Puertos reportados: 1433–1438</li>
+<li>HA/Backups: no detectado</li>
+</ul>
+<h3 id="4-mongodb-self-hosted-us-east-2">4) MongoDB self-hosted (us-east-2)</h3>
+<ul>
+<li>Instancia: <code>mongo8</code> (<code>i-0dfef81c198e9fdcb</code>) (stopped)</li>
+<li>Puerto: 27017</li>
+<li>HA: no (instancia única)</li>
+<li>Backups: no detectado</li>
+</ul>
+<h2 id="mensajeria-colas">Mensajería / colas</h2>
+<h3 id="sqs">SQS</h3>
+<p>Se observa uso activo de <strong>Amazon SQS</strong> en <code>us-east-1</code> y <code>us-east-2</code>.</p>
+<p>Los nombres de colas sugieren procesamiento asíncrono de documentos (XML/PDF/CFDI/pedimentos/coves), por ejemplo: timbrar, pdf-pedimento, xml-pedimento, errores, archivos-celery, etc.</p>
+<blockquote>
+<p>Pendiente: confirmar para cada cola si es Standard/FIFO, DLQ, encryption, retention, visibility timeout.</p>
+</blockquote>
+<h3 id="redis-rabbitmq-sns">Redis / RabbitMQ / SNS</h3>
+<ul>
+<li>ElastiCache/Redis: <strong>no encontrado</strong></li>
+<li>Amazon MQ (RabbitMQ): <strong>no encontrado</strong></li>
+<li>SNS: <strong>inconcluso</strong> (la herramienta no terminó el análisis; revisar en consola SNS &gt; Topics/Subscriptions)</li>
+</ul>
+<h2 id="almacenamiento-s3">Almacenamiento (S3)</h2>
+<p>Buckets observados (por propósito, según nombres):</p>
+<h3 id="auditoria-y-configuracion">Auditoría y configuración</h3>
+<ul>
+<li><code>aws-cloudtrail-logs-305968097757-8a7643ed</code> (CloudTrail)</li>
+<li><code>config-bucket-305968097757</code> (AWS Config)</li>
+</ul>
+<h3 id="deploy-tooling">Deploy / tooling</h3>
+<ul>
+<li><code>bulk-policy-migration-305968097757</code></li>
+<li><code>serverless-framework-deployments-us-east-1-b1d0b797-f04c</code></li>
+<li><code>serverless-framework-deployments-us-east-2-efb7910d-6e19</code></li>
+</ul>
+<h3 id="web-estatica-cloudfront">Web estática / CloudFront</h3>
+<ul>
+<li><code>login.econnectpro.mx</code></li>
+<li><code>www.econnectpro.mx</code></li>
+<li><code>econnectpro.mx</code></li>
+<li><code>econnect.com.mx</code></li>
+</ul>
+<h3 id="descargas-documentos">Descargas / documentos</h3>
+<ul>
+<li><code>descargas.econnectpro.mx</code> y <code>descargas.econnectpro.mx.2</code></li>
+<li><code>awsfacturasdetalladas</code></li>
+<li><code>facturas.abiertas.econnectpro.mx</code></li>
+<li><code>carta.porte.econnectpro.mx</code></li>
+<li><code>bulkproduction.econnect.ds</code></li>
+</ul>
+<h3 id="batchreportes">Batch/reportes</h3>
+<ul>
+<li><code>ecnc-prod-s3-batch-reports</code></li>
+<li><code>ecnc-prod-s3-mx1-manifest</code> (mx-central-1; sugiere artefactos relacionados a MX)</li>
+</ul>
+<h3 id="sftp-por-naming">SFTP (por naming)</h3>
+<ul>
+<li><code>sftp.agencias</code></li>
+<li><code>sftp.econnectpro.mx</code></li>
+<li><code>sftp.rbo910102qj9.econnectpro.mx</code></li>
+</ul>
+<blockquote>
+<p>Pendiente: confirmar región exacta, políticas (bucket policy), encryption, lifecycle, logging, y acceso por roles.</p>
+</blockquote>
+<h2 id="contenedores">Contenedores</h2>
+<p>No se encontró evidencia de uso de contenedores:
+- ECR: 0 repositorios
+- ECS/EKS: 0 clusters, 0 task definitions
+- No se detectaron referencias a Docker en user data / launch templates (según evidencia disponible)</p>
+<p><strong>Conclusión:</strong> arquitectura tradicional <strong>RDS + EC2 + SQS</strong> (sin contenedores).</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../08-iam/" class="btn btn-neutral float-left" title="IAM"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../10-observabilidad/" class="btn btn-neutral float-right" title="Observabilidad">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../08-iam/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../10-observabilidad/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

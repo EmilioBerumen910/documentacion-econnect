@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Emilio Bravo" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Inventario EC2 - Econnect AWS Documentation</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Inventario EC2";
+        var mkdocs_page_input_path = "02-inventario.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> Econnect AWS Documentation
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Inicio</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">EC2</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../index-EC2/">Inicio EC2</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../01-contexto/">Contexto</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Inventario EC2</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#resumen-de-computo">Resumen de cómputo</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#inventario-consolidado">Inventario consolidado</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#entry-points-del-sistema">Entry points del sistema</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#frontend-sitios">Frontend / sitios</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#aplicaciones-httphttps">Aplicaciones (HTTP/HTTPS)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#apis">APIs</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#acceso-administrativo-a-instancias">Acceso administrativo a instancias</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../03-red/">Red y conectividad</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../04-balanceadores/">Balanceadores y DNS</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../05-ensamblaje/">Recreación / IaC</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../06-runtime/">OS y runtime</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../07-config/">Config externa (SSM/Secrets)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../08-iam/">IAM</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../09-dependencias/">Dependencias</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../10-observabilidad/">Observabilidad</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../11-seguridad/">Seguridad</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">RDS</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../index-RDS/">Inicio RDS</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../01-inventory/">Inventario</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../02-network-access/">Red y acceso</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../03-security/">Seguridad</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../04-configuration/">Configuración</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../05-backup-recovery/">Backups y recuperación</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../06-performance-ops/">Performance y operación</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../07-ha-dr/">Alta disponibilidad y DR</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../08-migration-plan/">Plan de migración</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../09-appendix/">Apéndice</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Lambda</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../index-lambda/">Inicio Lambda</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../01-inventory-lambda/">Inventario</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../02-triggers-lambda/">Triggers e integraciones</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../03-networking-lambda/">Networking (VPC)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../04-runtime-deploy-lambda/">Runtime y despliegue</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../05-iam-security-lambda/">IAM y seguridad</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../06-observability-lambda/">Observabilidad</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../07-migration-plan-lambda/">Plan de migración</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../08-appendix-lambda/">Apéndice</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">Econnect AWS Documentation</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">EC2</li>
+      <li class="breadcrumb-item active">Inventario EC2</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="inventario-ec2-y-entry-points">Inventario EC2 y entry points</h1>
+<blockquote>
+<p>Fuente: <a href="../assets/EC2-Documentacion-Econnect.pdf">assets/EC2-Documentacion-Econnect.pdf</a><br />
+Generado: <strong>2026-03-03</strong></p>
+</blockquote>
+<h2 id="resumen-de-computo">Resumen de cómputo</h2>
+<ul>
+<li><strong>us-east-1:</strong> 8 instancias EC2 detectadas.</li>
+<li><strong>us-east-2:</strong> 1 instancia EC2 (stopped).</li>
+</ul>
+<blockquote>
+<p>No se observa un tag estándar <code>Environment/Env/Stage</code>, por lo que no se puede clasificar formalmente por dev/stage/prod con la información disponible.</p>
+</blockquote>
+<h2 id="inventario-consolidado">Inventario consolidado</h2>
+<table>
+<thead>
+<tr>
+<th>Región</th>
+<th>Name/Tag</th>
+<th>Instance ID</th>
+<th>Estado</th>
+<th>Rol</th>
+<th>VPC</th>
+<th>OS</th>
+<th>AMI</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>us-east-1</td>
+<td>Windows</td>
+<td><code>i-0ef1204ed1c03a849</code></td>
+<td>running (según CloudWatch Agent/SSM online)</td>
+<td>Windows server (app/ops) + SQL Server self-hosted</td>
+<td><code>vpc-0cda6f6b</code></td>
+<td>Windows Server 2019 (Spanish Full Base)</td>
+<td>ami-09125c5ac14dca1c5 (deleted/private)</td>
+</tr>
+<tr>
+<td>us-east-1</td>
+<td>win_robots</td>
+<td><code>i-05ac207409e68b7b2</code></td>
+<td>running (según CloudWatch Agent/SSM online)</td>
+<td>Worker/automation (robots)</td>
+<td><code>vpc-166c0773</code></td>
+<td>Windows Server 2022 (English Full Base)</td>
+<td>ami-085d15593174f2582 (deleted/private)</td>
+</tr>
+<tr>
+<td>us-east-1</td>
+<td>Mongo-Primary</td>
+<td><code>i-0fba1627118e40ac9</code></td>
+<td>(no confirmado; no reporta métricas custom)</td>
+<td>MongoDB primary (replica set)</td>
+<td><code>vpc-0cda6f6b</code></td>
+<td>Amazon Linux (2018.03)</td>
+<td>ami-0e2ff28bfb72a4e45</td>
+</tr>
+<tr>
+<td>us-east-1</td>
+<td>Mongo-Reports</td>
+<td><code>i-096c5970aa84088af</code></td>
+<td>running (según CloudWatch Agent/SSM online)</td>
+<td>MongoDB reporting/analytics node</td>
+<td><code>vpc-0cda6f6b</code></td>
+<td>Amazon Linux (2018.03)</td>
+<td>ami-0e2ff28bfb72a4e45</td>
+</tr>
+<tr>
+<td>us-east-1</td>
+<td>sa31 c6</td>
+<td><code>i-0e2bc974ec12793c1</code></td>
+<td>running (según CloudWatch Agent/SSM online)</td>
+<td>Compute/app server (alto cómputo)</td>
+<td><code>vpc-0cda6f6b</code></td>
+<td>Amazon Linux 2 (kernel 5.10)</td>
+<td>ami-0453898e90846c639</td>
+</tr>
+<tr>
+<td>us-east-1</td>
+<td>SOLUCIONA</td>
+<td><code>i-0b3731b503b53cedf</code></td>
+<td>stopped</td>
+<td>App/servicio (legacy; launch template sin ASG)</td>
+<td><code>vpc-0cda6f6b</code></td>
+<td>Amazon Linux 2</td>
+<td>ami-0947d2ba12ee1ff75</td>
+</tr>
+<tr>
+<td>us-east-1</td>
+<td>windows2</td>
+<td><code>i-08ba32766c8ea908d</code></td>
+<td>stopped</td>
+<td>Windows server (secundario/legacy)</td>
+<td><code>vpc-0cda6f6b</code></td>
+<td>Windows Server 2019 (Spanish Full Base)</td>
+<td>ami-04fc94404996b18a9 (deleted/private)</td>
+</tr>
+<tr>
+<td>us-east-1</td>
+<td>sews</td>
+<td><code>i-02380ddcba26ed3a2</code></td>
+<td>stopped</td>
+<td>App/servicio (por nombre)</td>
+<td><code>vpc-0cda6f6b</code></td>
+<td>Windows Server 2019 (English Full Base)</td>
+<td>ami-0b17e49efb8d755c3 (deleted/private)</td>
+</tr>
+<tr>
+<td>us-east-2</td>
+<td>mongo8</td>
+<td><code>i-0dfef81c198e9fdcb</code></td>
+<td>stopped</td>
+<td>MongoDB nodo suelto (instancia única)</td>
+<td><code>(no documentado)</code></td>
+<td>(no documentado)</td>
+<td>(no documentado)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="entry-points-del-sistema">Entry points del sistema</h2>
+<h3 id="frontend-sitios">Frontend / sitios</h3>
+<ul>
+<li><strong>CloudFront → S3</strong> para frontend/sitios públicos (distribuciones con CNAMEs <code>econnectpro.mx</code> y <code>login.econnectpro.mx</code>, y orígenes S3 / S3 static website).</li>
+</ul>
+<h3 id="aplicaciones-httphttps">Aplicaciones (HTTP/HTTPS)</h3>
+<ul>
+<li><strong>ALBs internet-facing</strong> en <code>us-east-1</code> para componentes de aplicación:</li>
+<li><code>econnect</code>, <code>admin</code>, <code>soluciona31</code>, <code>reportes</code>, <code>integra24</code>, <code>apivucem</code>, <code>apiSA31</code>.</li>
+</ul>
+<h3 id="apis">APIs</h3>
+<ul>
+<li><strong>API Gateway</strong> como entry point para APIs:</li>
+<li>APIs en <code>us-east-1</code> (REST + WebSocket).</li>
+<li>APIs en <code>us-east-2</code> (REST + WebSocket + HTTP, incluyendo <code>dev-auth-api</code>).</li>
+</ul>
+<h2 id="acceso-administrativo-a-instancias">Acceso administrativo a instancias</h2>
+<ul>
+<li>El acceso administrativo se realiza principalmente por <strong>AWS Systems Manager (SSM) / Session Manager</strong>.</li>
+<li>Se confirma en la instancia Windows (<code>i-0ef1204ed1c03a849</code>) que el SSM Agent está en línea (Session Manager “Connected”) con rol <strong>AmazonSSMRoleForInstancesQuickSetup</strong>.</li>
+</ul>
+<p><strong>Implicación:</strong> no se requiere bastion/jump box ni abrir puertos de administración para operar (si se estandariza el acceso vía SSM).</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../01-contexto/" class="btn btn-neutral float-left" title="Contexto"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../03-red/" class="btn btn-neutral float-right" title="Red y conectividad">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../01-contexto/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../03-red/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

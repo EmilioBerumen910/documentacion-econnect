@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Emilio Bravo" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Red y conectividad - Econnect AWS Documentation</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Red y conectividad";
+        var mkdocs_page_input_path = "03-red.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> Econnect AWS Documentation
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Inicio</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">EC2</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../index-EC2/">Inicio EC2</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../01-contexto/">Contexto</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../02-inventario/">Inventario EC2</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Red y conectividad</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#vpcs-y-ubicacion-de-instancias">VPCs y ubicación de instancias</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#mapping-por-instancia-vpc">Mapping por instancia (VPC)</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#subnets-y-clasificacion-us-east-1">Subnets y clasificación (us-east-1)</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#vpc-0cda6f6b">vpc-0cda6f6b</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#vpc-166c0773">vpc-166c0773</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#salida-a-internet-desde-subnets-privadas">Salida a Internet desde subnets privadas</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#conectividad-privada-on-prem">Conectividad privada / on-prem</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#puertos-relevantes-reportados-exposicion">Puertos relevantes reportados (exposición)</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#network-acls">Network ACLs</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#dependencias-de-allow-lists-por-ip-riesgo-de-migracion">Dependencias de allow-lists por IP (riesgo de migración)</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../04-balanceadores/">Balanceadores y DNS</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../05-ensamblaje/">Recreación / IaC</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../06-runtime/">OS y runtime</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../07-config/">Config externa (SSM/Secrets)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../08-iam/">IAM</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../09-dependencias/">Dependencias</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../10-observabilidad/">Observabilidad</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../11-seguridad/">Seguridad</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">RDS</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../index-RDS/">Inicio RDS</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../01-inventory/">Inventario</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../02-network-access/">Red y acceso</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../03-security/">Seguridad</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../04-configuration/">Configuración</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../05-backup-recovery/">Backups y recuperación</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../06-performance-ops/">Performance y operación</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../07-ha-dr/">Alta disponibilidad y DR</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../08-migration-plan/">Plan de migración</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../09-appendix/">Apéndice</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Lambda</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../index-lambda/">Inicio Lambda</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../01-inventory-lambda/">Inventario</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../02-triggers-lambda/">Triggers e integraciones</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../03-networking-lambda/">Networking (VPC)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../04-runtime-deploy-lambda/">Runtime y despliegue</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../05-iam-security-lambda/">IAM y seguridad</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../06-observability-lambda/">Observabilidad</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../07-migration-plan-lambda/">Plan de migración</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../08-appendix-lambda/">Apéndice</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">Econnect AWS Documentation</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">EC2</li>
+      <li class="breadcrumb-item active">Red y conectividad</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="red-y-conectividad">Red y conectividad</h1>
+<blockquote>
+<p>Fuente: <a href="../assets/EC2-Documentacion-Econnect.pdf">assets/EC2-Documentacion-Econnect.pdf</a><br />
+Generado: <strong>2026-03-03</strong></p>
+</blockquote>
+<h2 id="vpcs-y-ubicacion-de-instancias">VPCs y ubicación de instancias</h2>
+<h3 id="mapping-por-instancia-vpc">Mapping por instancia (VPC)</h3>
+<ul>
+<li><code>vpc-0cda6f6b</code> (nombre pendiente): Windows, Mongo-Primary, Mongo-Reports, SOLUCIONA, windows2, sews, sa31 c6</li>
+<li><code>vpc-166c0773</code> (nombre pendiente): win_robots</li>
+</ul>
+<h2 id="subnets-y-clasificacion-us-east-1">Subnets y clasificación (us-east-1)</h2>
+<h3 id="vpc-0cda6f6b"><code>vpc-0cda6f6b</code></h3>
+<ul>
+<li><strong>Subnets públicas</strong> (ruta default <code>0.0.0.0/0 → IGW</code>):</li>
+<li><code>subnet-0a083fd804a5d7647</code>, <code>subnet-eaa0f1c0</code>, <code>subnet-4b87863d</code>, <code>subnet-eebeecb6</code>, <code>subnet-b1ae9e8c</code></li>
+<li><strong>Subnets privadas</strong> (ruta default <code>0.0.0.0/0 → NAT</code>):</li>
+<li><code>subnet-0ef552d2118b2938a</code>, <code>subnet-028170afb4e27690a</code>, <code>subnet-0d2549cfe1b691e62</code></li>
+</ul>
+<h3 id="vpc-166c0773"><code>vpc-166c0773</code></h3>
+<ul>
+<li>Subnets observadas (todas públicas, por ruta principal <code>0.0.0.0/0 → IGW</code>):</li>
+<li><code>subnet-3b7caf10</code>, <code>subnet-48780a72</code>, <code>subnet-b3a034c4</code>, <code>subnet-5d65d104</code></li>
+</ul>
+<h2 id="salida-a-internet-desde-subnets-privadas">Salida a Internet desde subnets privadas</h2>
+<ul>
+<li>Se confirma salida por <strong>NAT Gateway</strong> usando la route table privada <code>rtb-023adfd6d8baafdcf</code> con ruta <code>0.0.0.0/0 → nat-03f4861d918874e94</code>.</li>
+</ul>
+<h2 id="conectividad-privada-on-prem">Conectividad privada / on-prem</h2>
+<p>No se encontró evidencia de conectividad privada hacia/on-prem:
+- <strong>VPC Peering:</strong> no hay conexiones activas (se observó antes una ruta <code>pcx-...</code> en estado <em>Blackhole</em>, sugiriendo peering previo eliminado/roto).
+- <strong>Transit Gateway:</strong> no existe.
+- <strong>VPN (Client VPN / Site-to-Site):</strong> no existe (según revisión).
+- <strong>Direct Connect:</strong> no hay interconnects.</p>
+<h2 id="puertos-relevantes-reportados-exposicion">Puertos relevantes reportados (exposición)</h2>
+<ul>
+<li><strong>22/TCP (SSH):</strong> restringido a IPs específicas / SG interno.</li>
+<li><strong>27017 y 27017–27030/TCP (MongoDB):</strong> reportado como abierto a Internet (<code>0.0.0.0/0</code> y/o <code>::/0</code>).</li>
+<li><strong>28017/TCP:</strong> accesible desde SGs internos (admin/monitoring probable).</li>
+<li><strong>8881/TCP:</strong> abierto a Internet (servicio por confirmar).</li>
+</ul>
+<h2 id="network-acls">Network ACLs</h2>
+<ul>
+<li>NACL reportada como <strong>permisiva (ALLOW ALL)</strong>; el control de tráfico real depende de <strong>Security Groups</strong> y de rutas/subnets.</li>
+</ul>
+<h2 id="dependencias-de-allow-lists-por-ip-riesgo-de-migracion">Dependencias de allow-lists por IP (riesgo de migración)</h2>
+<p>Hay señales claras de dependencias por IP pública:
+- NAT Gateway con IP pública fija <strong>3.226.159.167</strong> (posible IP de salida allowlisteada por terceros).
+- <strong>19 Elastic IPs</strong> y al menos una asociada directamente a una instancia (<code>i-0b3731b503b53cedf</code>), lo cual sugiere integraciones que dependen de IP fija.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../02-inventario/" class="btn btn-neutral float-left" title="Inventario EC2"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../04-balanceadores/" class="btn btn-neutral float-right" title="Balanceadores y DNS">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../02-inventario/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../04-balanceadores/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
