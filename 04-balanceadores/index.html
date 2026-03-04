@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Emilio Bravo" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Balanceadores y DNS - Econnect AWS Documentation</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Balanceadores y DNS";
+        var mkdocs_page_input_path = "04-balanceadores.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> Econnect AWS Documentation
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Inicio</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">EC2</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../index-EC2/">Inicio EC2</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../01-contexto/">Contexto</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../02-inventario/">Inventario EC2</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../03-red/">Red y conectividad</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Balanceadores y DNS</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#application-load-balancers-alb">Application Load Balancers (ALB)</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#target-groups-puertos-y-health-checks">Target Groups: puertos y health checks</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#dns-route-53">DNS (Route 53)</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#certificados-acm">Certificados (ACM)</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#cloudfront-cdn">CloudFront (CDN)</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#waf">WAF</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../05-ensamblaje/">Recreación / IaC</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../06-runtime/">OS y runtime</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../07-config/">Config externa (SSM/Secrets)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../08-iam/">IAM</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../09-dependencias/">Dependencias</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../10-observabilidad/">Observabilidad</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../11-seguridad/">Seguridad</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">RDS</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../index-RDS/">Inicio RDS</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../01-inventory/">Inventario</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../02-network-access/">Red y acceso</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../03-security/">Seguridad</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../04-configuration/">Configuración</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../05-backup-recovery/">Backups y recuperación</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../06-performance-ops/">Performance y operación</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../07-ha-dr/">Alta disponibilidad y DR</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../08-migration-plan/">Plan de migración</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../09-appendix/">Apéndice</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Lambda</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../index-lambda/">Inicio Lambda</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../01-inventory-lambda/">Inventario</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../02-triggers-lambda/">Triggers e integraciones</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../03-networking-lambda/">Networking (VPC)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../04-runtime-deploy-lambda/">Runtime y despliegue</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../05-iam-security-lambda/">IAM y seguridad</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../06-observability-lambda/">Observabilidad</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../07-migration-plan-lambda/">Plan de migración</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../08-appendix-lambda/">Apéndice</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">Econnect AWS Documentation</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">EC2</li>
+      <li class="breadcrumb-item active">Balanceadores y DNS</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="balanceadores-dns-certificados-y-cdn">Balanceadores, DNS, certificados y CDN</h1>
+<blockquote>
+<p>Fuente: <a href="../assets/EC2-Documentacion-Econnect.pdf">assets/EC2-Documentacion-Econnect.pdf</a><br />
+Generado: <strong>2026-03-03</strong></p>
+</blockquote>
+<h2 id="application-load-balancers-alb">Application Load Balancers (ALB)</h2>
+<p>Las aplicaciones reciben tráfico mediante <strong>ALBs internet-facing</strong> en <code>us-east-1</code>:</p>
+<ul>
+<li><code>econnect</code> — <code>arn:aws:elasticloadbalancing:us-east-1:305968097757:loadbalancer/app/econnect/c38988eed74a3c38</code></li>
+<li><code>admin</code> — <code>arn:aws:elasticloadbalancing:us-east-1:305968097757:loadbalancer/app/admin/86892f0d3bf17a9e</code></li>
+<li><code>soluciona31</code> — <code>arn:aws:elasticloadbalancing:us-east-1:305968097757:loadbalancer/app/soluciona31/5b7bd91cb2303658</code></li>
+<li><code>reportes</code> — <code>arn:aws:elasticloadbalancing:us-east-1:305968097757:loadbalancer/app/reportes/c9cd5174bcfe69ca</code></li>
+<li><code>integra24</code> — <code>arn:aws:elasticloadbalancing:us-east-1:305968097757:loadbalancer/app/integra24/0aa86d04cdda60cd</code></li>
+<li><code>apivucem</code> — <code>arn:aws:elasticloadbalancing:us-east-1:305968097757:loadbalancer/app/apivucem/0febd7aaee44084b</code></li>
+<li><code>apiSA31</code> — <code>arn:aws:elasticloadbalancing:us-east-1:305968097757:loadbalancer/app/apiSA31/8afd54ca01b6faea</code></li>
+</ul>
+<h2 id="target-groups-puertos-y-health-checks">Target Groups: puertos y health checks</h2>
+<p><strong>Configuración estándar observada de health check:</strong>
+- Protocol: HTTP
+- Port: traffic port
+- Path: <code>/</code>
+- Success codes: <code>200</code>
+- Interval: 30s
+- Timeout: 5s
+- Healthy threshold: 5
+- Unhealthy threshold: 2</p>
+<p><strong>Puertos por target group (según inventario):</strong>
+- admin: 8888
+- apireportes: 8880
+- apivucem: 8881
+- ds1: 8885
+- integra24: 80
+- rabit: 15672
+- sa31Pro: 8882
+- soluciona31: 8889</p>
+<blockquote>
+<p>Nota operativa: con matcher solo <code>200</code> y path <code>/</code>, una app que responda 301/302/401/403/204 en <code>/</code> puede quedar “unhealthy”. Si hay flapping, primer ajuste típico: success codes <code>200-399</code> o un path <code>/health</code>.</p>
+</blockquote>
+<h2 id="dns-route-53">DNS (Route 53)</h2>
+<ul>
+<li>Hosted Zone pública: <code>econnectpro.mx</code>.</li>
+<li>Routing observado: <strong>A/ALIAS</strong> (hacia CloudFront y algunos ALBs dualstack) y <strong>CNAME</strong> (hacia DNS públicos de EC2 u otros destinos).</li>
+</ul>
+<h2 id="certificados-acm">Certificados (ACM)</h2>
+<p><strong>ALB econnect / admin</strong>
+- Cert: <code>econnect.mx</code>
+- ARN: <code>arn:aws:acm:us-east-1:305968097757:certificate/17000119-e24d-4c0b-b690-18324a6ce286</code>
+- Expira: <strong>Jan 30, 2027</strong></p>
+<p><strong>ALB soluciona31</strong>
+- Cert: <code>soluciona31.mx</code>
+- ARN: <code>arn:aws:acm:us-east-1:305968097757:certificate/99397c88-3a5a-475b-86dd-931d0d74707f</code>
+- Expira: <strong>Jun 22, 2026</strong></p>
+<p><strong>ALB reportes / apivucem / apiSA31</strong>
+- Cert: <code>econnectpro.mx</code>
+- ARN: <code>arn:aws:acm:us-east-1:305968097757:certificate/d2aaab9e-bbff-46fe-b939-c3d1700a3b65</code>
+- Expira: <strong>Mar 1, 2027</strong></p>
+<p><strong>ALB integra24</strong>
+- Cert: <code>integra24.mx</code>
+- ARN: <code>arn:aws:acm:us-east-1:305968097757:certificate/6f0a761-44e5-439f-b71f-1449bca12acf</code>
+- Expira: <strong>Dec 26, 2026</strong></p>
+<h2 id="cloudfront-cdn">CloudFront (CDN)</h2>
+<p>Se observan <strong>2 distribuciones CloudFront</strong> (enabled):
+- Distribución para <code>econnectpro.mx</code> y <code>www.econnectpro.mx</code> → origin S3: <code>econnectpro.mx.s3.amazonaws.com</code>
+- Distribución para <code>login.econnectpro.mx</code> → origin S3 Static Website: <code>login.econnectpro.mx.s3-website-us-east-1.amazonaws.com</code></p>
+<h2 id="waf">WAF</h2>
+<ul>
+<li><strong>No hay WAF habilitado en CloudFront</strong> (Core protections = Not enabled).</li>
+</ul>
+<p><strong>Implicación:</strong> apps expuestas carecen de una capa gestionada de protección web (OWASP rulesets, rate limiting, etc.).</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../03-red/" class="btn btn-neutral float-left" title="Red y conectividad"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../05-ensamblaje/" class="btn btn-neutral float-right" title="Recreación / IaC">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../03-red/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../05-ensamblaje/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

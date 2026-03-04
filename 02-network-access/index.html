@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Emilio Bravo" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Red y acceso - Econnect AWS Documentation</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Red y acceso";
+        var mkdocs_page_input_path = "02-network-access.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> Econnect AWS Documentation
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Inicio</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">EC2</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../index-EC2/">Inicio EC2</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../01-contexto/">Contexto</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../02-inventario/">Inventario EC2</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../03-red/">Red y conectividad</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../04-balanceadores/">Balanceadores y DNS</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../05-ensamblaje/">Recreación / IaC</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../06-runtime/">OS y runtime</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../07-config/">Config externa (SSM/Secrets)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../08-iam/">IAM</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../09-dependencias/">Dependencias</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../10-observabilidad/">Observabilidad</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../11-seguridad/">Seguridad</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">RDS</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../index-RDS/">Inicio RDS</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../01-inventory/">Inventario</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Red y acceso</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#vpc-y-subredes-del-rds">VPC y subredes del RDS</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#exposicion-publica">Exposición pública</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#control-de-acceso-security-groups">Control de acceso (Security Groups)</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#inbound-principales-origenes-permitidos">Inbound (principales orígenes permitidos)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#outbound">Outbound</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#conectividad-privada-no-presente">Conectividad privada (no presente)</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../03-security/">Seguridad</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../04-configuration/">Configuración</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../05-backup-recovery/">Backups y recuperación</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../06-performance-ops/">Performance y operación</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../07-ha-dr/">Alta disponibilidad y DR</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../08-migration-plan/">Plan de migración</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../09-appendix/">Apéndice</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Lambda</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../index-lambda/">Inicio Lambda</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../01-inventory-lambda/">Inventario</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../02-triggers-lambda/">Triggers e integraciones</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../03-networking-lambda/">Networking (VPC)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../04-runtime-deploy-lambda/">Runtime y despliegue</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../05-iam-security-lambda/">IAM y seguridad</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../06-observability-lambda/">Observabilidad</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../07-migration-plan-lambda/">Plan de migración</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../08-appendix-lambda/">Apéndice</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">Econnect AWS Documentation</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">RDS</li>
+      <li class="breadcrumb-item active">Red y acceso</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="red-y-acceso">Red y acceso</h1>
+<h2 id="vpc-y-subredes-del-rds">VPC y subredes del RDS</h2>
+<ul>
+<li><strong>VPC</strong>: <code>vpc-0cda6f6b</code> (CIDR <code>172.30.0.0/16</code>)</li>
+<li><strong>DB Subnet Group</strong>: <code>default-vpc-0cda6f6b</code></li>
+<li>Subnets incluidas (todas con ruteo público hacia IGW):</li>
+<li><code>subnet-eaa0f1c0</code> (us-east-1a) — <code>172.30.0.0/24</code></li>
+<li><code>subnet-4b87863d</code> (us-east-1b) — <code>172.30.1.0/24</code></li>
+<li><code>subnet-eebeecb6</code> (us-east-1c) — <code>172.30.2.0/24</code></li>
+<li><code>subnet-b1ae9e8c</code> (us-east-1e) — <code>172.30.4.0/24</code></li>
+</ul>
+<h2 id="exposicion-publica">Exposición pública</h2>
+<ul>
+<li><strong>Publicly accessible</strong>: <code>true</code></li>
+<li>Endpoint público (DNS): <code>econnectds1.ck6nep3j6xwz.us-east-1.rds.amazonaws.com</code></li>
+<li>Importante: que el subnet group sea “público” no significa que esté abierto; el acceso efectivo depende de SG/NACL.</li>
+</ul>
+<h2 id="control-de-acceso-security-groups">Control de acceso (Security Groups)</h2>
+<ul>
+<li><strong>SG asociado</strong>: <code>sg-fc671187</code> (default VPC security group)</li>
+<li><strong>Puerto DB</strong>: <code>TCP/3306</code></li>
+</ul>
+<h3 id="inbound-principales-origenes-permitidos">Inbound (principales orígenes permitidos)</h3>
+<p><strong>Allowlist /32 (IPs específicas):</strong>
+- <code>172.30.1.187/32</code> (EC2 Mongo Esclavo – interno)
+- <code>18.208.191.215/32</code> (SERVER MONGO – externo)
+- <code>201.163.95.186/32</code> (ECONNECT-LOURDES)
+- <code>187.232.23.81/32</code> (ECONNECT-HUMBERTO)
+- <code>172.30.1.125/32</code> (SERVER SA31 – interno)
+- <code>172.30.1.123/32</code> (NEW SA31 – interno)
+- <code>172.30.1.221/32</code> (server c6 – interno)
+- <code>3.225.226.65/32</code> (SERVER SITIOS – AWS)
+- <code>187.190.185.131/32</code> (NYX RDS – dev)
+- <code>187.133.124.245/32</code> (pilos rio)
+- <code>177.227.67.199/32</code> (POWER-DEVEL ENRIQUE)
+- <code>177.227.70.85/32</code> (POWER-DEVEL PILOS)
+- <code>177.242.159.98/32</code> (POWER-DEVEL GUSTAVO)</p>
+<p><strong>Rango AWS (servicio):</strong>
+- <code>52.23.63.224/27</code> (QuickSight N. Virginia)</p>
+<p><strong>Security Group como origen:</strong>
+- <code>sg-9b3678e4</code> → <code>3306</code> (windows servers grupo)</p>
+<p><strong>Tráfico interno del mismo SG:</strong>
+- <code>sg-fc671187</code> → All traffic (comunicación interna entre recursos con el mismo SG)</p>
+<h3 id="outbound">Outbound</h3>
+<ul>
+<li><code>0.0.0.0/0</code> y <code>::/0</code> → All traffic (salida permisiva)</li>
+</ul>
+<h2 id="conectividad-privada-no-presente">Conectividad privada (no presente)</h2>
+<p>No se detectó:
+- VPC Peering
+- Transit Gateway (TGW)
+- Site-to-Site VPN / Client VPN
+- Direct Connect</p>
+<p>Además, las route tables del DB subnet group no muestran rutas a on-prem ni a otras VPCs por peering/TGW/VPN; la conectividad se reduce a recursos dentro de la VPC y acceso público controlado.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../01-inventory/" class="btn btn-neutral float-left" title="Inventario"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../03-security/" class="btn btn-neutral float-right" title="Seguridad">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../01-inventory/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../03-security/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

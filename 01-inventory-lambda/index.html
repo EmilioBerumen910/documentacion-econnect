@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Emilio Bravo" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Inventario - Econnect AWS Documentation</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Inventario";
+        var mkdocs_page_input_path = "01-inventory-lambda.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> Econnect AWS Documentation
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Inicio</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">EC2</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../index-EC2/">Inicio EC2</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../01-contexto/">Contexto</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../02-inventario/">Inventario EC2</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../03-red/">Red y conectividad</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../04-balanceadores/">Balanceadores y DNS</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../05-ensamblaje/">Recreación / IaC</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../06-runtime/">OS y runtime</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../07-config/">Config externa (SSM/Secrets)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../08-iam/">IAM</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../09-dependencias/">Dependencias</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../10-observabilidad/">Observabilidad</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../11-seguridad/">Seguridad</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">RDS</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../index-RDS/">Inicio RDS</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../01-inventory/">Inventario</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../02-network-access/">Red y acceso</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../03-security/">Seguridad</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../04-configuration/">Configuración</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../05-backup-recovery/">Backups y recuperación</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../06-performance-ops/">Performance y operación</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../07-ha-dr/">Alta disponibilidad y DR</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../08-migration-plan/">Plan de migración</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../09-appendix/">Apéndice</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Lambda</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../index-lambda/">Inicio Lambda</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Inventario</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#inventario-condensado">Inventario (condensado)</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#funciones-criticas-impacto-a-usuarios">Funciones críticas (impacto a usuarios)</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#funciones-internas-mantenimiento-muestra">Funciones internas / mantenimiento (muestra)</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../02-triggers-lambda/">Triggers e integraciones</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../03-networking-lambda/">Networking (VPC)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../04-runtime-deploy-lambda/">Runtime y despliegue</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../05-iam-security-lambda/">IAM y seguridad</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../06-observability-lambda/">Observabilidad</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../07-migration-plan-lambda/">Plan de migración</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../08-appendix-lambda/">Apéndice</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">Econnect AWS Documentation</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Lambda</li>
+      <li class="breadcrumb-item active">Inventario</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="inventario-y-mapa-funcional">Inventario y mapa funcional</h1>
+<p>Esta sección consolida el inventario de Lambdas por región y resalta las funciones críticas
+(user-facing) vs funciones internas/mantenimiento.</p>
+<h2 id="inventario-condensado">Inventario (condensado)</h2>
+<table>
+<thead>
+<tr>
+<th>Región</th>
+<th>Función</th>
+<th>Ambiente</th>
+<th>Runtime</th>
+<th>Invocación</th>
+<th>Crítica</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>us-east-1</td>
+<td><code>recuperacion_edocs_agente</code></td>
+<td>Producción (sin sufijo dev/stage)</td>
+<td>python3.7</td>
+<td>Asíncrona (sin triggers configurados, probablemente invocación</td>
+<td>No - Función de backend para procesamiento de documentos</td>
+</tr>
+<tr>
+<td>us-east-1</td>
+<td><code>elimina_pedimentos</code></td>
+<td>Producción (sin sufijo dev/stage)</td>
+<td>python3.7</td>
+<td>Asíncrona (sin triggers configurados, probablemente invocación</td>
+<td>No - Función de mantenimiento de datos</td>
+</tr>
+<tr>
+<td>us-east-1</td>
+<td><code>encolar_pdf_coves_manifestacion</code></td>
+<td>Producción (sin sufijo dev/stage)</td>
+<td>python3.7</td>
+<td>Asíncrona (sin triggers configurados, probablemente invocación</td>
+<td>Sí - Procesamiento de documentos críticos para manifestaciones</td>
+</tr>
+<tr>
+<td>us-east-1</td>
+<td><code>recuperar_acuses_manifestacion</code></td>
+<td>Producción (sin sufijo dev/stage)</td>
+<td>python3.7</td>
+<td>Asíncrona (sin triggers configurados, probablemente invocación</td>
+<td>Sí - Confirmaciones críticas para procesos de manifestación</td>
+</tr>
+<tr>
+<td>us-east-1</td>
+<td><code>actualizar_validacion_pedimento</code></td>
+<td>Producción (sin sufijo dev/stage)</td>
+<td>python3.7</td>
+<td>Asíncrona (sin triggers configurados, probablemente invocación</td>
+<td>Sí - Validación crítica para procesos aduaneros</td>
+</tr>
+<tr>
+<td>us-east-1</td>
+<td><code>insertaMensajeSQSArchivosS3</code></td>
+<td>Producción (sin sufijo dev/stage)</td>
+<td>python3.7</td>
+<td>Asíncrona (sin triggers configurados, probablemente invocación</td>
+<td>Sí - Gestión de archivos críticos del usuario</td>
+</tr>
+<tr>
+<td>us-east-1</td>
+<td><code>update_validaciones_encolados</code></td>
+<td>Producción (sin sufijo dev/stage)</td>
+<td>python3.7</td>
+<td>Asíncrona (sin triggers configurados, probablemente invocación</td>
+<td>No - Función de procesamiento interno</td>
+</tr>
+<tr>
+<td>us-east-1</td>
+<td><code>CronGuardarS3</code></td>
+<td>Producción (sin sufijo dev/stage)</td>
+<td>python3.7</td>
+<td>Asíncrona (probablemente EventBridge/CloudWatch Events por</td>
+<td>No - Función de respaldo/mantenimiento</td>
+</tr>
+<tr>
+<td>us-east-1</td>
+<td><code>lambda-usuarios-dev</code></td>
+<td>Desarrollo (sufijo -dev)</td>
+<td>python3.7</td>
+<td>Síncrona (probablemente API Gateway por descripción "Zappa</td>
+<td>No - Ambiente de desarrollo</td>
+</tr>
+<tr>
+<td>us-east-1</td>
+<td><code>check_damaged_edocs</code></td>
+<td>Producción (sin sufijo dev/stage)</td>
+<td>python3.13</td>
+<td>Asíncrona (sin triggers configurados, probablemente invocación</td>
+<td>No - Función de verificación/mantenimiento</td>
+</tr>
+<tr>
+<td>us-east-1</td>
+<td><code>valida_pedimentos_previos_zip</code></td>
+<td>Producción (sin sufijo dev/stage)</td>
+<td>python3.7</td>
+<td>Asíncrona (sin triggers configurados, probablemente invocación</td>
+<td>Sí - Validación crítica para procesamiento de pedimentos</td>
+</tr>
+<tr>
+<td>us-east-1</td>
+<td><code>verifica_estados_pagados</code></td>
+<td>Producción (sin sufijo dev/stage)</td>
+<td>python3.7</td>
+<td>Asíncrona (sin triggers configurados, probablemente invocación</td>
+<td>Sí - Verificación crítica de pagos</td>
+</tr>
+<tr>
+<td>us-east-1</td>
+<td><code>genera_avance_tipo</code></td>
+<td>Producción (sin sufijo dev/stage)</td>
+<td>python3.7</td>
+<td>Asíncrona (sin triggers configurados, probablemente invocación</td>
+<td>No - Función de reportería</td>
+</tr>
+<tr>
+<td>us-east-1</td>
+<td><code>lambda-catalogos-dev</code></td>
+<td>Desarrollo (sufijo -dev)</td>
+<td>python3.7</td>
+<td>Síncrona (probablemente API Gateway por descripción "Zappa</td>
+<td>No - Ambiente de desarrollo</td>
+</tr>
+<tr>
+<td>us-east-1</td>
+<td><code>encolar_pedimento_estado_pdf</code></td>
+<td>Producción (sin sufijo dev/stage)</td>
+<td>python3.7</td>
+<td>Asíncrona (sin triggers configurados, probablemente invocación</td>
+<td>Sí - Generación de documentos críticos para usuarios</td>
+</tr>
+<tr>
+<td>us-east-1</td>
+<td><code>guardarAdjuntosTraficoS3</code></td>
+<td>Producción (sin sufijo dev/stage)</td>
+<td>python3.7</td>
+<td>Asíncrona (sin triggers configurados, probablemente invocación</td>
+<td>Sí - Gestión de adjuntos críticos del usuario</td>
+</tr>
+<tr>
+<td>us-east-1</td>
+<td><code>procesar_bandeja_manifestacion</code></td>
+<td>Producción (sin sufijo dev/stage)</td>
+<td>python3.13</td>
+<td>Asíncrona (sin triggers configurados, probablemente invocación</td>
+<td>Sí - Procesamiento crítico de manifestaciones</td>
+</tr>
+<tr>
+<td>us-east-1</td>
+<td><code>guardarArchivoM</code></td>
+<td>Producción (sin sufijo dev/stage)</td>
+<td>python3.7</td>
+<td>Asíncrona (sin triggers configurados, probablemente invocación</td>
+<td>Sí - Gestión de archivos críticos de eManifiesto</td>
+</tr>
+<tr>
+<td>us-east-1</td>
+<td><code>encolar_cove_remesa_xml</code></td>
+<td>Producción (sin sufijo dev/stage)</td>
+<td>python3.7</td>
+<td>Asíncrona (sin triggers configurados, probablemente invocación</td>
+<td>Sí - Procesamiento de documentos XML críticos</td>
+</tr>
+<tr>
+<td>us-east-1</td>
+<td><code>AutorizadorApis</code></td>
+<td>Producción (sin sufijo dev/stage)</td>
+<td>nodejs12.x</td>
+<td>Síncrona (probablemente API Gateway Authorizer por nombre)</td>
+<td>Sí - Función crítica de seguridad y autenticación</td>
+</tr>
+<tr>
+<td>us-east-2</td>
+<td><code>encolar_pedimento_estado_pdf</code></td>
+<td>Producción (sin sufijo dev/stage)</td>
+<td>python3.12</td>
+<td>Asíncrona (sin triggers configurados, probablemente invocación</td>
+<td>Sí - Generación de documentos críticos para usuarios</td>
+</tr>
+<tr>
+<td>us-east-2</td>
+<td><code>insertaMensajeSQSArchivosS3</code></td>
+<td>Producción (sin sufijo dev/stage)</td>
+<td>python3.12</td>
+<td>Asíncrona (sin triggers configurados, probablemente invocación</td>
+<td>Sí - Gestión de archivos críticos del usuario</td>
+</tr>
+<tr>
+<td>us-east-2</td>
+<td><code>lambda-archivos-dev</code></td>
+<td>Desarrollo (sufijo -dev)</td>
+<td>python3.12</td>
+<td>Síncrona (probablemente API Gateway por patrón lambda-*-dev)</td>
+<td>No - Ambiente de desarrollo</td>
+</tr>
+<tr>
+<td>us-east-2</td>
+<td><code>lambda-reportes-dev</code></td>
+<td>Desarrollo (sufijo -dev)</td>
+<td>python3.12</td>
+<td>Síncrona (probablemente API Gateway por patrón lambda-*-dev)</td>
+<td>No - Ambiente de desarrollo</td>
+</tr>
+<tr>
+<td>us-east-2</td>
+<td><code>AutorizadorApis</code></td>
+<td>Producción (sin sufijo dev/stage)</td>
+<td>nodejs18.x</td>
+<td>Síncrona (probablemente API Gateway Authorizer por nombre)</td>
+<td>Sí - Función crítica de seguridad y autenticación</td>
+</tr>
+<tr>
+<td>us-east-2</td>
+<td><code>encolar_pedimentos</code></td>
+<td>Producción (sin sufijo dev/stage)</td>
+<td>python3.12</td>
+<td>Asíncrona (sin triggers configurados, probablemente invocación</td>
+<td>Sí - Procesamiento crítico de pedimentos</td>
+</tr>
+<tr>
+<td>us-east-2</td>
+<td><code>encolar_pdf_coves_manifestacion</code></td>
+<td>Producción (sin sufijo dev/stage)</td>
+<td>python3.12</td>
+<td>Asíncrona (sin triggers configurados, probablemente invocación</td>
+<td>Sí - Procesamiento de documentos críticos para manifestaciones</td>
+</tr>
+<tr>
+<td>us-east-2</td>
+<td><code>CronGuardarS3</code></td>
+<td>Producción (sin sufijo dev/stage)</td>
+<td>python3.12</td>
+<td>Asíncrona (probablemente EventBridge/CloudWatch Events por</td>
+<td>No - Función de respaldo/mantenimiento</td>
+</tr>
+<tr>
+<td>us-east-2</td>
+<td><code>update_edocs_encolados</code></td>
+<td>Producción (sin sufijo dev/stage)</td>
+<td>python3.12</td>
+<td>Asíncrona (sin triggers configurados, probablemente invocación</td>
+<td>No - Función de procesamiento interno</td>
+</tr>
+<tr>
+<td>us-east-2</td>
+<td><code>activar_cola_estados_pedimento</code></td>
+<td>Producción (sin sufijo dev/stage)</td>
+<td>nodejs20.x</td>
+<td>Asíncrona (sin triggers configurados, probablemente invocación</td>
+<td>Sí - Activación crítica para procesamiento de pedimentos</td>
+</tr>
+<tr>
+<td>us-east-2</td>
+<td><code>verificar_edocs</code></td>
+<td>Producción (sin sufijo dev/stage)</td>
+<td>python3.12</td>
+<td>Asíncrona (sin triggers configurados, probablemente invocación</td>
+<td>No - Función de verificación/mantenimiento</td>
+</tr>
+<tr>
+<td>us-east-2</td>
+<td><code>lambda-carta-porte-colas</code></td>
+<td>Producción (sin sufijo dev/stage)</td>
+<td>python3.12</td>
+<td>Asíncrona (SQS triggers: pdf_carta_porte y timbrar)</td>
+<td>Sí - Procesamiento crítico de carta porte</td>
+</tr>
+<tr>
+<td>us-east-2</td>
+<td><code>generar_estados_robot</code></td>
+<td>Producción (sin sufijo dev/stage)</td>
+<td>python3.12</td>
+<td>Asíncrona (sin triggers configurados, probablemente invocación</td>
+<td>No - Función de automatización interna</td>
+</tr>
+<tr>
+<td>us-east-2</td>
+<td><code>elimina_pedimentos</code></td>
+<td>Producción (sin sufijo dev/stage)</td>
+<td>python3.12</td>
+<td>Asíncrona (sin triggers configurados, probablemente invocación</td>
+<td>No - Función de mantenimiento de datos</td>
+</tr>
+<tr>
+<td>us-east-2</td>
+<td><code>InsertaMensajeSQSReportes</code></td>
+<td>Producción (sin sufijo dev/stage)</td>
+<td>python3.12</td>
+<td>Asíncrona (sin triggers configurados, probablemente invocación</td>
+<td>No - Función posiblemente en desuso</td>
+</tr>
+<tr>
+<td>us-east-2</td>
+<td><code>genera_avance_tipo</code></td>
+<td>Producción (sin sufijo dev/stage)</td>
+<td>python3.12</td>
+<td>Asíncrona (sin triggers configurados, probablemente invocación</td>
+<td>No - Función de reportería</td>
+</tr>
+<tr>
+<td>us-east-2</td>
+<td><code>encolar_cove_remesa_pdf</code></td>
+<td>Producción (sin sufijo dev/stage)</td>
+<td>python3.12</td>
+<td>Asíncrona (sin triggers configurados, probablemente invocación</td>
+<td>Sí - Procesamiento de documentos PDF críticos</td>
+</tr>
+<tr>
+<td>us-east-2</td>
+<td><code>recuperaciones_diarias</code></td>
+<td>Producción (sin sufijo dev/stage)</td>
+<td>python3.12</td>
+<td>Asíncrona (probablemente EventBridge/CloudWatch Events por</td>
+<td>No - Función de mantenimiento/recuperación</td>
+</tr>
+<tr>
+<td>us-east-2</td>
+<td><code>lambda-usuarios-dev</code></td>
+<td>Desarrollo (sufijo -dev)</td>
+<td>python3.12</td>
+<td>Síncrona (probablemente API Gateway por patrón lambda-*-dev)</td>
+<td>No - Ambiente de desarrollo</td>
+</tr>
+<tr>
+<td>us-east-2</td>
+<td><code>elimina_previos_pasados</code></td>
+<td>Producción (sin sufijo dev/stage)</td>
+<td>python3.12</td>
+<td>Asíncrona (sin triggers configurados, probablemente invocación</td>
+<td>No - Función de mantenimiento de datos</td>
+</tr>
+</tbody>
+</table>
+<h2 id="funciones-criticas-impacto-a-usuarios">Funciones críticas (impacto a usuarios)</h2>
+<ul>
+<li><code>encolar_pdf_coves_manifestacion</code> (us-east-1, python3.7) — Encolado de PDFs de coves de manifestación para procesamiento</li>
+<li><code>recuperar_acuses_manifestacion</code> (us-east-1, python3.7) — Recuperación de acuses de recibo de manifestaciones desde sistemas</li>
+<li><code>actualizar_validacion_pedimento</code> (us-east-1, python3.7) — Actualización de validaciones de pedimentos en base de datos MongoDB</li>
+<li><code>insertaMensajeSQSArchivosS3</code> (us-east-1, python3.7) — Encolado de mensajes SQS para subida de archivos a S3</li>
+<li><code>valida_pedimentos_previos_zip</code> (us-east-1, python3.7) — Validación de pedimentos previos en archivos ZIP comprimidos</li>
+<li><code>verifica_estados_pagados</code> (us-east-1, python3.7) — Verificación de estados de pago en el sistema</li>
+<li><code>encolar_pedimento_estado_pdf</code> (us-east-1, python3.7) — Encolado de pedimentos para generación de PDFs de estado</li>
+<li><code>guardarAdjuntosTraficoS3</code> (us-east-1, python3.7) — Guardado de adjuntos de tráfico en S3 desde bandeja de entrada</li>
+<li><code>procesar_bandeja_manifestacion</code> (us-east-1, python3.13) — Procesamiento de bandeja de entrada para manifestaciones</li>
+<li><code>guardarArchivoM</code> (us-east-1, python3.7) — Guardado de archivos desde bandeja de eManifiesto</li>
+<li><code>encolar_cove_remesa_xml</code> (us-east-1, python3.7) — Encolado de XMLs de cove remesa para procesamiento posterior</li>
+<li><code>AutorizadorApis</code> (us-east-1, nodejs12.x) — Autorizador personalizado para APIs, control de acceso y autenticación</li>
+<li><code>encolar_pedimento_estado_pdf</code> (us-east-2, python3.12) — Encolado de pedimentos para generación de PDFs de estado (versión</li>
+<li><code>insertaMensajeSQSArchivosS3</code> (us-east-2, python3.12) — Encolado de mensajes SQS para subida de archivos a S3 (versión</li>
+<li><code>AutorizadorApis</code> (us-east-2, nodejs18.x) — Autorizador personalizado para APIs (versión migrada y actualizada)</li>
+<li><code>encolar_pedimentos</code> (us-east-2, python3.12) — Encolado de pedimentos para procesamiento posterior</li>
+<li><code>encolar_pdf_coves_manifestacion</code> (us-east-2, python3.12) — Encolado de PDFs de coves de manifestación (versión migrada)</li>
+<li><code>activar_cola_estados_pedimento</code> (us-east-2, nodejs20.x) — Activación de cola para procesamiento de estados de pedimento</li>
+<li><code>lambda-carta-porte-colas</code> (us-east-2, python3.12) — Procesamiento de colas para carta porte (timbrado y generación PDF)</li>
+<li><code>encolar_cove_remesa_pdf</code> (us-east-2, python3.12) — Encolado de PDFs de cove remesa para procesamiento</li>
+</ul>
+<h2 id="funciones-internas-mantenimiento-muestra">Funciones internas / mantenimiento (muestra)</h2>
+<ul>
+<li><code>recuperacion_edocs_agente</code> (us-east-1, python3.7) — Recuperación de documentos electrónicos mediante agente automatizado</li>
+<li><code>elimina_pedimentos</code> (us-east-1, python3.7) — Eliminación de pedimentos del sistema para limpieza de datos</li>
+<li><code>update_validaciones_encolados</code> (us-east-1, python3.7) — Actualización de validaciones para elementos encolados en el sistema</li>
+<li><code>CronGuardarS3</code> (us-east-1, python3.7) — Tarea programada para guardar datos en S3 de forma periódica</li>
+<li><code>lambda-usuarios-dev</code> (us-east-1, python3.7) — API de gestión de usuarios desplegada con Zappa para desarrollo</li>
+<li><code>check_damaged_edocs</code> (us-east-1, python3.13) — Verificación de documentos electrónicos dañados o corruptos</li>
+<li><code>genera_avance_tipo</code> (us-east-1, python3.7) — Generación de reportes de avance por tipo de proceso</li>
+<li><code>lambda-catalogos-dev</code> (us-east-1, python3.7) — API de catálogos desplegada con Zappa para desarrollo</li>
+<li><code>lambda-archivos-dev</code> (us-east-2, python3.12) — API de gestión de archivos para ambiente de desarrollo</li>
+<li><code>lambda-reportes-dev</code> (us-east-2, python3.12) — API de generación de reportes para ambiente de desarrollo</li>
+<li><code>CronGuardarS3</code> (us-east-2, python3.12) — Tarea programada para guardar datos en S3 (versión migrada)</li>
+<li><code>update_edocs_encolados</code> (us-east-2, python3.12) — Actualización de documentos electrónicos encolados</li>
+<li><code>verificar_edocs</code> (us-east-2, python3.12) — Verificación de documentos electrónicos en el sistema</li>
+<li><code>generar_estados_robot</code> (us-east-2, python3.12) — Generación automatizada de estados mediante robot/bot</li>
+<li><code>elimina_pedimentos</code> (us-east-2, python3.12) — Eliminación de pedimentos del sistema (versión migrada)</li>
+<li><code>InsertaMensajeSQSReportes</code> (us-east-2, python3.12) — Encolado de mensajes SQS para reportes (posiblemente en desuso)</li>
+<li><code>genera_avance_tipo</code> (us-east-2, python3.12) — Generación de reportes de avance por tipo (versión migrada)</li>
+<li><code>recuperaciones_diarias</code> (us-east-2, python3.12) — Recuperaciones diarias automatizadas de datos/documentos</li>
+<li><code>lambda-usuarios-dev</code> (us-east-2, python3.12) — API de gestión de usuarios para ambiente de desarrollo</li>
+<li><code>elimina_previos_pasados</code> (us-east-2, python3.12) — Eliminación de registros previos pasados para limpieza de datos</li>
+</ul>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../index-lambda/" class="btn btn-neutral float-left" title="Inicio Lambda"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../02-triggers-lambda/" class="btn btn-neutral float-right" title="Triggers e integraciones">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../index-lambda/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../02-triggers-lambda/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
