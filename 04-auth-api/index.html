@@ -5,15 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Emilio Bravo" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>Inventario EC2 - Econnect AWS Documentation</title>
+    <title>Autenticación y autorización - Econnect AWS Documentation</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Inventario EC2";
-        var mkdocs_page_input_path = "02-inventario.md";
+        var mkdocs_page_name = "Autenticaci\u00f3n y autorizaci\u00f3n";
+        var mkdocs_page_input_path = "04-auth-api.md";
         var mkdocs_page_url = null;
       </script>
     
@@ -44,30 +44,12 @@
                 </li>
               </ul>
               <p class="caption"><span class="caption-text">EC2</span></p>
-              <ul class="current">
+              <ul>
                   <li class="toctree-l1"><a class="reference internal" href="../index-EC2/">Inicio EC2</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../01-contexto/">Contexto</a>
                   </li>
-                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Inventario EC2</a>
-    <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#resumen-de-computo">Resumen de cómputo</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#inventario-consolidado">Inventario consolidado</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#entry-points-del-sistema">Entry points del sistema</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#frontend-sitios">Frontend / sitios</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#aplicaciones-httphttps">Aplicaciones (HTTP/HTTPS)</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#apis">APIs</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#acceso-administrativo-a-instancias">Acceso administrativo a instancias</a>
-    </li>
-    </ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../02-inventario/">Inventario EC2</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../03-red/">Red y conectividad</a>
                   </li>
@@ -133,7 +115,7 @@
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">API Gateway</span></p>
-              <ul>
+              <ul class="current">
                   <li class="toctree-l1"><a class="reference internal" href="../index-api/">Inicio API Gateway</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../01-inventory-api/">Inventario</a>
@@ -142,7 +124,71 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../03-stages-deployments-api/">Etapas y despliegues</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../04-auth-api/">Autenticación y autorización</a>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Autenticación y autorización</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#estado-actual">Estado actual</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#resumen-por-api">Resumen por API</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#apieconnectpro">apieconnectpro</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#authorizer-configurado">Authorizer configurado</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#problema-critico">Problema crítico</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#riesgos">Riesgos</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#apiusuarios">apiusuarios</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#authorizer-principal">Authorizer principal</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#observaciones">Observaciones</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#riesgos_1">Riesgos</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#lambda-authorizer-autorizadorapis">Lambda Authorizer: AutorizadorApis</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#detalles-observados">Detalles observados</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#implicaciones">Implicaciones</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#cognito">Cognito</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#hallazgos-confirmados">Hallazgos confirmados</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#riesgo-de-migracion">Riesgo de migración</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#que-debe-definirse-antes-de-migrar">Qué debe definirse antes de migrar</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#politica-recomendada">Política recomendada</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#decisiones-obligatorias">Decisiones obligatorias</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#diseno-recomendado-por-tipo-de-api">Diseño recomendado por tipo de API</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#rest-criticas">REST críticas</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#websocket">WebSocket</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#http-api">HTTP API</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#controles-adicionales-recomendados">Controles adicionales recomendados</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#resultado-esperado-post-migracion">Resultado esperado post-migración</a>
+    </li>
+    </ul>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../05-domains-dns-api/">Dominios y DNS</a>
                   </li>
@@ -171,8 +217,8 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
-          <li class="breadcrumb-item">EC2</li>
-      <li class="breadcrumb-item active">Inventario EC2</li>
+          <li class="breadcrumb-item">API Gateway</li>
+      <li class="breadcrumb-item active">Autenticación y autorización</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -181,154 +227,176 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="inventario-ec2-y-entry-points">Inventario EC2 y entry points</h1>
-<blockquote>
-<p>Fuente: <a href="../assets/EC2-Documentacion-Econnect.pdf">assets/EC2-Documentacion-Econnect.pdf</a><br />
-Generado: <strong>2026-03-03</strong></p>
-</blockquote>
-<h2 id="resumen-de-computo">Resumen de cómputo</h2>
-<ul>
-<li><strong>us-east-1:</strong> 8 instancias EC2 detectadas.</li>
-<li><strong>us-east-2:</strong> 1 instancia EC2 (stopped).</li>
-</ul>
-<blockquote>
-<p>No se observa un tag estándar <code>Environment/Env/Stage</code>, por lo que no se puede clasificar formalmente por dev/stage/prod con la información disponible.</p>
-</blockquote>
-<h2 id="inventario-consolidado">Inventario consolidado</h2>
+                <h1 id="autenticacion-y-autorizacion">Autenticación y autorización</h1>
+<h2 id="estado-actual">Estado actual</h2>
+<p>La autenticación del entorno actual es <strong>mixta e inconsistente</strong>.<br />
+Hay APIs con Cognito, otras con Lambda Authorizer configurado pero no aplicado y otras completamente abiertas.</p>
+<h2 id="resumen-por-api">Resumen por API</h2>
 <table>
 <thead>
 <tr>
+<th>API</th>
+<th>Tipo</th>
 <th>Región</th>
-<th>Name/Tag</th>
-<th>Instance ID</th>
-<th>Estado</th>
-<th>Rol</th>
-<th>VPC</th>
-<th>OS</th>
-<th>AMI</th>
+<th>Auth principal</th>
+<th>Riesgo</th>
 </tr>
 </thead>
 <tbody>
 <tr>
+<td>apieconnectpro</td>
+<td>REST</td>
 <td>us-east-1</td>
-<td>Windows</td>
-<td><code>i-0ef1204ed1c03a849</code></td>
-<td>running (según CloudWatch Agent/SSM online)</td>
-<td>Windows server (app/ops) + SQL Server self-hosted</td>
-<td><code>vpc-0cda6f6b</code></td>
-<td>Windows Server 2019 (Spanish Full Base)</td>
-<td>ami-09125c5ac14dca1c5 (deleted/private)</td>
+<td>Lambda Authorizer configurado pero no aplicado</td>
+<td>Alto</td>
 </tr>
 <tr>
+<td>apiusuarios</td>
+<td>REST</td>
 <td>us-east-1</td>
-<td>win_robots</td>
-<td><code>i-05ac207409e68b7b2</code></td>
-<td>running (según CloudWatch Agent/SSM online)</td>
-<td>Worker/automation (robots)</td>
-<td><code>vpc-166c0773</code></td>
-<td>Windows Server 2022 (English Full Base)</td>
-<td>ami-085d15593174f2582 (deleted/private)</td>
+<td>Cognito User Pools en la mayoría de métodos</td>
+<td>Medio</td>
 </tr>
 <tr>
-<td>us-east-1</td>
-<td>Mongo-Primary</td>
-<td><code>i-0fba1627118e40ac9</code></td>
-<td>(no confirmado; no reporta métricas custom)</td>
-<td>MongoDB primary (replica set)</td>
-<td><code>vpc-0cda6f6b</code></td>
-<td>Amazon Linux (2018.03)</td>
-<td>ami-0e2ff28bfb72a4e45</td>
-</tr>
-<tr>
-<td>us-east-1</td>
-<td>Mongo-Reports</td>
-<td><code>i-096c5970aa84088af</code></td>
-<td>running (según CloudWatch Agent/SSM online)</td>
-<td>MongoDB reporting/analytics node</td>
-<td><code>vpc-0cda6f6b</code></td>
-<td>Amazon Linux (2018.03)</td>
-<td>ami-0e2ff28bfb72a4e45</td>
-</tr>
-<tr>
-<td>us-east-1</td>
-<td>sa31 c6</td>
-<td><code>i-0e2bc974ec12793c1</code></td>
-<td>running (según CloudWatch Agent/SSM online)</td>
-<td>Compute/app server (alto cómputo)</td>
-<td><code>vpc-0cda6f6b</code></td>
-<td>Amazon Linux 2 (kernel 5.10)</td>
-<td>ami-0453898e90846c639</td>
-</tr>
-<tr>
-<td>us-east-1</td>
-<td>SOLUCIONA</td>
-<td><code>i-0b3731b503b53cedf</code></td>
-<td>stopped</td>
-<td>App/servicio (legacy; launch template sin ASG)</td>
-<td><code>vpc-0cda6f6b</code></td>
-<td>Amazon Linux 2</td>
-<td>ami-0947d2ba12ee1ff75</td>
-</tr>
-<tr>
-<td>us-east-1</td>
-<td>windows2</td>
-<td><code>i-08ba32766c8ea908d</code></td>
-<td>stopped</td>
-<td>Windows server (secundario/legacy)</td>
-<td><code>vpc-0cda6f6b</code></td>
-<td>Windows Server 2019 (Spanish Full Base)</td>
-<td>ami-04fc94404996b18a9 (deleted/private)</td>
-</tr>
-<tr>
-<td>us-east-1</td>
-<td>sews</td>
-<td><code>i-02380ddcba26ed3a2</code></td>
-<td>stopped</td>
-<td>App/servicio (por nombre)</td>
-<td><code>vpc-0cda6f6b</code></td>
-<td>Windows Server 2019 (English Full Base)</td>
-<td>ami-0b17e49efb8d755c3 (deleted/private)</td>
-</tr>
-<tr>
+<td>api_socket</td>
+<td>WebSocket</td>
 <td>us-east-2</td>
-<td>mongo8</td>
-<td><code>i-0dfef81c198e9fdcb</code></td>
-<td>stopped</td>
-<td>MongoDB nodo suelto (instancia única)</td>
-<td><code>(no documentado)</code></td>
-<td>(no documentado)</td>
-<td>(no documentado)</td>
+<td>NONE</td>
+<td>Alto</td>
+</tr>
+<tr>
+<td>dev-auth-api</td>
+<td>HTTP</td>
+<td>us-east-2</td>
+<td>NONE</td>
+<td>Alto</td>
 </tr>
 </tbody>
 </table>
-<h2 id="entry-points-del-sistema">Entry points del sistema</h2>
-<h3 id="frontend-sitios">Frontend / sitios</h3>
+<h2 id="apieconnectpro">apieconnectpro</h2>
+<h3 id="authorizer-configurado">Authorizer configurado</h3>
 <ul>
-<li><strong>CloudFront → S3</strong> para frontend/sitios públicos (distribuciones con CNAMEs <code>econnectpro.mx</code> y <code>login.econnectpro.mx</code>, y orígenes S3 / S3 static website).</li>
+<li>Nombre: <code>LambdaAutorizaApi</code></li>
+<li>ID: <code>15qlr1</code></li>
+<li>Tipo: <code>REQUEST</code></li>
+<li>Lambda target: <code>AutorizadorApis</code></li>
+<li>Caching TTL: <code>0</code></li>
 </ul>
-<h3 id="aplicaciones-httphttps">Aplicaciones (HTTP/HTTPS)</h3>
+<h3 id="problema-critico">Problema crítico</h3>
+<p>Aunque existe authorizer, la evidencia indica que los métodos usan <code>authorizationType = NONE</code>.<br />
+En la práctica, eso significa que la API está expuesta sin autenticación efectiva.</p>
+<h3 id="riesgos">Riesgos</h3>
 <ul>
-<li><strong>ALBs internet-facing</strong> en <code>us-east-1</code> para componentes de aplicación:</li>
-<li><code>econnect</code>, <code>admin</code>, <code>soluciona31</code>, <code>reportes</code>, <code>integra24</code>, <code>apivucem</code>, <code>apiSA31</code>.</li>
+<li>falsa sensación de seguridad</li>
+<li>exposición de endpoints sensibles</li>
+<li>drift entre expectativa del equipo y comportamiento real</li>
 </ul>
-<h3 id="apis">APIs</h3>
+<h2 id="apiusuarios">apiusuarios</h2>
+<h3 id="authorizer-principal">Authorizer principal</h3>
 <ul>
-<li><strong>API Gateway</strong> como entry point para APIs:</li>
-<li>APIs en <code>us-east-1</code> (REST + WebSocket).</li>
-<li>APIs en <code>us-east-2</code> (REST + WebSocket + HTTP, incluyendo <code>dev-auth-api</code>).</li>
+<li>Nombre: <code>ApiAutorizador</code></li>
+<li>Tipo: <code>COGNITO_USER_POOLS</code></li>
+<li>User Pool ID: <code>us-east-1_s1zhiuODD</code></li>
+<li>Región del User Pool: <code>us-east-1</code></li>
 </ul>
-<h2 id="acceso-administrativo-a-instancias">Acceso administrativo a instancias</h2>
+<h3 id="observaciones">Observaciones</h3>
+<p>La mayoría de los métodos usan Cognito, pero hay excepciones con <code>NONE</code>, incluyendo:
+- <code>OPTIONS</code>
+- <code>POST /create_notificacion</code>
+- paths <code>/s3</code>
+- algunos endpoints de tráfico
+- algunos endpoints de reportes y verificación</p>
+<h3 id="riesgos_1">Riesgos</h3>
 <ul>
-<li>El acceso administrativo se realiza principalmente por <strong>AWS Systems Manager (SSM) / Session Manager</strong>.</li>
-<li>Se confirma en la instancia Windows (<code>i-0ef1204ed1c03a849</code>) que el SSM Agent está en línea (Session Manager “Connected”) con rol <strong>AmazonSSMRoleForInstancesQuickSetup</strong>.</li>
+<li>exposición parcial no intencional</li>
+<li>inconsistencias entre rutas similares</li>
+<li>frontends que parecen protegidos pero tienen bypass en endpoints específicos</li>
 </ul>
-<p><strong>Implicación:</strong> no se requiere bastion/jump box ni abrir puertos de administración para operar (si se estandariza el acceso vía SSM).</p>
+<h2 id="lambda-authorizer-autorizadorapis">Lambda Authorizer: <code>AutorizadorApis</code></h2>
+<h3 id="detalles-observados">Detalles observados</h3>
+<ul>
+<li>Runtime: <code>nodejs12.x</code></li>
+<li>Timeout: <code>3 segundos</code></li>
+<li>Memory: <code>128 MB</code></li>
+<li>VPC config: no configurada</li>
+<li>Permisos visibles: solo CloudWatch Logs</li>
+</ul>
+<h3 id="implicaciones">Implicaciones</h3>
+<ul>
+<li>runtime obsoleto</li>
+<li>sin caching</li>
+<li>timeout agresivo</li>
+<li>si se habilita de verdad, podría introducir latencia o fallos</li>
+</ul>
+<h2 id="cognito">Cognito</h2>
+<h3 id="hallazgos-confirmados">Hallazgos confirmados</h3>
+<ul>
+<li>Se conoce el User Pool.</li>
+<li>No hay evidencia de App Clients.</li>
+<li>No hay evidencia de callback URLs, scopes ni TTLs de tokens.</li>
+</ul>
+<h3 id="riesgo-de-migracion">Riesgo de migración</h3>
+<p>Cognito User Pools es <strong>regional</strong>.<br />
+Si la API migra de región, se debe decidir entre:</p>
+<ol>
+<li><strong>mantener Cognito en us-east-1</strong></li>
+<li><strong>crear nuevo User Pool regional</strong></li>
+<li><strong>hacer transición gradual</strong></li>
+</ol>
+<h2 id="que-debe-definirse-antes-de-migrar">Qué debe definirse antes de migrar</h2>
+<h3 id="politica-recomendada">Política recomendada</h3>
+<p>Para cada API y método, definir una sola de estas opciones:</p>
+<ul>
+<li><code>COGNITO_USER_POOLS</code></li>
+<li><code>CUSTOM</code> con Lambda Authorizer</li>
+<li><code>JWT</code> (si se moderniza HTTP API)</li>
+<li><code>IAM</code></li>
+<li><code>NONE</code> solo cuando sea explícitamente público</li>
+</ul>
+<h3 id="decisiones-obligatorias">Decisiones obligatorias</h3>
+<ul>
+<li>qué rutas deben ser públicas</li>
+<li>qué rutas deben ser internas</li>
+<li>qué rutas requieren token</li>
+<li>si WebSocket debe autenticarse en <code>$connect</code></li>
+<li>si <code>dev-auth-api</code> seguirá existiendo como API pública</li>
+</ul>
+<h2 id="diseno-recomendado-por-tipo-de-api">Diseño recomendado por tipo de API</h2>
+<h3 id="rest-criticas">REST críticas</h3>
+<ul>
+<li>usar Cognito o Lambda Authorizer aplicado realmente</li>
+<li>remover <code>NONE</code> salvo endpoints públicos justificados</li>
+<li>documentar excepciones una por una</li>
+</ul>
+<h3 id="websocket">WebSocket</h3>
+<ul>
+<li>autenticar en <code>$connect</code></li>
+<li>validar token o identidad antes de aceptar la conexión</li>
+</ul>
+<h3 id="http-api">HTTP API</h3>
+<ul>
+<li>preferir JWT/IAM cuando aplique</li>
+<li>evitar exponer catch-all público con <code>ANY /{proxy+}</code></li>
+</ul>
+<h2 id="controles-adicionales-recomendados">Controles adicionales recomendados</h2>
+<ul>
+<li>tabla de autorización por método</li>
+<li>pruebas automatizadas de endpoints públicos/protegidos</li>
+<li>validación de <code>OPTIONS</code> sin filtrar rutas sensibles reales</li>
+<li>revisión de authorizers obsoletos</li>
+<li>modernización de runtimes</li>
+</ul>
+<h2 id="resultado-esperado-post-migracion">Resultado esperado post-migración</h2>
+<p>Una vez migrado, no debería existir:
+- API “aparentemente protegida” pero realmente abierta
+- rutas críticas con <code>NONE</code> por accidente
+- diferencias no documentadas entre stages</p>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../01-contexto/" class="btn btn-neutral float-left" title="Contexto"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../03-red/" class="btn btn-neutral float-right" title="Red y conectividad">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../03-stages-deployments-api/" class="btn btn-neutral float-left" title="Etapas y despliegues"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../05-domains-dns-api/" class="btn btn-neutral float-right" title="Dominios y DNS">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -351,10 +419,10 @@ Generado: <strong>2026-03-03</strong></p>
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-      <span><a href="../01-contexto/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../03-stages-deployments-api/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../03-red/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../05-domains-dns-api/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>

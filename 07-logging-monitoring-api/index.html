@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Emilio Bravo" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Logging y monitoreo - Econnect AWS Documentation</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Logging y monitoreo";
+        var mkdocs_page_input_path = "07-logging-monitoring-api.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> Econnect AWS Documentation
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Inicio</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">EC2</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../index-EC2/">Inicio EC2</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../01-contexto/">Contexto</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../02-inventario/">Inventario EC2</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../03-red/">Red y conectividad</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../04-balanceadores/">Balanceadores y DNS</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../05-ensamblaje/">Recreación / IaC</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../06-runtime/">OS y runtime</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../07-config/">Config externa (SSM/Secrets)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../08-iam/">IAM</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../09-dependencias/">Dependencias</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../10-observabilidad/">Observabilidad</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../11-seguridad/">Seguridad</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">RDS</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../index-RDS/">Inicio RDS</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../01-inventory/">Inventario</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../02-network-access/">Red y acceso</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../03-security/">Seguridad</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../04-configuration/">Configuración</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../05-backup-recovery/">Backups y recuperación</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../06-performance-ops/">Performance y operación</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../07-ha-dr/">Alta disponibilidad y DR</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../08-migration-plan/">Plan de migración</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../09-appendix/">Apéndice</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Lambda</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../index-lambda/">Inicio Lambda</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../01-inventory-lambda/">Inventario</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../02-triggers-lambda/">Triggers e integraciones</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../03-networking-lambda/">Networking (VPC)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../04-runtime-deploy-lambda/">Runtime y despliegue</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../05-iam-security-lambda/">IAM y seguridad</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../06-observability-lambda/">Observabilidad</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../07-migration-plan-lambda/">Plan de migración</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../08-appendix-lambda/">Apéndice</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API Gateway</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../index-api/">Inicio API Gateway</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../01-inventory-api/">Inventario</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../02-routes-integrations-api/">Integraciones</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../03-stages-deployments-api/">Etapas y despliegues</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../04-auth-api/">Autenticación y autorización</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../05-domains-dns-api/">Dominios y DNS</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../06-cors-binary-api/">CORS y manejo de binarios</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Logging y monitoreo</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#estado-actual-de-observabilidad">Estado actual de observabilidad</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#access-logs">Access logs</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#hallazgo">Hallazgo</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#implicacion">Implicación</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#execution-logs">Execution logs</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#hallazgo_1">Hallazgo</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#causa-adicional">Causa adicional</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#implicacion_1">Implicación</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#x-ray">X-Ray</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#estado">Estado</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#no-habilitado-en">No habilitado en</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#implicacion_2">Implicación</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#metricas">Métricas</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#hallazgo_2">Hallazgo</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#ejemplo">Ejemplo</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#alarmas">Alarmas</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#hallazgo_3">Hallazgo</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#implicacion_3">Implicación</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#dashboards">Dashboards</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#hallazgo_4">Hallazgo</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#implicacion_4">Implicación</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#problemas-derivados-para-migracion">Problemas derivados para migración</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#1-cutover-sin-visibilidad">1. Cutover sin visibilidad</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#2-troubleshooting-lento">2. Troubleshooting lento</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#3-sin-baseline">3. Sin baseline</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#recomendacion-minima-antes-del-cutover">Recomendación mínima antes del cutover</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#habilitar-access-logs">Habilitar Access Logs</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#habilitar-execution-logs">Habilitar Execution Logs</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#habilitar-metricas">Habilitar métricas</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#crear-alarmas">Crear alarmas</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#recomendadas">Recomendadas</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#crear-dashboard-de-migracion">Crear dashboard de migración</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#validacion-post-migracion">Validación post-migración</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#resultado-esperado">Resultado esperado</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../08-security-guardrails-api/">Seguridad</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../09-migration-plan-api/">Plan de migración</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../10-appendix-api/">Apéndice</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">Econnect AWS Documentation</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">API Gateway</li>
+      <li class="breadcrumb-item active">Logging y monitoreo</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="logging-y-monitoreo">Logging y monitoreo</h1>
+<h2 id="estado-actual-de-observabilidad">Estado actual de observabilidad</h2>
+<p>La observabilidad de API Gateway es débil.<br />
+La evidencia apunta a un entorno con <strong>muy poca instrumentación nativa del servicio</strong>, lo que incrementa el riesgo de una migración sin visibilidad suficiente.</p>
+<h2 id="access-logs">Access logs</h2>
+<h3 id="hallazgo">Hallazgo</h3>
+<p>No hay evidencia de <strong>Access Logs habilitados</strong> en los stages REST principales de <code>us-east-1</code>.</p>
+<h3 id="implicacion">Implicación</h3>
+<p>Sin access logs no se puede observar fácilmente:
+- IP origen
+- status code
+- latencia
+- user agent
+- path consumido
+- volumen por stage
+- errores CORS o auth</p>
+<h2 id="execution-logs">Execution logs</h2>
+<h3 id="hallazgo_1">Hallazgo</h3>
+<p>Los <strong>Execution Logs</strong> están efectivamente deshabilitados en los stages revisados.</p>
+<h3 id="causa-adicional">Causa adicional</h3>
+<p>No está configurado el <strong>CloudWatch Logs Role ARN</strong> a nivel cuenta para API Gateway en <code>us-east-1</code>.</p>
+<h3 id="implicacion_1">Implicación</h3>
+<p>Aunque se quisiera activar logging, primero debe resolverse la configuración de cuenta.</p>
+<h2 id="x-ray">X-Ray</h2>
+<h3 id="estado">Estado</h3>
+<p>Solo se observó <strong>X-Ray habilitado parcialmente</strong>:
+- <code>apieconnectpro</code> stage <code>valida</code> → <code>tracingEnabled = true</code></p>
+<h3 id="no-habilitado-en">No habilitado en</h3>
+<ul>
+<li><code>apieconnectpro</code> stage <code>test</code></li>
+<li><code>apieconnectpro</code> stage <code>econnect</code></li>
+<li><code>apiusuarios</code> stages <code>test</code> y <code>usuarios</code></li>
+</ul>
+<h3 id="implicacion_2">Implicación</h3>
+<p>La trazabilidad actual es inconsistente y no sirve como base uniforme para comparar ambientes.</p>
+<h2 id="metricas">Métricas</h2>
+<h3 id="hallazgo_2">Hallazgo</h3>
+<p>No hay métricas detalladas por método/recurso activadas (<code>metricsEnabled = false</code>), pero sí hay alguna evidencia de métricas básicas por API/stage.</p>
+<h3 id="ejemplo">Ejemplo</h3>
+<ul>
+<li><code>apieconnectpro</code> stage <code>test</code> tiene datapoints básicos</li>
+<li><code>apiusuarios</code> no muestra datapoints visibles en la evidencia consultada</li>
+</ul>
+<h2 id="alarmas">Alarmas</h2>
+<h3 id="hallazgo_3">Hallazgo</h3>
+<p>No hay <strong>CloudWatch Alarms de API Gateway</strong> para:
+- <code>4XXError</code>
+- <code>5XXError</code>
+- <code>Latency</code>
+- <code>IntegrationLatency</code></p>
+<h3 id="implicacion_3">Implicación</h3>
+<p>No existe alerta temprana específica del plano API durante una degradación.</p>
+<h2 id="dashboards">Dashboards</h2>
+<h3 id="hallazgo_4">Hallazgo</h3>
+<p>Existen dashboards llamados <code>Econnect</code>, pero están vacíos o no útiles para validación post-migración.</p>
+<h3 id="implicacion_4">Implicación</h3>
+<p>No hay panel operativo que permita decidir rápidamente:
+- go / no-go
+- rollback
+- impacto por endpoint</p>
+<h2 id="problemas-derivados-para-migracion">Problemas derivados para migración</h2>
+<h3 id="1-cutover-sin-visibilidad">1. Cutover sin visibilidad</h3>
+<p>Mover tráfico sin logs ni alarmas deja al equipo operando “a ciegas”.</p>
+<h3 id="2-troubleshooting-lento">2. Troubleshooting lento</h3>
+<p>Será difícil diferenciar si un fallo viene de:
+- API Gateway
+- Lambda
+- backend HTTP externo
+- auth
+- CORS
+- DNS / domain mapping</p>
+<h3 id="3-sin-baseline">3. Sin baseline</h3>
+<p>No existe una línea base operacional confiable para comparar el “antes” vs “después”.</p>
+<h2 id="recomendacion-minima-antes-del-cutover">Recomendación mínima antes del cutover</h2>
+<h3 id="habilitar-access-logs">Habilitar Access Logs</h3>
+<p>Definir un formato con al menos:
+- requestId
+- ip
+- requestTime
+- httpMethod
+- resourcePath / routeKey
+- status
+- protocol
+- responseLength
+- integrationErrorMessage</p>
+<h3 id="habilitar-execution-logs">Habilitar Execution Logs</h3>
+<ul>
+<li>nivel mínimo: <code>ERROR</code></li>
+<li>usar <code>INFO</code> temporalmente durante ventana de migración si el costo lo permite</li>
+</ul>
+<h3 id="habilitar-metricas">Habilitar métricas</h3>
+<ul>
+<li>métricas básicas por API/stage como mínimo</li>
+<li>métricas detalladas en APIs críticas si el costo y el volumen lo justifican</li>
+</ul>
+<h3 id="crear-alarmas">Crear alarmas</h3>
+<h4 id="recomendadas">Recomendadas</h4>
+<ul>
+<li>5XX &gt; umbral</li>
+<li>4XX anómalo</li>
+<li>Latency p95 alta</li>
+<li>IntegrationLatency alta</li>
+<li>Count anómalo</li>
+<li>error de Lambda target</li>
+</ul>
+<h3 id="crear-dashboard-de-migracion">Crear dashboard de migración</h3>
+<p>Widgets mínimos:
+- Requests
+- 4XX
+- 5XX
+- Latency
+- IntegrationLatency
+- Lambda errors
+- Lambda duration
+- WebSocket connect/disconnect si aplica</p>
+<h2 id="validacion-post-migracion">Validación post-migración</h2>
+<p>Durante la ventana de cambio, revisar por intervalos cortos:</p>
+<ol>
+<li>tráfico total</li>
+<li>errores 4XX</li>
+<li>errores 5XX</li>
+<li>latencia media y p95</li>
+<li>errores de integración</li>
+<li>logs del authorizer y Lambdas críticas</li>
+<li>handshake WebSocket</li>
+</ol>
+<h2 id="resultado-esperado">Resultado esperado</h2>
+<p>El estado objetivo post-migración no debe ser solo “la API responde”.<br />
+Debe existir al menos:</p>
+<ul>
+<li>logs por stage</li>
+<li>métricas básicas</li>
+<li>alarmas de API Gateway</li>
+<li>dashboard operativo</li>
+<li>runbook de rollback vinculado a señales medibles</li>
+</ul>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../06-cors-binary-api/" class="btn btn-neutral float-left" title="CORS y manejo de binarios"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../08-security-guardrails-api/" class="btn btn-neutral float-right" title="Seguridad">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../06-cors-binary-api/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../08-security-guardrails-api/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

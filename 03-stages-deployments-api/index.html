@@ -5,15 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Emilio Bravo" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>Seguridad - Econnect AWS Documentation</title>
+    <title>Etapas y despliegues - Econnect AWS Documentation</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Seguridad";
-        var mkdocs_page_input_path = "11-seguridad.md";
+        var mkdocs_page_name = "Etapas y despliegues";
+        var mkdocs_page_input_path = "03-stages-deployments-api.md";
         var mkdocs_page_url = null;
       </script>
     
@@ -44,7 +44,7 @@
                 </li>
               </ul>
               <p class="caption"><span class="caption-text">EC2</span></p>
-              <ul class="current">
+              <ul>
                   <li class="toctree-l1"><a class="reference internal" href="../index-EC2/">Inicio EC2</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../01-contexto/">Contexto</a>
@@ -67,33 +67,7 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../10-observabilidad/">Observabilidad</a>
                   </li>
-                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Seguridad</a>
-    <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#acceso-a-instancias">Acceso a instancias</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#session-manager-ssm">Session Manager (SSM)</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#ssh-rdp-acceso-tradicional">SSH / RDP (acceso tradicional)</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#auditoria-de-session-manager-gaps">Auditoría de Session Manager (gaps)</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#controles-de-seguridad-gestionados">Controles de seguridad gestionados</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#aws-waf">AWS WAF</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#aws-shield">AWS Shield</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#guardduty">GuardDuty</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#idsips">IDS/IPS</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#acciones-recomendadas-prioridad">Acciones recomendadas (prioridad)</a>
-    </li>
-    </ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../11-seguridad/">Seguridad</a>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">RDS</span></p>
@@ -141,14 +115,64 @@
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">API Gateway</span></p>
-              <ul>
+              <ul class="current">
                   <li class="toctree-l1"><a class="reference internal" href="../index-api/">Inicio API Gateway</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../01-inventory-api/">Inventario</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../02-routes-integrations-api/">Integraciones</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../03-stages-deployments-api/">Etapas y despliegues</a>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Etapas y despliegues</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#panorama">Panorama</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#stage-inventory">Stage inventory</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#apieconnectpro-zj7721vv78">apieconnectpro — zj7721vv78</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#apiusuarios-l4qndp976e">apiusuarios — l4qndp976e</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#api_socket-ucjmxw4qef">api_socket — ucjmxw4qef</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#us-east-2">us-east-2</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#ausencia-de-stage-variables">Ausencia de Stage Variables</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#implicaciones">Implicaciones</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#versionado-de-stages">Versionado de stages</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#evidencia-de-actividad">Evidencia de actividad</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#riesgos-operativos">Riesgos operativos</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#1-drift-entre-stages">1. Drift entre stages</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#2-ambiguedad-de-produccion">2. Ambigüedad de “producción”</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#3-us-east-2-no-listo">3. us-east-2 no listo</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#que-debe-documentarse-por-stage-en-la-region-destino">Qué debe documentarse por stage en la región destino</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#recomendacion-de-migracion">Recomendación de migración</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#opcion-recomendada">Opción recomendada</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#opcion-no-recomendada">Opción no recomendada</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#checklist-previo-a-despliegue-regional">Checklist previo a despliegue regional</a>
+    </li>
+    </ul>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../04-auth-api/">Autenticación y autorización</a>
                   </li>
@@ -179,8 +203,8 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
-          <li class="breadcrumb-item">EC2</li>
-      <li class="breadcrumb-item active">Seguridad</li>
+          <li class="breadcrumb-item">API Gateway</li>
+      <li class="breadcrumb-item active">Etapas y despliegues</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -189,70 +213,211 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="seguridad-y-compliance">Seguridad y compliance</h1>
-<blockquote>
-<p>Fuente: <a href="../assets/EC2-Documentacion-Econnect.pdf">assets/EC2-Documentacion-Econnect.pdf</a><br />
-Generado: <strong>2026-03-03</strong></p>
-</blockquote>
-<h2 id="acceso-a-instancias">Acceso a instancias</h2>
-<h3 id="session-manager-ssm">Session Manager (SSM)</h3>
-<p>En <code>us-east-1</code> se usa <strong>SSM Session Manager</strong> como método principal (sin SSH/RDP):</p>
-<p>Instancias “Managed / Online” con SSM:
-- Mongo-Reports (Amazon Linux)
-- sa31 c6 (Amazon Linux 2)
-- Windows (Windows Server 2019)
-- win_robots (Windows Server 2022)</p>
-<p>En <code>us-east-2</code> no hay instancias managed (no aplica Session Manager actualmente).</p>
-<h3 id="ssh-rdp-acceso-tradicional">SSH / RDP (acceso tradicional)</h3>
+                <h1 id="etapas-y-despliegues">Etapas y despliegues</h1>
+<h2 id="panorama">Panorama</h2>
+<p>Los stages actuales son el principal mecanismo para diferenciar ambientes.<br />
+No hay evidencia de uso de <strong>Stage Variables</strong>, por lo que el cambio por ambiente parece depender de:</p>
 <ul>
-<li><strong>SSH (22):</strong> restringido (allowlist /32) en varios SG (bien).</li>
-<li><strong>RDP (3389):</strong> mixto:</li>
-<li>Hay allowlist /32 en algunos SG (bien).</li>
-<li><strong>Hallazgo crítico:</strong> el SG <code>windows-server</code> permite RDP desde <code>0.0.0.0/0</code> (abierto a Internet).</li>
+<li>nombre de stage</li>
+<li>deployment distinto</li>
+<li>configuración en backend o código</li>
+<li>mapeo de custom domains</li>
 </ul>
-<h2 id="auditoria-de-session-manager-gaps">Auditoría de Session Manager (gaps)</h2>
-<p>Estado reportado:
-- Logging a S3/CloudWatch: <strong>NO configurado</strong>
-- KMS encryption: <strong>NO configurado</strong>
-- Idle timeout: default (no configurado)</p>
-<p><strong>Implicación:</strong> se puede operar sin SSH, pero falta trazabilidad/auditoría robusta de sesiones.</p>
-<h2 id="controles-de-seguridad-gestionados">Controles de seguridad gestionados</h2>
-<h3 id="aws-waf">AWS WAF</h3>
+<h2 id="stage-inventory">Stage inventory</h2>
+<h3 id="apieconnectpro-zj7721vv78">apieconnectpro — <code>zj7721vv78</code></h3>
+<table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Región</th>
+<th>Deployment ID</th>
+<th>Observaciones</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>econnect</td>
+<td>us-east-1</td>
+<td><code>l7fxyi</code></td>
+<td>sin stage variables</td>
+</tr>
+<tr>
+<td>test</td>
+<td>us-east-1</td>
+<td><code>eb28t4</code></td>
+<td>sin stage variables</td>
+</tr>
+<tr>
+<td>valida</td>
+<td>us-east-1</td>
+<td><code>ev4945</code></td>
+<td>sin stage variables</td>
+</tr>
+</tbody>
+</table>
+<h3 id="apiusuarios-l4qndp976e">apiusuarios — <code>l4qndp976e</code></h3>
+<table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Región</th>
+<th>Deployment ID</th>
+<th>Observaciones</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>test</td>
+<td>us-east-1</td>
+<td><code>09tmfw</code></td>
+<td>sin stage variables</td>
+</tr>
+<tr>
+<td>usuarios</td>
+<td>us-east-1</td>
+<td><code>zvba9f</code></td>
+<td>sin stage variables</td>
+</tr>
+</tbody>
+</table>
+<h3 id="api_socket-ucjmxw4qef">api_socket — <code>ucjmxw4qef</code></h3>
+<table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Región</th>
+<th>Observaciones</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>socket</td>
+<td>us-east-1</td>
+<td>custom domain regional asociado</td>
+</tr>
+<tr>
+<td>test</td>
+<td>us-east-1</td>
+<td>custom domain mapeado a test</td>
+</tr>
+</tbody>
+</table>
+<h3 id="us-east-2">us-east-2</h3>
+<table>
+<thead>
+<tr>
+<th>API</th>
+<th>Stage</th>
+<th>Estado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>apieconnectpro</td>
+<td>ninguno activo</td>
+<td>no lista para cutover</td>
+</tr>
+<tr>
+<td>apiusuarios</td>
+<td>ninguno activo</td>
+<td>no lista para cutover</td>
+</tr>
+<tr>
+<td>api_socket</td>
+<td>production</td>
+<td>parcialmente activa</td>
+</tr>
+<tr>
+<td>dev-auth-api</td>
+<td><code>$default</code></td>
+<td>activa</td>
+</tr>
+<tr>
+<td>api_procontrol</td>
+<td>prueba</td>
+<td>testing</td>
+</tr>
+</tbody>
+</table>
+<h2 id="ausencia-de-stage-variables">Ausencia de Stage Variables</h2>
+<p>No se evidenciaron Stage Variables en los stages revisados.</p>
+<h3 id="implicaciones">Implicaciones</h3>
 <ul>
-<li><strong>No habilitado</strong> (ni global CloudFront ni regional para ALB/API Gateway).</li>
-<li>Implicación: no hay protección gestionada contra ataques web comunes (OWASP, bots, rate limiting).</li>
+<li>No existe mapeo por ambiente vía stage vars.</li>
+<li>Cualquier cambio de endpoint, flag o backend probablemente depende del código o del deployment.</li>
+<li>El drift entre ambientes puede pasar desapercibido si dos stages tienen deployment IDs distintos pero comportamiento similar solo en apariencia.</li>
 </ul>
-<h3 id="aws-shield">AWS Shield</h3>
+<h2 id="versionado-de-stages">Versionado de stages</h2>
+<p>Los stages están vinculados a <code>deploymentId</code>, pero no hay trazabilidad clara a:</p>
 <ul>
-<li>Shield Standard: ✅ (por defecto en CloudFront/Route53/ELB)</li>
-<li>Shield Advanced: ❌ (no suscripción)</li>
+<li>branch de Git</li>
+<li>commit SHA</li>
+<li>tag release</li>
+<li>artefacto versionado</li>
 </ul>
-<h3 id="guardduty">GuardDuty</h3>
+<h3 id="evidencia-de-actividad">Evidencia de actividad</h3>
 <ul>
-<li><code>us-east-1</code>: ✅ habilitado (S3 Protection ✅, Malware Protection ✅)</li>
-<li><code>us-east-2</code>: ❌ no habilitado</li>
+<li><code>apieconnectpro</code>: ~200 deployments</li>
+<li><code>apiusuarios</code>: 83 deployments</li>
+<li>señales de automatización por Serverless Framework y Zappa</li>
+<li>sin relación explícita a commits o releases</li>
 </ul>
-<h3 id="idsips">IDS/IPS</h3>
+<h2 id="riesgos-operativos">Riesgos operativos</h2>
+<h3 id="1-drift-entre-stages">1. Drift entre stages</h3>
+<p>Como no hay stage vars y cada stage puede apuntar a un deployment distinto, es posible que:
+- <code>test</code>
+- <code>usuarios</code>
+- <code>econnect</code>
+- <code>valida</code><br />
+no representen configuraciones equivalentes ni trazables.</p>
+<h3 id="2-ambiguedad-de-produccion">2. Ambigüedad de “producción”</h3>
+<p>Un hallazgo especialmente delicado es que el dominio <code>api.econnectpro.mx</code> está mapeado al stage <code>test</code>.<br />
+Eso obliga a confirmar si:
+- el stage <code>test</code> es realmente el ambiente productivo, o
+- existe una exposición accidental.</p>
+<h3 id="3-us-east-2-no-listo">3. us-east-2 no listo</h3>
+<p>La presencia de APIs homónimas en <code>us-east-2</code> sin stages activos indica que la región destino no está lista como reemplazo directo.</p>
+<h2 id="que-debe-documentarse-por-stage-en-la-region-destino">Qué debe documentarse por stage en la región destino</h2>
+<p>Para cada stage que vaya a existir en la nueva región:</p>
 <ul>
-<li>AWS Network Firewall: ❌</li>
-<li>GWLB + appliances: ❌</li>
-<li>Terceros IDS/IPS: ❌ detectado</li>
-<li>Controles presentes: ✅ Security Groups y ✅ NACLs (default VPCs)</li>
+<li>nombre</li>
+<li>deploymentId</li>
+<li>auth por método</li>
+<li>throttling</li>
+<li>logging</li>
+<li>tracing</li>
+<li>métricas</li>
+<li>CORS</li>
+<li>dominio/mapping</li>
+<li>fecha de creación</li>
+<li>fecha de última actualización</li>
+<li>runbook de rollback</li>
 </ul>
-<h2 id="acciones-recomendadas-prioridad">Acciones recomendadas (prioridad)</h2>
-<ol>
-<li>🚨 <strong>Cerrar RDP 3389 desde 0.0.0.0/0</strong> en <code>windows-server</code> (dejar allowlist o forzar SSM/VPN/bastion).</li>
-<li>Configurar <strong>Session Manager logging</strong> a CloudWatch Logs o S3 + <strong>KMS</strong>.</li>
-<li>Definir <strong>idle timeout</strong> y estandarizar configuración de SSM Agent.</li>
-<li>Evaluar habilitar <strong>WAF</strong> (CloudFront y/o ALBs) con managed rules + rate limiting.</li>
-<li>Habilitar <strong>GuardDuty en us-east-2</strong> para cobertura completa (si hay workloads/colas allí).</li>
-</ol>
+<h2 id="recomendacion-de-migracion">Recomendación de migración</h2>
+<h3 id="opcion-recomendada">Opción recomendada</h3>
+<p>Crear stages explícitos y alineados con propósito real:</p>
+<ul>
+<li><code>prod</code></li>
+<li><code>test</code></li>
+<li><code>valida</code></li>
+<li><code>socket-prod</code> o equivalente</li>
+</ul>
+<h3 id="opcion-no-recomendada">Opción no recomendada</h3>
+<p>Repetir nombres históricos ambiguos sin redefinir semántica operativa.</p>
+<h2 id="checklist-previo-a-despliegue-regional">Checklist previo a despliegue regional</h2>
+<ul>
+<li>[ ] Confirmar qué stage actual recibe tráfico real.</li>
+<li>[ ] Confirmar qué deployment es la referencia funcional.</li>
+<li>[ ] Confirmar si el stage mapeado al custom domain es intencional.</li>
+<li>[ ] Versionar el despliegue con una convención reproducible.</li>
+<li>[ ] Registrar una tabla “stage → deployment → artefacto → fecha”.</li>
+</ul>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../10-observabilidad/" class="btn btn-neutral float-left" title="Observabilidad"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../index-RDS/" class="btn btn-neutral float-right" title="Inicio RDS">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../02-routes-integrations-api/" class="btn btn-neutral float-left" title="Integraciones"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../04-auth-api/" class="btn btn-neutral float-right" title="Autenticación y autorización">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -275,10 +440,10 @@ Generado: <strong>2026-03-03</strong></p>
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-      <span><a href="../10-observabilidad/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../02-routes-integrations-api/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../index-RDS/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../04-auth-api/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>

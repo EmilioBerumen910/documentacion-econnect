@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Emilio Bravo" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Inventario - Econnect AWS Documentation</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Inventario";
+        var mkdocs_page_input_path = "01-inventory-api.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> Econnect AWS Documentation
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Inicio</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">EC2</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../index-EC2/">Inicio EC2</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../01-contexto/">Contexto</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../02-inventario/">Inventario EC2</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../03-red/">Red y conectividad</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../04-balanceadores/">Balanceadores y DNS</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../05-ensamblaje/">Recreación / IaC</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../06-runtime/">OS y runtime</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../07-config/">Config externa (SSM/Secrets)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../08-iam/">IAM</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../09-dependencias/">Dependencias</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../10-observabilidad/">Observabilidad</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../11-seguridad/">Seguridad</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">RDS</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../index-RDS/">Inicio RDS</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../01-inventory/">Inventario</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../02-network-access/">Red y acceso</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../03-security/">Seguridad</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../04-configuration/">Configuración</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../05-backup-recovery/">Backups y recuperación</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../06-performance-ops/">Performance y operación</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../07-ha-dr/">Alta disponibilidad y DR</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../08-migration-plan/">Plan de migración</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../09-appendix/">Apéndice</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Lambda</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../index-lambda/">Inicio Lambda</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../01-inventory-lambda/">Inventario</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../02-triggers-lambda/">Triggers e integraciones</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../03-networking-lambda/">Networking (VPC)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../04-runtime-deploy-lambda/">Runtime y despliegue</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../05-iam-security-lambda/">IAM y seguridad</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../06-observability-lambda/">Observabilidad</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../07-migration-plan-lambda/">Plan de migración</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../08-appendix-lambda/">Apéndice</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API Gateway</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../index-api/">Inicio API Gateway</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Inventario</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#panorama-general">Panorama general</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#resumen-por-region">Resumen por región</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#us-east-1">us-east-1</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#us-east-2">us-east-2</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#apis-clave-para-la-migracion">APIs clave para la migración</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#1-apieconnectpro">1. apieconnectpro</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#2-apiusuarios">2. apiusuarios</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#3-api_socket">3. api_socket</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#4-quicksight">4. quicksight</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#clasificacion-por-tipo">Clasificación por tipo</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#rest-apis">REST APIs</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#http-apis">HTTP APIs</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#websocket-apis">WebSocket APIs</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#clasificacion-por-criticidad">Clasificación por criticidad</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#hallazgos-de-arquitectura">Hallazgos de arquitectura</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#que-debe-quedar-inventariado-antes-del-cutover">Qué debe quedar inventariado antes del cutover</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#decision-de-migracion-por-api">Decisión de migración por API</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#migrar-primero">Migrar primero</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#migrar-en-fase-principal">Migrar en fase principal</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#no-asumir-listas-para-cutover">No asumir listas para cutover</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../02-routes-integrations-api/">Integraciones</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../03-stages-deployments-api/">Etapas y despliegues</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../04-auth-api/">Autenticación y autorización</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../05-domains-dns-api/">Dominios y DNS</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../06-cors-binary-api/">CORS y manejo de binarios</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../07-logging-monitoring-api/">Logging y monitoreo</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../08-security-guardrails-api/">Seguridad</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../09-migration-plan-api/">Plan de migración</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../10-appendix-api/">Apéndice</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">Econnect AWS Documentation</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">API Gateway</li>
+      <li class="breadcrumb-item active">Inventario</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="inventario">Inventario</h1>
+<h2 id="panorama-general">Panorama general</h2>
+<p>El inventario disponible muestra APIs en <strong>us-east-1</strong> y <strong>us-east-2</strong>, con distinta madurez operativa.<br />
+En <strong>us-east-1</strong> están las APIs con mayor evidencia de uso y con los custom domains principales.<br />
+En <strong>us-east-2</strong> hay APIs parcialmente configuradas, algunas sin stages activos.</p>
+<h2 id="resumen-por-region">Resumen por región</h2>
+<h3 id="us-east-1">us-east-1</h3>
+<table>
+<thead>
+<tr>
+<th>API</th>
+<th>ID</th>
+<th>Tipo</th>
+<th>Stages observados</th>
+<th>Custom domain</th>
+<th>Estado inferido</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>apiusuarios</td>
+<td>l4qndp97e6 / l4qndp976e*</td>
+<td>REST</td>
+<td><code>test</code>, <code>usuarios</code></td>
+<td>No</td>
+<td>Activa</td>
+</tr>
+<tr>
+<td>quicksight</td>
+<td>ycsbx4j1hd</td>
+<td>REST</td>
+<td><code>inicial</code></td>
+<td>No</td>
+<td>Activa</td>
+</tr>
+<tr>
+<td>apieconnectpro</td>
+<td>zj7721vv78</td>
+<td>REST</td>
+<td><code>econnect</code>, <code>test</code>, <code>valida</code></td>
+<td>Sí</td>
+<td>Activa y central</td>
+</tr>
+<tr>
+<td>api_socket</td>
+<td>ucjmxw4qef</td>
+<td>WebSocket</td>
+<td><code>socket</code>, <code>test</code></td>
+<td>Sí</td>
+<td>Activa</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>* En la evidencia aparece una discrepancia menor de ID para <code>apiusuarios</code>.<br />
+En varias secciones operativas se usa <code>l4qndp976e</code>. Debe validarse el ID final al ejecutar la migración.</p>
+</blockquote>
+<h3 id="us-east-2">us-east-2</h3>
+<table>
+<thead>
+<tr>
+<th>API</th>
+<th>ID</th>
+<th>Tipo</th>
+<th>Stages observados</th>
+<th>Custom domain</th>
+<th>Estado inferido</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>apieconnectpro</td>
+<td>ymhcncjmo1</td>
+<td>REST</td>
+<td>sin stages activos</td>
+<td>No evidenciado</td>
+<td>Preparación / incompleta</td>
+</tr>
+<tr>
+<td>apiusuarios</td>
+<td>galuigkft1</td>
+<td>REST</td>
+<td>sin stages activos</td>
+<td>No evidenciado</td>
+<td>Preparación / incompleta</td>
+</tr>
+<tr>
+<td>api_socket</td>
+<td>ihbgjz8ky5</td>
+<td>WebSocket</td>
+<td><code>production</code></td>
+<td>No evidenciado</td>
+<td>Parcialmente activa</td>
+</tr>
+<tr>
+<td>dev-auth-api</td>
+<td>kz5lb17hqg</td>
+<td>HTTP</td>
+<td><code>$default</code></td>
+<td>No evidenciado</td>
+<td>Dev / soporte</td>
+</tr>
+<tr>
+<td>api_procontrol</td>
+<td>gxc9wnlzf9</td>
+<td>REST</td>
+<td><code>prueba</code></td>
+<td>No evidenciado</td>
+<td>Pruebas</td>
+</tr>
+</tbody>
+</table>
+<h2 id="apis-clave-para-la-migracion">APIs clave para la migración</h2>
+<h3 id="1-apieconnectpro">1. apieconnectpro</h3>
+<p>Es la API más crítica del conjunto.</p>
+<p><strong>Características principales</strong>
+- Tipo: REST
+- Región principal: <code>us-east-1</code>
+- API ID: <code>zj7721vv78</code>
+- Stages:
+  - <code>econnect</code>
+  - <code>test</code>
+  - <code>valida</code>
+- Dominio asociado:
+  - <code>api.econnectpro.mx</code> (EDGE)
+- Perfil operativo:
+  - alta centralidad funcional
+  - múltiples rutas
+  - múltiples dependencias Lambda
+  - superficie pública amplia</p>
+<h3 id="2-apiusuarios">2. apiusuarios</h3>
+<p>API importante para funciones de usuarios e integración.</p>
+<p><strong>Características principales</strong>
+- Tipo: REST
+- Región principal: <code>us-east-1</code>
+- Stage visibles:
+  - <code>test</code>
+  - <code>usuarios</code>
+- Custom domain: no evidenciado
+- Auth principal: Cognito en la mayoría de métodos</p>
+<h3 id="3-api_socket">3. api_socket</h3>
+<p>Canal de tiempo real.</p>
+<p><strong>Características principales</strong>
+- Tipo: WebSocket
+- Región principal: <code>us-east-1</code>
+- Stages:
+  - <code>socket</code>
+  - <code>test</code>
+- Dominio asociado:
+  - <code>socket.econnectpro.mx</code> (REGIONAL)</p>
+<h3 id="4-quicksight">4. quicksight</h3>
+<p>API específica y de menor superficie.</p>
+<p><strong>Características principales</strong>
+- Tipo: REST
+- Región principal: <code>us-east-1</code>
+- Stage:
+  - <code>inicial</code>
+- Ruta principal observada:
+  - <code>POST /quick-dashboard</code></p>
+<h2 id="clasificacion-por-tipo">Clasificación por tipo</h2>
+<h3 id="rest-apis">REST APIs</h3>
+<ul>
+<li><code>apiusuarios</code></li>
+<li><code>quicksight</code></li>
+<li><code>apieconnectpro</code></li>
+<li><code>api_procontrol</code></li>
+<li><code>apiusuarios</code> (us-east-2)</li>
+<li><code>apieconnectpro</code> (us-east-2)</li>
+</ul>
+<h3 id="http-apis">HTTP APIs</h3>
+<ul>
+<li><code>dev-auth-api</code></li>
+</ul>
+<h3 id="websocket-apis">WebSocket APIs</h3>
+<ul>
+<li><code>api_socket</code> (us-east-1)</li>
+<li><code>api_socket</code> (us-east-2)</li>
+</ul>
+<h2 id="clasificacion-por-criticidad">Clasificación por criticidad</h2>
+<table>
+<thead>
+<tr>
+<th>Nivel</th>
+<th>APIs</th>
+<th>Motivo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Alta</td>
+<td><code>apieconnectpro</code></td>
+<td>API central, múltiples stages, múltiples Lambdas, custom domain</td>
+</tr>
+<tr>
+<td>Media</td>
+<td><code>apiusuarios</code>, <code>api_socket</code>, <code>dev-auth-api</code></td>
+<td>Auth, usuarios y tiempo real</td>
+</tr>
+<tr>
+<td>Baja / Media</td>
+<td><code>quicksight</code>, <code>api_procontrol</code></td>
+<td>uso puntual, reporting o pruebas</td>
+</tr>
+</tbody>
+</table>
+<h2 id="hallazgos-de-arquitectura">Hallazgos de arquitectura</h2>
+<ul>
+<li>En <code>us-east-1</code> todas las APIs evidenciadas son públicas.</li>
+<li>No hay evidencia de <code>PRIVATE endpoint types</code>.</li>
+<li>No se observaron VPC endpoints asociados a API Gateway.</li>
+<li>La presencia de una API EDGE y otra REGIONAL implica rutas de publicación diferentes para migración y rollback.</li>
+</ul>
+<h2 id="que-debe-quedar-inventariado-antes-del-cutover">Qué debe quedar inventariado antes del cutover</h2>
+<p>Antes de mover tráfico a otra región, cada API debe tener documentado y validado:</p>
+<ul>
+<li>tipo de API</li>
+<li>API ID</li>
+<li>stage destino</li>
+<li>dominio asociado</li>
+<li>método de autenticación</li>
+<li>integraciones backend</li>
+<li>CORS</li>
+<li>binarios</li>
+<li>logging</li>
+<li>throttling</li>
+<li>mecanismo de rollback</li>
+</ul>
+<h2 id="decision-de-migracion-por-api">Decisión de migración por API</h2>
+<h3 id="migrar-primero">Migrar primero</h3>
+<ul>
+<li><code>quicksight</code></li>
+<li><code>dev-auth-api</code></li>
+<li><code>api_procontrol</code><br />
+Estas APIs pueden servir como candidatos de ensayo por menor acoplamiento operativo.</li>
+</ul>
+<h3 id="migrar-en-fase-principal">Migrar en fase principal</h3>
+<ul>
+<li><code>apiusuarios</code></li>
+<li><code>api_socket</code></li>
+<li><code>apieconnectpro</code></li>
+</ul>
+<h3 id="no-asumir-listas-para-cutover">No asumir listas para cutover</h3>
+<ul>
+<li><code>apieconnectpro</code> en <code>us-east-2</code></li>
+<li><code>apiusuarios</code> en <code>us-east-2</code><br />
+Aunque existen, la evidencia indica <strong>sin stages activos</strong> y por tanto no deben considerarse listas para producción.</li>
+</ul>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../index-api/" class="btn btn-neutral float-left" title="Inicio API Gateway"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../02-routes-integrations-api/" class="btn btn-neutral float-right" title="Integraciones">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../index-api/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../02-routes-integrations-api/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

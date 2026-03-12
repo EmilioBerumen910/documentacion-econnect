@@ -5,15 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Emilio Bravo" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>Seguridad - Econnect AWS Documentation</title>
+    <title>Apéndice - Econnect AWS Documentation</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Seguridad";
-        var mkdocs_page_input_path = "11-seguridad.md";
+        var mkdocs_page_name = "Ap\u00e9ndice";
+        var mkdocs_page_input_path = "10-appendix-api.md";
         var mkdocs_page_url = null;
       </script>
     
@@ -44,7 +44,7 @@
                 </li>
               </ul>
               <p class="caption"><span class="caption-text">EC2</span></p>
-              <ul class="current">
+              <ul>
                   <li class="toctree-l1"><a class="reference internal" href="../index-EC2/">Inicio EC2</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../01-contexto/">Contexto</a>
@@ -67,33 +67,7 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../10-observabilidad/">Observabilidad</a>
                   </li>
-                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Seguridad</a>
-    <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#acceso-a-instancias">Acceso a instancias</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#session-manager-ssm">Session Manager (SSM)</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#ssh-rdp-acceso-tradicional">SSH / RDP (acceso tradicional)</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#auditoria-de-session-manager-gaps">Auditoría de Session Manager (gaps)</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#controles-de-seguridad-gestionados">Controles de seguridad gestionados</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#aws-waf">AWS WAF</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#aws-shield">AWS Shield</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#guardduty">GuardDuty</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#idsips">IDS/IPS</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#acciones-recomendadas-prioridad">Acciones recomendadas (prioridad)</a>
-    </li>
-    </ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../11-seguridad/">Seguridad</a>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">RDS</span></p>
@@ -141,7 +115,7 @@
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">API Gateway</span></p>
-              <ul>
+              <ul class="current">
                   <li class="toctree-l1"><a class="reference internal" href="../index-api/">Inicio API Gateway</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../01-inventory-api/">Inventario</a>
@@ -162,7 +136,45 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../09-migration-plan-api/">Plan de migración</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../10-appendix-api/">Apéndice</a>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Apéndice</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#a-apis-identificadas">A. APIs identificadas</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#b-custom-domains">B. Custom domains</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#c-certificado">C. Certificado</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#d-authorizers">D. Authorizers</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#cognito">Cognito</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#lambda-authorizer">Lambda Authorizer</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#e-backends-lambda-principales">E. Backends Lambda principales</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#f-hallazgos-de-seguridad">F. Hallazgos de seguridad</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#g-hallazgos-de-observabilidad">G. Hallazgos de observabilidad</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#h-hallazgos-de-configuracion">H. Hallazgos de configuración</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#i-hallazgos-de-despliegue">I. Hallazgos de despliegue</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#j-notas-de-consistencia-de-datos">J. Notas de consistencia de datos</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#1-id-de-apiusuarios">1. ID de apiusuarios</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#2-dominios-vs-runs-inconsistentes">2. Dominios vs runs inconsistentes</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#3-region-destino-no-lista">3. Región destino no lista</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#k-lista-corta-de-decisiones-pendientes">K. Lista corta de decisiones pendientes</a>
+    </li>
+    </ul>
                   </li>
               </ul>
       </div>
@@ -179,8 +191,8 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
-          <li class="breadcrumb-item">EC2</li>
-      <li class="breadcrumb-item active">Seguridad</li>
+          <li class="breadcrumb-item">API Gateway</li>
+      <li class="breadcrumb-item active">Apéndice</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -189,70 +201,255 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="seguridad-y-compliance">Seguridad y compliance</h1>
-<blockquote>
-<p>Fuente: <a href="../assets/EC2-Documentacion-Econnect.pdf">assets/EC2-Documentacion-Econnect.pdf</a><br />
-Generado: <strong>2026-03-03</strong></p>
-</blockquote>
-<h2 id="acceso-a-instancias">Acceso a instancias</h2>
-<h3 id="session-manager-ssm">Session Manager (SSM)</h3>
-<p>En <code>us-east-1</code> se usa <strong>SSM Session Manager</strong> como método principal (sin SSH/RDP):</p>
-<p>Instancias “Managed / Online” con SSM:
-- Mongo-Reports (Amazon Linux)
-- sa31 c6 (Amazon Linux 2)
-- Windows (Windows Server 2019)
-- win_robots (Windows Server 2022)</p>
-<p>En <code>us-east-2</code> no hay instancias managed (no aplica Session Manager actualmente).</p>
-<h3 id="ssh-rdp-acceso-tradicional">SSH / RDP (acceso tradicional)</h3>
+                <h1 id="apendice">Apéndice</h1>
+<h2 id="a-apis-identificadas">A. APIs identificadas</h2>
+<table>
+<thead>
+<tr>
+<th>API</th>
+<th>ID</th>
+<th>Tipo</th>
+<th>Región</th>
+<th>Stage(s) observados</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>apiusuarios</td>
+<td>l4qndp97e6 / l4qndp976e</td>
+<td>REST</td>
+<td>us-east-1</td>
+<td>test, usuarios</td>
+</tr>
+<tr>
+<td>quicksight</td>
+<td>ycsbx4j1hd</td>
+<td>REST</td>
+<td>us-east-1</td>
+<td>inicial</td>
+</tr>
+<tr>
+<td>apieconnectpro</td>
+<td>zj7721vv78</td>
+<td>REST</td>
+<td>us-east-1</td>
+<td>econnect, test, valida</td>
+</tr>
+<tr>
+<td>api_socket</td>
+<td>ucjmxw4qef</td>
+<td>WebSocket</td>
+<td>us-east-1</td>
+<td>socket, test</td>
+</tr>
+<tr>
+<td>apieconnectpro</td>
+<td>ymhcncjmo1</td>
+<td>REST</td>
+<td>us-east-2</td>
+<td>sin stages activos</td>
+</tr>
+<tr>
+<td>apiusuarios</td>
+<td>galuigkft1</td>
+<td>REST</td>
+<td>us-east-2</td>
+<td>sin stages activos</td>
+</tr>
+<tr>
+<td>api_socket</td>
+<td>ihbgjz8ky5</td>
+<td>WebSocket</td>
+<td>us-east-2</td>
+<td>production</td>
+</tr>
+<tr>
+<td>dev-auth-api</td>
+<td>kz5lb17hqg</td>
+<td>HTTP</td>
+<td>us-east-2</td>
+<td>$default</td>
+</tr>
+<tr>
+<td>api_procontrol</td>
+<td>gxc9wnlzf9</td>
+<td>REST</td>
+<td>us-east-2</td>
+<td>prueba</td>
+</tr>
+</tbody>
+</table>
+<h2 id="b-custom-domains">B. Custom domains</h2>
+<table>
+<thead>
+<tr>
+<th>Dominio</th>
+<th>Tipo</th>
+<th>API</th>
+<th>Stage</th>
+<th>Target</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>api.econnectpro.mx</td>
+<td>EDGE</td>
+<td>zj7721vv78</td>
+<td>test</td>
+<td>da3va61kxw5mp.cloudfront.net</td>
+</tr>
+<tr>
+<td>socket.econnectpro.mx</td>
+<td>REGIONAL</td>
+<td>ucjmxw4qef</td>
+<td>test</td>
+<td>d-tw5pnm947f.execute-api.us-east-1.amazonaws.com</td>
+</tr>
+</tbody>
+</table>
+<h2 id="c-certificado">C. Certificado</h2>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ACM ARN</td>
+<td>arn:aws:acm:us-east-1:305968097757:certificate/d2aaab9e-bbff-46fe-b939-c3d1700a3b65</td>
+</tr>
+<tr>
+<td>Región</td>
+<td>us-east-1</td>
+</tr>
+</tbody>
+</table>
+<h2 id="d-authorizers">D. Authorizers</h2>
+<h3 id="cognito">Cognito</h3>
+<table>
+<thead>
+<tr>
+<th>API</th>
+<th>Authorizer</th>
+<th>Tipo</th>
+<th>User Pool</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>apiusuarios</td>
+<td>ApiAutorizador</td>
+<td>COGNITO_USER_POOLS</td>
+<td>us-east-1_s1zhiuODD</td>
+</tr>
+</tbody>
+</table>
+<h3 id="lambda-authorizer">Lambda Authorizer</h3>
+<table>
+<thead>
+<tr>
+<th>API</th>
+<th>Authorizer</th>
+<th>Tipo</th>
+<th>Lambda</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>apieconnectpro</td>
+<td>LambdaAutorizaApi</td>
+<td>REQUEST</td>
+<td>AutorizadorApis</td>
+</tr>
+</tbody>
+</table>
+<h2 id="e-backends-lambda-principales">E. Backends Lambda principales</h2>
 <ul>
-<li><strong>SSH (22):</strong> restringido (allowlist /32) en varios SG (bien).</li>
-<li><strong>RDP (3389):</strong> mixto:</li>
-<li>Hay allowlist /32 en algunos SG (bien).</li>
-<li><strong>Hallazgo crítico:</strong> el SG <code>windows-server</code> permite RDP desde <code>0.0.0.0/0</code> (abierto a Internet).</li>
+<li>lambda-usuarios-dev</li>
+<li>lambda-catalogos-dev</li>
+<li>lambda-trafico-dev</li>
+<li>actualizar_validacion_pedimento</li>
+<li>insertaMensajeSQSArchivosS3</li>
+<li>InsertaMensajeSQSReportes</li>
+<li>validar_pedimento</li>
+<li>lambda-vucem-datastage-dev</li>
+<li>quicksight_get_url</li>
+<li>mensajes_SNS</li>
+<li>AutorizadorApis</li>
 </ul>
-<h2 id="auditoria-de-session-manager-gaps">Auditoría de Session Manager (gaps)</h2>
-<p>Estado reportado:
-- Logging a S3/CloudWatch: <strong>NO configurado</strong>
-- KMS encryption: <strong>NO configurado</strong>
-- Idle timeout: default (no configurado)</p>
-<p><strong>Implicación:</strong> se puede operar sin SSH, pero falta trazabilidad/auditoría robusta de sesiones.</p>
-<h2 id="controles-de-seguridad-gestionados">Controles de seguridad gestionados</h2>
-<h3 id="aws-waf">AWS WAF</h3>
+<h2 id="f-hallazgos-de-seguridad">F. Hallazgos de seguridad</h2>
 <ul>
-<li><strong>No habilitado</strong> (ni global CloudFront ni regional para ALB/API Gateway).</li>
-<li>Implicación: no hay protección gestionada contra ataques web comunes (OWASP, bots, rate limiting).</li>
+<li>Sin WAF evidenciado</li>
+<li>Sin resource policies</li>
+<li>Sin usage plans</li>
+<li>Sin API keys requeridas</li>
+<li>Auth inconsistente</li>
+<li>WebSocket y HTTP API abiertos en algunos casos</li>
+<li>stages sin throttling explícito</li>
 </ul>
-<h3 id="aws-shield">AWS Shield</h3>
+<h2 id="g-hallazgos-de-observabilidad">G. Hallazgos de observabilidad</h2>
 <ul>
-<li>Shield Standard: ✅ (por defecto en CloudFront/Route53/ELB)</li>
-<li>Shield Advanced: ❌ (no suscripción)</li>
+<li>sin access logs</li>
+<li>execution logs OFF</li>
+<li>CloudWatch Logs Role ARN no configurado para API Gateway</li>
+<li>X-Ray parcial</li>
+<li>sin alarmas de API Gateway</li>
+<li>dashboards no utilizables</li>
 </ul>
-<h3 id="guardduty">GuardDuty</h3>
+<h2 id="h-hallazgos-de-configuracion">H. Hallazgos de configuración</h2>
 <ul>
-<li><code>us-east-1</code>: ✅ habilitado (S3 Protection ✅, Malware Protection ✅)</li>
-<li><code>us-east-2</code>: ❌ no habilitado</li>
+<li>no stage variables</li>
+<li>integración fuerte con Lambda</li>
+<li>uso de HTTP_PROXY a <code>api.power-devel.com</code></li>
+<li><code>CONVERT_TO_TEXT</code> en rutas con binarios</li>
+<li>binary media types habilitados</li>
+<li>límites de payload de 10 MB</li>
+<li>timeout efectivo ~29 s</li>
 </ul>
-<h3 id="idsips">IDS/IPS</h3>
+<h2 id="i-hallazgos-de-despliegue">I. Hallazgos de despliegue</h2>
 <ul>
-<li>AWS Network Firewall: ❌</li>
-<li>GWLB + appliances: ❌</li>
-<li>Terceros IDS/IPS: ❌ detectado</li>
-<li>Controles presentes: ✅ Security Groups y ✅ NACLs (default VPCs)</li>
+<li>IaC fragmentado:</li>
+<li>CloudFormation</li>
+<li>Serverless Framework</li>
+<li>SAM</li>
+<li>Zappa</li>
+<li>Quick Starts</li>
+<li>sin evidencia de Terraform</li>
+<li>sin evidencia de CDK</li>
+<li>sin CodePipeline</li>
+<li>sin CodeBuild</li>
+<li>sin evidencia de GitHub Actions o Jenkins</li>
+<li>posible despliegue manual o con scripts ad-hoc</li>
 </ul>
-<h2 id="acciones-recomendadas-prioridad">Acciones recomendadas (prioridad)</h2>
-<ol>
-<li>🚨 <strong>Cerrar RDP 3389 desde 0.0.0.0/0</strong> en <code>windows-server</code> (dejar allowlist o forzar SSM/VPN/bastion).</li>
-<li>Configurar <strong>Session Manager logging</strong> a CloudWatch Logs o S3 + <strong>KMS</strong>.</li>
-<li>Definir <strong>idle timeout</strong> y estandarizar configuración de SSM Agent.</li>
-<li>Evaluar habilitar <strong>WAF</strong> (CloudFront y/o ALBs) con managed rules + rate limiting.</li>
-<li>Habilitar <strong>GuardDuty en us-east-2</strong> para cobertura completa (si hay workloads/colas allí).</li>
-</ol>
+<h2 id="j-notas-de-consistencia-de-datos">J. Notas de consistencia de datos</h2>
+<h3 id="1-id-de-apiusuarios">1. ID de apiusuarios</h3>
+<p>Aparece con dos variantes en la evidencia:
+- <code>l4qndp97e6</code>
+- <code>l4qndp976e</code></p>
+<p>Debe confirmarse el valor exacto con inventario vivo antes de automatizar la migración.</p>
+<h3 id="2-dominios-vs-runs-inconsistentes">2. Dominios vs runs inconsistentes</h3>
+<p>En una parte de la evidencia se reportan custom domains existentes, mientras que en otra ejecución se mencionan como “no encontrados”.<br />
+La documentación toma como referencia la evidencia más consistente y detallada, pero esta diferencia debe validarse en AWS antes del cambio.</p>
+<h3 id="3-region-destino-no-lista">3. Región destino no lista</h3>
+<p>La existencia de recursos en <code>us-east-2</code> no implica preparación de producción.<br />
+Varias APIs carecen de stages activos o integraciones completas.</p>
+<h2 id="k-lista-corta-de-decisiones-pendientes">K. Lista corta de decisiones pendientes</h2>
+<ul>
+<li>¿Qué stage actual es realmente producción?</li>
+<li>¿Se mantendrá Cognito en us-east-1 o se migrará?</li>
+<li>¿Se implementará WAF?</li>
+<li>¿Se mantendrá <code>HTTP_PROXY</code> hacia <code>api.power-devel.com</code>?</li>
+<li>¿Se migrarán también las Lambdas dependientes?</li>
+<li>¿Qué estrategia de versionado reproducible se adoptará?</li>
+<li>¿Se formalizará pipeline CI/CD antes o después del cutover?</li>
+</ul>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../10-observabilidad/" class="btn btn-neutral float-left" title="Observabilidad"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../index-RDS/" class="btn btn-neutral float-right" title="Inicio RDS">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../09-migration-plan-api/" class="btn btn-neutral float-left" title="Plan de migración"><span class="icon icon-circle-arrow-left"></span> Previous</a>
     </div>
 
   <hr/>
@@ -275,10 +472,8 @@ Generado: <strong>2026-03-03</strong></p>
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-      <span><a href="../10-observabilidad/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../09-migration-plan-api/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
-    
-      <span><a href="../index-RDS/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>

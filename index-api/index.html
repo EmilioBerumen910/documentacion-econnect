@@ -5,15 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Emilio Bravo" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>Seguridad - Econnect AWS Documentation</title>
+    <title>Inicio API Gateway - Econnect AWS Documentation</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Seguridad";
-        var mkdocs_page_input_path = "11-seguridad.md";
+        var mkdocs_page_name = "Inicio API Gateway";
+        var mkdocs_page_input_path = "index-api.md";
         var mkdocs_page_url = null;
       </script>
     
@@ -44,7 +44,7 @@
                 </li>
               </ul>
               <p class="caption"><span class="caption-text">EC2</span></p>
-              <ul class="current">
+              <ul>
                   <li class="toctree-l1"><a class="reference internal" href="../index-EC2/">Inicio EC2</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../01-contexto/">Contexto</a>
@@ -67,33 +67,7 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../10-observabilidad/">Observabilidad</a>
                   </li>
-                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Seguridad</a>
-    <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#acceso-a-instancias">Acceso a instancias</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#session-manager-ssm">Session Manager (SSM)</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#ssh-rdp-acceso-tradicional">SSH / RDP (acceso tradicional)</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#auditoria-de-session-manager-gaps">Auditoría de Session Manager (gaps)</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#controles-de-seguridad-gestionados">Controles de seguridad gestionados</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#aws-waf">AWS WAF</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#aws-shield">AWS Shield</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#guardduty">GuardDuty</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#idsips">IDS/IPS</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#acciones-recomendadas-prioridad">Acciones recomendadas (prioridad)</a>
-    </li>
-    </ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../11-seguridad/">Seguridad</a>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">RDS</span></p>
@@ -141,8 +115,26 @@
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">API Gateway</span></p>
-              <ul>
-                  <li class="toctree-l1"><a class="reference internal" href="../index-api/">Inicio API Gateway</a>
+              <ul class="current">
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Inicio API Gateway</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#proposito">Propósito</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#resumen-ejecutivo">Resumen ejecutivo</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#hallazgos-principales">Hallazgos principales</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#alcance">Alcance</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#supuestos-de-este-documento">Supuestos de este documento</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#lectura-recomendada">Lectura recomendada</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#objetivo-de-migracion">Objetivo de migración</a>
+    </li>
+    </ul>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../01-inventory-api/">Inventario</a>
                   </li>
@@ -179,8 +171,8 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
-          <li class="breadcrumb-item">EC2</li>
-      <li class="breadcrumb-item active">Seguridad</li>
+          <li class="breadcrumb-item">API Gateway</li>
+      <li class="breadcrumb-item active">Inicio API Gateway</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -189,70 +181,97 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="seguridad-y-compliance">Seguridad y compliance</h1>
-<blockquote>
-<p>Fuente: <a href="../assets/EC2-Documentacion-Econnect.pdf">assets/EC2-Documentacion-Econnect.pdf</a><br />
-Generado: <strong>2026-03-03</strong></p>
-</blockquote>
-<h2 id="acceso-a-instancias">Acceso a instancias</h2>
-<h3 id="session-manager-ssm">Session Manager (SSM)</h3>
-<p>En <code>us-east-1</code> se usa <strong>SSM Session Manager</strong> como método principal (sin SSH/RDP):</p>
-<p>Instancias “Managed / Online” con SSM:
-- Mongo-Reports (Amazon Linux)
-- sa31 c6 (Amazon Linux 2)
-- Windows (Windows Server 2019)
-- win_robots (Windows Server 2022)</p>
-<p>En <code>us-east-2</code> no hay instancias managed (no aplica Session Manager actualmente).</p>
-<h3 id="ssh-rdp-acceso-tradicional">SSH / RDP (acceso tradicional)</h3>
+                <h1 id="api-gateway-inicio">API Gateway — Inicio</h1>
+<h2 id="proposito">Propósito</h2>
+<p>Esta documentación describe el estado actual del servicio <strong>API Gateway</strong> de la plataforma Econnect y define los elementos que deben recrearse o ajustarse durante una migración regional.<br />
+El documento es <strong>independiente</strong> y está enfocado en <strong>inventario, dependencias, seguridad, observabilidad y ejecución del cutover</strong>.</p>
+<h2 id="resumen-ejecutivo">Resumen ejecutivo</h2>
+<p>El inventario analizado muestra un ecosistema API Gateway distribuido principalmente entre <strong>us-east-1</strong> y <strong>us-east-2</strong>, con predominio de <strong>REST APIs</strong>, presencia de <strong>WebSocket APIs</strong> y al menos una <strong>HTTP API</strong>.<br />
+En <strong>us-east-1</strong> se concentran las APIs activas y los custom domains principales; en <strong>us-east-2</strong> existen APIs parciales, de soporte o sin stages activos.</p>
+<h3 id="hallazgos-principales">Hallazgos principales</h3>
 <ul>
-<li><strong>SSH (22):</strong> restringido (allowlist /32) en varios SG (bien).</li>
-<li><strong>RDP (3389):</strong> mixto:</li>
-<li>Hay allowlist /32 en algunos SG (bien).</li>
-<li><strong>Hallazgo crítico:</strong> el SG <code>windows-server</code> permite RDP desde <code>0.0.0.0/0</code> (abierto a Internet).</li>
+<li>En <strong>us-east-1</strong> existen 4 APIs activas visibles:  </li>
+<li><code>apiusuarios</code> — REST  </li>
+<li><code>quicksight</code> — REST  </li>
+<li><code>apieconnectpro</code> — REST  </li>
+<li><code>api_socket</code> — WebSocket</li>
+<li>Los custom domains identificados son:</li>
+<li><code>api.econnectpro.mx</code></li>
+<li><code>socket.econnectpro.mx</code></li>
+<li>La arquitectura actual depende en gran medida de:</li>
+<li><strong>Lambda / AWS_PROXY</strong></li>
+<li><strong>HTTP_PROXY</strong> hacia <code>api.power-devel.com</code></li>
+<li><strong>MOCK</strong> para <code>OPTIONS</code> y CORS</li>
+<li>No hay evidencia de:</li>
+<li><strong>VPC Link</strong></li>
+<li><strong>Usage Plans</strong></li>
+<li><strong>API Keys obligatorias</strong></li>
+<li><strong>Resource Policies</strong></li>
+<li><strong>WAF</strong></li>
+<li><strong>pipelines CI/CD formales</strong></li>
+<li>La observabilidad es limitada:</li>
+<li>sin <strong>access logs</strong></li>
+<li>sin <strong>execution logs</strong></li>
+<li>sin <strong>alarmas de API Gateway</strong></li>
+<li>con <strong>X-Ray parcial</strong></li>
+<li>Existen riesgos de seguridad y operación:</li>
+<li>métodos con <code>authorizationType = NONE</code></li>
+<li>CORS inconsistente entre regiones</li>
+<li><code>CONVERT_TO_TEXT</code> en rutas con binarios</li>
+<li>stages sin throttling explícito</li>
+<li>configuraciones fragmentadas entre regiones</li>
 </ul>
-<h2 id="auditoria-de-session-manager-gaps">Auditoría de Session Manager (gaps)</h2>
-<p>Estado reportado:
-- Logging a S3/CloudWatch: <strong>NO configurado</strong>
-- KMS encryption: <strong>NO configurado</strong>
-- Idle timeout: default (no configurado)</p>
-<p><strong>Implicación:</strong> se puede operar sin SSH, pero falta trazabilidad/auditoría robusta de sesiones.</p>
-<h2 id="controles-de-seguridad-gestionados">Controles de seguridad gestionados</h2>
-<h3 id="aws-waf">AWS WAF</h3>
-<ul>
-<li><strong>No habilitado</strong> (ni global CloudFront ni regional para ALB/API Gateway).</li>
-<li>Implicación: no hay protección gestionada contra ataques web comunes (OWASP, bots, rate limiting).</li>
-</ul>
-<h3 id="aws-shield">AWS Shield</h3>
-<ul>
-<li>Shield Standard: ✅ (por defecto en CloudFront/Route53/ELB)</li>
-<li>Shield Advanced: ❌ (no suscripción)</li>
-</ul>
-<h3 id="guardduty">GuardDuty</h3>
-<ul>
-<li><code>us-east-1</code>: ✅ habilitado (S3 Protection ✅, Malware Protection ✅)</li>
-<li><code>us-east-2</code>: ❌ no habilitado</li>
-</ul>
-<h3 id="idsips">IDS/IPS</h3>
-<ul>
-<li>AWS Network Firewall: ❌</li>
-<li>GWLB + appliances: ❌</li>
-<li>Terceros IDS/IPS: ❌ detectado</li>
-<li>Controles presentes: ✅ Security Groups y ✅ NACLs (default VPCs)</li>
-</ul>
-<h2 id="acciones-recomendadas-prioridad">Acciones recomendadas (prioridad)</h2>
+<h2 id="alcance">Alcance</h2>
+<p>Esta documentación cubre:</p>
 <ol>
-<li>🚨 <strong>Cerrar RDP 3389 desde 0.0.0.0/0</strong> en <code>windows-server</code> (dejar allowlist o forzar SSM/VPN/bastion).</li>
-<li>Configurar <strong>Session Manager logging</strong> a CloudWatch Logs o S3 + <strong>KMS</strong>.</li>
-<li>Definir <strong>idle timeout</strong> y estandarizar configuración de SSM Agent.</li>
-<li>Evaluar habilitar <strong>WAF</strong> (CloudFront y/o ALBs) con managed rules + rate limiting.</li>
-<li>Habilitar <strong>GuardDuty en us-east-2</strong> para cobertura completa (si hay workloads/colas allí).</li>
+<li>Inventario funcional y técnico de APIs.</li>
+<li>Rutas, integraciones y dependencias.</li>
+<li>Stages, despliegues y control de drift.</li>
+<li>Autenticación y autorización.</li>
+<li>Dominios, certificados y DNS.</li>
+<li>CORS, binarios y transformaciones.</li>
+<li>Logging, tracing, métricas y monitoreo.</li>
+<li>Guardrails de seguridad.</li>
+<li>Plan detallado de migración y rollback.</li>
+<li>Apéndice con inventario de IDs, riesgos y notas.</li>
 </ol>
+<h2 id="supuestos-de-este-documento">Supuestos de este documento</h2>
+<ul>
+<li>La región operativa principal actual es <strong>us-east-1</strong>.</li>
+<li><strong>us-east-2</strong> contiene piezas de soporte, pruebas o preparación, pero no refleja un reemplazo listo para producción de todas las APIs.</li>
+<li>La mayor parte del tráfico crítico parece estar concentrada en <code>apieconnectpro</code>, <code>apiusuarios</code> y <code>api_socket</code>.</li>
+<li>Donde la evidencia no confirma un detalle, se marca explícitamente como <strong>no evidenciado</strong> o <strong>inferido</strong>.</li>
+</ul>
+<h2 id="lectura-recomendada">Lectura recomendada</h2>
+<p>Para revisar esta documentación en orden:</p>
+<ol>
+<li><strong>Inventario</strong></li>
+<li><strong>Integraciones</strong></li>
+<li><strong>Stages y despliegues</strong></li>
+<li><strong>Auth</strong></li>
+<li><strong>Dominios y DNS</strong></li>
+<li><strong>CORS y binarios</strong></li>
+<li><strong>Logging y monitoreo</strong></li>
+<li><strong>Seguridad</strong></li>
+<li><strong>Plan de migración</strong></li>
+<li><strong>Apéndice</strong></li>
+</ol>
+<h2 id="objetivo-de-migracion">Objetivo de migración</h2>
+<p>El objetivo no es solo “levantar APIs” en otra región.<br />
+El objetivo es <strong>recrear una plataforma API funcional, segura, observable y reversible</strong>, asegurando:</p>
+<ul>
+<li>continuidad de integraciones</li>
+<li>compatibilidad con clientes web y de tiempo real</li>
+<li>preservación de dominios</li>
+<li>rollback rápido</li>
+<li>reducción de drift entre ambientes y regiones</li>
+</ul>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../10-observabilidad/" class="btn btn-neutral float-left" title="Observabilidad"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../index-RDS/" class="btn btn-neutral float-right" title="Inicio RDS">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../08-appendix-lambda/" class="btn btn-neutral float-left" title="Apéndice"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../01-inventory-api/" class="btn btn-neutral float-right" title="Inventario">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -275,10 +294,10 @@ Generado: <strong>2026-03-03</strong></p>
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-      <span><a href="../10-observabilidad/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../08-appendix-lambda/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../index-RDS/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../01-inventory-api/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>

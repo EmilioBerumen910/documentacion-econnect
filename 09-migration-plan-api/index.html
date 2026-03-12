@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Emilio Bravo" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Plan de migración - Econnect AWS Documentation</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Plan de migraci\u00f3n";
+        var mkdocs_page_input_path = "09-migration-plan-api.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> Econnect AWS Documentation
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Inicio</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">EC2</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../index-EC2/">Inicio EC2</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../01-contexto/">Contexto</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../02-inventario/">Inventario EC2</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../03-red/">Red y conectividad</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../04-balanceadores/">Balanceadores y DNS</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../05-ensamblaje/">Recreación / IaC</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../06-runtime/">OS y runtime</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../07-config/">Config externa (SSM/Secrets)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../08-iam/">IAM</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../09-dependencias/">Dependencias</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../10-observabilidad/">Observabilidad</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../11-seguridad/">Seguridad</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">RDS</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../index-RDS/">Inicio RDS</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../01-inventory/">Inventario</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../02-network-access/">Red y acceso</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../03-security/">Seguridad</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../04-configuration/">Configuración</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../05-backup-recovery/">Backups y recuperación</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../06-performance-ops/">Performance y operación</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../07-ha-dr/">Alta disponibilidad y DR</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../08-migration-plan/">Plan de migración</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../09-appendix/">Apéndice</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Lambda</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../index-lambda/">Inicio Lambda</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../01-inventory-lambda/">Inventario</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../02-triggers-lambda/">Triggers e integraciones</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../03-networking-lambda/">Networking (VPC)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../04-runtime-deploy-lambda/">Runtime y despliegue</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../05-iam-security-lambda/">IAM y seguridad</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../06-observability-lambda/">Observabilidad</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../07-migration-plan-lambda/">Plan de migración</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../08-appendix-lambda/">Apéndice</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API Gateway</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../index-api/">Inicio API Gateway</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../01-inventory-api/">Inventario</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../02-routes-integrations-api/">Integraciones</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../03-stages-deployments-api/">Etapas y despliegues</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../04-auth-api/">Autenticación y autorización</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../05-domains-dns-api/">Dominios y DNS</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../06-cors-binary-api/">CORS y manejo de binarios</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../07-logging-monitoring-api/">Logging y monitoreo</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../08-security-guardrails-api/">Seguridad</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Plan de migración</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#objetivo">Objetivo</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#principios-de-ejecucion">Principios de ejecución</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#riesgos-de-partida">Riesgos de partida</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#fases-de-migracion">Fases de migración</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#fase-0-preparacion">Fase 0 — Preparación</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#entregables">Entregables</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#checklist">Checklist</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#fase-1-recreacion-tecnica-en-region-destino">Fase 1 — Recreación técnica en región destino</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#crear-recrear">Crear / recrear</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#criterio-de-salida">Criterio de salida</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#fase-2-hardening-previo">Fase 2 — Hardening previo</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#seguridad">Seguridad</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#observabilidad">Observabilidad</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#criterio-de-salida_1">Criterio de salida</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#fase-3-pruebas-integrales">Fase 3 — Pruebas integrales</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#pruebas-obligatorias">Pruebas obligatorias</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#rest">REST</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#web">Web</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#binarios">Binarios</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#websocket">WebSocket</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#dependencias">Dependencias</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#criterio-de-salida_2">Criterio de salida</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#fase-4-cutover-controlado">Fase 4 — Cutover controlado</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#estrategia-recomendada">Estrategia recomendada</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#motivo">Motivo</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#orden-sugerido">Orden sugerido</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#durante-el-cutover">Durante el cutover</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#fase-5-estabilizacion">Fase 5 — Estabilización</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#ventana-inmediata-post-cambio">Ventana inmediata post-cambio</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#rollback">Rollback</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#estrategia-recomendada_1">Estrategia recomendada</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#datos-que-deben-quedar-guardados-antes-del-cambio">Datos que deben quedar guardados antes del cambio</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#cuando-hacer-rollback">Cuándo hacer rollback</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#tiempo-objetivo">Tiempo objetivo</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#validacion-posterior-al-rollback">Validación posterior al rollback</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#recomendaciones-estructurales-posteriores">Recomendaciones estructurales posteriores</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#criterio-de-exito">Criterio de éxito</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../10-appendix-api/">Apéndice</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">Econnect AWS Documentation</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">API Gateway</li>
+      <li class="breadcrumb-item active">Plan de migración</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="plan-de-migracion">Plan de migración</h1>
+<h2 id="objetivo">Objetivo</h2>
+<p>Migrar el servicio API Gateway a la región destino con un proceso:</p>
+<ul>
+<li>controlado</li>
+<li>observable</li>
+<li>reversible</li>
+<li>compatible con dominios existentes</li>
+<li>alineado a dependencias reales</li>
+</ul>
+<h2 id="principios-de-ejecucion">Principios de ejecución</h2>
+<ol>
+<li><strong>No mover tráfico antes de recrear integraciones y auth.</strong></li>
+<li><strong>No considerar “lista” una API solo porque exista en otra región.</strong></li>
+<li><strong>Usar domain mappings como mecanismo principal de cutover.</strong></li>
+<li><strong>Preparar rollback antes del cambio.</strong></li>
+<li><strong>Validar APIs con clientes reales, no solo con curl.</strong></li>
+</ol>
+<h2 id="riesgos-de-partida">Riesgos de partida</h2>
+<ul>
+<li><code>us-east-2</code> no tiene todas las APIs listas para producción.</li>
+<li><code>apieconnectpro</code> y <code>apiusuarios</code> aparecen sin stages activos en esa región.</li>
+<li>auth es inconsistente.</li>
+<li>observabilidad es limitada.</li>
+<li>CORS y binarios pueden romper clientes.</li>
+<li>no hay CI/CD formal ni trazabilidad fuerte por commit/tag.</li>
+<li>dependencias a <code>api.power-devel.com</code> y Lambdas cross-region siguen vigentes.</li>
+</ul>
+<h2 id="fases-de-migracion">Fases de migración</h2>
+<h2 id="fase-0-preparacion">Fase 0 — Preparación</h2>
+<h3 id="entregables">Entregables</h3>
+<ul>
+<li>matriz completa de APIs, stages, rutas e integraciones</li>
+<li>tabla de dominios y mappings actuales</li>
+<li>tabla de auth por método</li>
+<li>tabla de CORS y binarios</li>
+<li>runbook de rollback</li>
+<li>dashboard mínimo y alarmas mínimas</li>
+</ul>
+<h3 id="checklist">Checklist</h3>
+<ul>
+<li>[ ] Confirmar API IDs finales.</li>
+<li>[ ] Confirmar stages realmente productivos.</li>
+<li>[ ] Confirmar dependencias cross-region.</li>
+<li>[ ] Confirmar certificados y dominios.</li>
+<li>[ ] Confirmar qué backends siguen en <code>us-east-1</code>.</li>
+<li>[ ] Confirmar si Cognito se mantiene o se replica.</li>
+</ul>
+<h2 id="fase-1-recreacion-tecnica-en-region-destino">Fase 1 — Recreación técnica en región destino</h2>
+<h3 id="crear-recrear">Crear / recrear</h3>
+<ul>
+<li>APIs REST/HTTP/WebSocket necesarias</li>
+<li>rutas y métodos</li>
+<li>integraciones Lambda / HTTP_PROXY / MOCK</li>
+<li>permisos <code>lambda:InvokeFunction</code></li>
+<li>custom domains</li>
+<li>certificados necesarios</li>
+<li>mappings</li>
+<li><code>OPTIONS</code> y Gateway Responses</li>
+<li>binary media types</li>
+<li>auth y authorizers</li>
+<li>throttling</li>
+<li>logging y métricas</li>
+</ul>
+<h3 id="criterio-de-salida">Criterio de salida</h3>
+<p>La nueva región debe responder funcionalmente sin recibir tráfico productivo.</p>
+<h2 id="fase-2-hardening-previo">Fase 2 — Hardening previo</h2>
+<h3 id="seguridad">Seguridad</h3>
+<ul>
+<li>aplicar auth real donde corresponda</li>
+<li>revisar rutas <code>NONE</code></li>
+<li>definir WAF / resource policies si aplica</li>
+<li>normalizar throttling</li>
+</ul>
+<h3 id="observabilidad">Observabilidad</h3>
+<ul>
+<li>access logs</li>
+<li>execution logs</li>
+<li>alarmas</li>
+<li>dashboard de migración</li>
+</ul>
+<h3 id="criterio-de-salida_1">Criterio de salida</h3>
+<p>La región destino debe ser operable, no solo funcional.</p>
+<h2 id="fase-3-pruebas-integrales">Fase 3 — Pruebas integrales</h2>
+<h3 id="pruebas-obligatorias">Pruebas obligatorias</h3>
+<h4 id="rest">REST</h4>
+<ul>
+<li>GET/POST/PUT/DELETE principales</li>
+<li>rutas <code>ANY</code> y <code>{proxy+}</code></li>
+<li>respuestas 200, 4XX y 5XX</li>
+<li>auth correcta</li>
+<li>headers correctos</li>
+</ul>
+<h4 id="web">Web</h4>
+<ul>
+<li>preflight OPTIONS</li>
+<li>CORS en errores</li>
+<li>clientes browser reales</li>
+</ul>
+<h4 id="binarios">Binarios</h4>
+<ul>
+<li>upload multipart</li>
+<li>download octet-stream</li>
+<li>validación de integridad</li>
+<li>tamaños límite</li>
+</ul>
+<h4 id="websocket">WebSocket</h4>
+<ul>
+<li><code>$connect</code></li>
+<li><code>$disconnect</code></li>
+<li><code>$default</code></li>
+<li>autenticación si aplica</li>
+<li>reintentos y errores</li>
+</ul>
+<h4 id="dependencias">Dependencias</h4>
+<ul>
+<li>Lambda</li>
+<li><code>api.power-devel.com</code></li>
+<li>S3</li>
+<li>SQS</li>
+<li>cualquier backend externo relevante</li>
+</ul>
+<h3 id="criterio-de-salida_2">Criterio de salida</h3>
+<p>La región destino debe pasar pruebas comparables a la región actual.</p>
+<h2 id="fase-4-cutover-controlado">Fase 4 — Cutover controlado</h2>
+<h3 id="estrategia-recomendada">Estrategia recomendada</h3>
+<p>Cambiar el <strong>custom domain mapping</strong> del dominio hacia la API/stage destino.</p>
+<h3 id="motivo">Motivo</h3>
+<p>Es el mecanismo más alineado con la arquitectura observada y el más reversible.</p>
+<h3 id="orden-sugerido">Orden sugerido</h3>
+<ol>
+<li>APIs no críticas o de menor blast radius.</li>
+<li><code>socket.econnectpro.mx</code> si el canal de tiempo real puede aislarse.</li>
+<li><code>api.econnectpro.mx</code> al final, cuando todo esté validado.</li>
+</ol>
+<h3 id="durante-el-cutover">Durante el cutover</h3>
+<ul>
+<li>monitorear 4XX/5XX</li>
+<li>monitorear latencia</li>
+<li>revisar logs Lambda</li>
+<li>probar endpoints críticos</li>
+<li>validar handshake WebSocket</li>
+<li>validar uploads y descargas</li>
+</ul>
+<h2 id="fase-5-estabilizacion">Fase 5 — Estabilización</h2>
+<h3 id="ventana-inmediata-post-cambio">Ventana inmediata post-cambio</h3>
+<ul>
+<li>revisar errores por 15 min, 30 min, 60 min</li>
+<li>revisar métricas y logs</li>
+<li>validar rutas críticas con usuarios o sistemas reales</li>
+<li>revisar auth</li>
+<li>revisar dominios y TLS</li>
+</ul>
+<h2 id="rollback">Rollback</h2>
+<h2 id="estrategia-recomendada_1">Estrategia recomendada</h2>
+<p>Revertir el <strong>custom domain mapping</strong> al target anterior.</p>
+<h2 id="datos-que-deben-quedar-guardados-antes-del-cambio">Datos que deben quedar guardados antes del cambio</h2>
+<ul>
+<li>dominio</li>
+<li>endpoint type</li>
+<li>API ID anterior</li>
+<li>stage anterior</li>
+<li>target anterior</li>
+<li>timestamp de cambio</li>
+<li>responsable del cambio</li>
+</ul>
+<h2 id="cuando-hacer-rollback">Cuándo hacer rollback</h2>
+<ul>
+<li>aumento sostenido de 5XX</li>
+<li>rutas críticas no funcionales</li>
+<li>auth fallando</li>
+<li>clientes browser rompiéndose por CORS</li>
+<li>uploads binarios corruptos</li>
+<li>degradación significativa de latencia</li>
+<li>fallos WebSocket generalizados</li>
+</ul>
+<h2 id="tiempo-objetivo">Tiempo objetivo</h2>
+<ul>
+<li>rollback por mapping: inmediato / &lt; 30 s</li>
+<li>rollback por DNS: solo como último recurso</li>
+</ul>
+<h2 id="validacion-posterior-al-rollback">Validación posterior al rollback</h2>
+<ul>
+<li>confirmar mapping restaurado</li>
+<li>re-probar endpoints críticos</li>
+<li>registrar incidente y causa</li>
+</ul>
+<h2 id="recomendaciones-estructurales-posteriores">Recomendaciones estructurales posteriores</h2>
+<p>Una vez terminada la migración, conviene cerrar deuda técnica:</p>
+<ul>
+<li>unificar IaC</li>
+<li>crear pipeline reproducible</li>
+<li>vincular deployments a commits/tags</li>
+<li>endurecer auth</li>
+<li>implementar guardrails de seguridad</li>
+<li>mejorar observabilidad</li>
+<li>eliminar dependencias cross-region cuando ya no sean necesarias</li>
+</ul>
+<h2 id="criterio-de-exito">Criterio de éxito</h2>
+<p>La migración será exitosa cuando:</p>
+<ul>
+<li>los dominios sigan operativos</li>
+<li>las rutas críticas respondan correctamente</li>
+<li>auth sea consistente</li>
+<li>clientes web no fallen por CORS</li>
+<li>binarios no se corrompan</li>
+<li>exista rollback probado</li>
+<li>el entorno destino sea más observable y gobernable que el actual</li>
+</ul>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../08-security-guardrails-api/" class="btn btn-neutral float-left" title="Seguridad"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../10-appendix-api/" class="btn btn-neutral float-right" title="Apéndice">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../08-security-guardrails-api/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../10-appendix-api/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

@@ -5,15 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Emilio Bravo" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>Inventario EC2 - Econnect AWS Documentation</title>
+    <title>Dominios y DNS - Econnect AWS Documentation</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Inventario EC2";
-        var mkdocs_page_input_path = "02-inventario.md";
+        var mkdocs_page_name = "Dominios y DNS";
+        var mkdocs_page_input_path = "05-domains-dns-api.md";
         var mkdocs_page_url = null;
       </script>
     
@@ -44,30 +44,12 @@
                 </li>
               </ul>
               <p class="caption"><span class="caption-text">EC2</span></p>
-              <ul class="current">
+              <ul>
                   <li class="toctree-l1"><a class="reference internal" href="../index-EC2/">Inicio EC2</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../01-contexto/">Contexto</a>
                   </li>
-                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Inventario EC2</a>
-    <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#resumen-de-computo">Resumen de cómputo</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#inventario-consolidado">Inventario consolidado</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#entry-points-del-sistema">Entry points del sistema</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#frontend-sitios">Frontend / sitios</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#aplicaciones-httphttps">Aplicaciones (HTTP/HTTPS)</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#apis">APIs</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#acceso-administrativo-a-instancias">Acceso administrativo a instancias</a>
-    </li>
-    </ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../02-inventario/">Inventario EC2</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../03-red/">Red y conectividad</a>
                   </li>
@@ -133,7 +115,7 @@
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">API Gateway</span></p>
-              <ul>
+              <ul class="current">
                   <li class="toctree-l1"><a class="reference internal" href="../index-api/">Inicio API Gateway</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../01-inventory-api/">Inventario</a>
@@ -144,7 +126,69 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../04-auth-api/">Autenticación y autorización</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../05-domains-dns-api/">Dominios y DNS</a>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Dominios y DNS</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#dominios-identificados">Dominios identificados</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#arquitectura-actual-de-publicacion">Arquitectura actual de publicación</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#apieconnectpromx">api.econnectpro.mx</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#socketeconnectpromx">socket.econnectpro.mx</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#certificado-acm">Certificado ACM</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#dns-en-route-53">DNS en Route 53</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#hosted-zone">Hosted zone</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#records-observados">Records observados</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#cloudfront-y-edge-behavior">CloudFront y edge behavior</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#evidencia-confirmada">Evidencia confirmada</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#riesgos">Riesgos</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#observacion-critica">Observación crítica</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#estrategia-de-cutover-recomendada">Estrategia de cutover recomendada</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#recomendacion-principal">Recomendación principal</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#motivos">Motivos</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#cuando-usar-dns">Cuándo usar DNS</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#rollback">Rollback</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#recomendacion">Recomendación</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#tiempos-objetivo-inferidos">Tiempos objetivo inferidos</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#que-debe-recrearse-en-region-destino">Qué debe recrearse en región destino</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#para-apieconnectpromx">Para api.econnectpro.mx</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#para-socketeconnectpromx">Para socket.econnectpro.mx</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#riesgos-de-migracion">Riesgos de migración</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#recomendaciones-operativas">Recomendaciones operativas</a>
+    </li>
+    </ul>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../06-cors-binary-api/">CORS y manejo de binarios</a>
                   </li>
@@ -171,8 +215,8 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
-          <li class="breadcrumb-item">EC2</li>
-      <li class="breadcrumb-item active">Inventario EC2</li>
+          <li class="breadcrumb-item">API Gateway</li>
+      <li class="breadcrumb-item active">Dominios y DNS</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -181,154 +225,203 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="inventario-ec2-y-entry-points">Inventario EC2 y entry points</h1>
-<blockquote>
-<p>Fuente: <a href="../assets/EC2-Documentacion-Econnect.pdf">assets/EC2-Documentacion-Econnect.pdf</a><br />
-Generado: <strong>2026-03-03</strong></p>
-</blockquote>
-<h2 id="resumen-de-computo">Resumen de cómputo</h2>
-<ul>
-<li><strong>us-east-1:</strong> 8 instancias EC2 detectadas.</li>
-<li><strong>us-east-2:</strong> 1 instancia EC2 (stopped).</li>
-</ul>
-<blockquote>
-<p>No se observa un tag estándar <code>Environment/Env/Stage</code>, por lo que no se puede clasificar formalmente por dev/stage/prod con la información disponible.</p>
-</blockquote>
-<h2 id="inventario-consolidado">Inventario consolidado</h2>
+                <h1 id="dominios-y-dns">Dominios y DNS</h1>
+<h2 id="dominios-identificados">Dominios identificados</h2>
+<p>Se evidenciaron dos custom domains principales:</p>
 <table>
 <thead>
 <tr>
-<th>Región</th>
-<th>Name/Tag</th>
-<th>Instance ID</th>
-<th>Estado</th>
-<th>Rol</th>
-<th>VPC</th>
-<th>OS</th>
-<th>AMI</th>
+<th>Dominio</th>
+<th>Tipo</th>
+<th>API mapeada</th>
+<th>Stage</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>us-east-1</td>
-<td>Windows</td>
-<td><code>i-0ef1204ed1c03a849</code></td>
-<td>running (según CloudWatch Agent/SSM online)</td>
-<td>Windows server (app/ops) + SQL Server self-hosted</td>
-<td><code>vpc-0cda6f6b</code></td>
-<td>Windows Server 2019 (Spanish Full Base)</td>
-<td>ami-09125c5ac14dca1c5 (deleted/private)</td>
+<td><code>api.econnectpro.mx</code></td>
+<td>EDGE</td>
+<td><code>apieconnectpro</code></td>
+<td><code>test</code></td>
 </tr>
 <tr>
-<td>us-east-1</td>
-<td>win_robots</td>
-<td><code>i-05ac207409e68b7b2</code></td>
-<td>running (según CloudWatch Agent/SSM online)</td>
-<td>Worker/automation (robots)</td>
-<td><code>vpc-166c0773</code></td>
-<td>Windows Server 2022 (English Full Base)</td>
-<td>ami-085d15593174f2582 (deleted/private)</td>
-</tr>
-<tr>
-<td>us-east-1</td>
-<td>Mongo-Primary</td>
-<td><code>i-0fba1627118e40ac9</code></td>
-<td>(no confirmado; no reporta métricas custom)</td>
-<td>MongoDB primary (replica set)</td>
-<td><code>vpc-0cda6f6b</code></td>
-<td>Amazon Linux (2018.03)</td>
-<td>ami-0e2ff28bfb72a4e45</td>
-</tr>
-<tr>
-<td>us-east-1</td>
-<td>Mongo-Reports</td>
-<td><code>i-096c5970aa84088af</code></td>
-<td>running (según CloudWatch Agent/SSM online)</td>
-<td>MongoDB reporting/analytics node</td>
-<td><code>vpc-0cda6f6b</code></td>
-<td>Amazon Linux (2018.03)</td>
-<td>ami-0e2ff28bfb72a4e45</td>
-</tr>
-<tr>
-<td>us-east-1</td>
-<td>sa31 c6</td>
-<td><code>i-0e2bc974ec12793c1</code></td>
-<td>running (según CloudWatch Agent/SSM online)</td>
-<td>Compute/app server (alto cómputo)</td>
-<td><code>vpc-0cda6f6b</code></td>
-<td>Amazon Linux 2 (kernel 5.10)</td>
-<td>ami-0453898e90846c639</td>
-</tr>
-<tr>
-<td>us-east-1</td>
-<td>SOLUCIONA</td>
-<td><code>i-0b3731b503b53cedf</code></td>
-<td>stopped</td>
-<td>App/servicio (legacy; launch template sin ASG)</td>
-<td><code>vpc-0cda6f6b</code></td>
-<td>Amazon Linux 2</td>
-<td>ami-0947d2ba12ee1ff75</td>
-</tr>
-<tr>
-<td>us-east-1</td>
-<td>windows2</td>
-<td><code>i-08ba32766c8ea908d</code></td>
-<td>stopped</td>
-<td>Windows server (secundario/legacy)</td>
-<td><code>vpc-0cda6f6b</code></td>
-<td>Windows Server 2019 (Spanish Full Base)</td>
-<td>ami-04fc94404996b18a9 (deleted/private)</td>
-</tr>
-<tr>
-<td>us-east-1</td>
-<td>sews</td>
-<td><code>i-02380ddcba26ed3a2</code></td>
-<td>stopped</td>
-<td>App/servicio (por nombre)</td>
-<td><code>vpc-0cda6f6b</code></td>
-<td>Windows Server 2019 (English Full Base)</td>
-<td>ami-0b17e49efb8d755c3 (deleted/private)</td>
-</tr>
-<tr>
-<td>us-east-2</td>
-<td>mongo8</td>
-<td><code>i-0dfef81c198e9fdcb</code></td>
-<td>stopped</td>
-<td>MongoDB nodo suelto (instancia única)</td>
-<td><code>(no documentado)</code></td>
-<td>(no documentado)</td>
-<td>(no documentado)</td>
+<td><code>socket.econnectpro.mx</code></td>
+<td>REGIONAL</td>
+<td><code>api_socket</code></td>
+<td><code>test</code></td>
 </tr>
 </tbody>
 </table>
-<h2 id="entry-points-del-sistema">Entry points del sistema</h2>
-<h3 id="frontend-sitios">Frontend / sitios</h3>
+<h2 id="arquitectura-actual-de-publicacion">Arquitectura actual de publicación</h2>
+<h3 id="apieconnectpromx">api.econnectpro.mx</h3>
 <ul>
-<li><strong>CloudFront → S3</strong> para frontend/sitios públicos (distribuciones con CNAMEs <code>econnectpro.mx</code> y <code>login.econnectpro.mx</code>, y orígenes S3 / S3 static website).</li>
+<li>usa custom domain <strong>EDGE</strong></li>
+<li>implica CloudFront administrado por API Gateway</li>
+<li>target visible:</li>
+<li><code>da3va61kxw5mp.cloudfront.net</code></li>
 </ul>
-<h3 id="aplicaciones-httphttps">Aplicaciones (HTTP/HTTPS)</h3>
+<h3 id="socketeconnectpromx">socket.econnectpro.mx</h3>
 <ul>
-<li><strong>ALBs internet-facing</strong> en <code>us-east-1</code> para componentes de aplicación:</li>
-<li><code>econnect</code>, <code>admin</code>, <code>soluciona31</code>, <code>reportes</code>, <code>integra24</code>, <code>apivucem</code>, <code>apiSA31</code>.</li>
+<li>usa custom domain <strong>REGIONAL</strong></li>
+<li>apunta directamente al endpoint regional de API Gateway</li>
+<li>target visible:</li>
+<li><code>d-tw5pnm947f.execute-api.us-east-1.amazonaws.com</code></li>
 </ul>
-<h3 id="apis">APIs</h3>
+<h2 id="certificado-acm">Certificado ACM</h2>
+<p>Ambos dominios usan el mismo certificado ACM en <code>us-east-1</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Certificate ARN</td>
+<td><code>arn:aws:acm:us-east-1:305968097757:certificate/d2aaab9e-bbff-46fe-b939-c3d1700a3b65</code></td>
+</tr>
+<tr>
+<td>Región</td>
+<td><code>us-east-1</code></td>
+</tr>
+<tr>
+<td>Cobertura inferida</td>
+<td>wildcard para <code>*.econnectpro.mx</code> y <code>econnectpro.mx</code></td>
+</tr>
+<tr>
+<td>Vigencia inferida</td>
+<td>hasta <code>2027-03-01</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="dns-en-route-53">DNS en Route 53</h2>
+<h3 id="hosted-zone">Hosted zone</h3>
 <ul>
-<li><strong>API Gateway</strong> como entry point para APIs:</li>
-<li>APIs en <code>us-east-1</code> (REST + WebSocket).</li>
-<li>APIs en <code>us-east-2</code> (REST + WebSocket + HTTP, incluyendo <code>dev-auth-api</code>).</li>
+<li>Hosted Zone ID: <code>Z1FARNXLLG1M1C</code></li>
+<li>Zone Name: <code>econnectpro.mx</code></li>
 </ul>
-<h2 id="acceso-administrativo-a-instancias">Acceso administrativo a instancias</h2>
+<h3 id="records-observados">Records observados</h3>
+<table>
+<thead>
+<tr>
+<th>Record</th>
+<th>Tipo</th>
+<th>Alias</th>
+<th>Target</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>api.econnectpro.mx</code></td>
+<td>A</td>
+<td>Yes</td>
+<td><code>da3va61kxw5mp.cloudfront.net</code></td>
+</tr>
+<tr>
+<td><code>socket.econnectpro.mx</code></td>
+<td>A</td>
+<td>Yes</td>
+<td><code>d-tw5pnm947f.execute-api.us-east-1.amazonaws.com</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="cloudfront-y-edge-behavior">CloudFront y edge behavior</h2>
+<h3 id="evidencia-confirmada">Evidencia confirmada</h3>
 <ul>
-<li>El acceso administrativo se realiza principalmente por <strong>AWS Systems Manager (SSM) / Session Manager</strong>.</li>
-<li>Se confirma en la instancia Windows (<code>i-0ef1204ed1c03a849</code>) que el SSM Agent está en línea (Session Manager “Connected”) con rol <strong>AmazonSSMRoleForInstancesQuickSetup</strong>.</li>
+<li><code>api.econnectpro.mx</code> sí está detrás de CloudFront debido a su tipo EDGE.</li>
+<li><code>socket.econnectpro.mx</code> no está detrás de CloudFront; es un endpoint regional directo.</li>
 </ul>
-<p><strong>Implicación:</strong> no se requiere bastion/jump box ni abrir puertos de administración para operar (si se estandariza el acceso vía SSM).</p>
+<h3 id="riesgos">Riesgos</h3>
+<ul>
+<li>comportamiento distinto de propagación</li>
+<li>comportamiento distinto de caché</li>
+<li>estrategias de rollback diferentes</li>
+<li>necesidad de validar certificados y mappings por separado</li>
+</ul>
+<h2 id="observacion-critica">Observación crítica</h2>
+<p>El dominio <code>api.econnectpro.mx</code> está mapeado al stage <code>test</code>.<br />
+Antes de migrar debe aclararse si:</p>
+<ul>
+<li><code>test</code> es realmente el stage productivo, o</li>
+<li>existe un naming legacy que no refleja el ambiente real.</li>
+</ul>
+<h2 id="estrategia-de-cutover-recomendada">Estrategia de cutover recomendada</h2>
+<h3 id="recomendacion-principal">Recomendación principal</h3>
+<p>Usar <strong>cambio de API mapping / base path mapping</strong> en API Gateway como mecanismo principal de cutover.</p>
+<h3 id="motivos">Motivos</h3>
+<ul>
+<li>es más rápido</li>
+<li>es más reversible</li>
+<li>evita un cambio DNS más grueso</li>
+<li>encaja con la arquitectura actual de custom domains</li>
+</ul>
+<h3 id="cuando-usar-dns">Cuándo usar DNS</h3>
+<p>Solo cuando cambie la estrategia de publicación o el dominio deba apuntar a un target completamente distinto.</p>
+<h2 id="rollback">Rollback</h2>
+<h3 id="recomendacion">Recomendación</h3>
+<p>Rollback por <strong>reversión del mapping</strong> del custom domain.</p>
+<h3 id="tiempos-objetivo-inferidos">Tiempos objetivo inferidos</h3>
+<ul>
+<li>rollback por mapping: inmediato / &lt; 30 s</li>
+<li>rollback por DNS ALIAS: 60–300 s aprox.</li>
+</ul>
+<h2 id="que-debe-recrearse-en-region-destino">Qué debe recrearse en región destino</h2>
+<h3 id="para-apieconnectpromx">Para <code>api.econnectpro.mx</code></h3>
+<ul>
+<li>custom domain compatible</li>
+<li>certificado en la región correcta según tipo EDGE/REGIONAL</li>
+<li>mapping a la API destino</li>
+<li>pruebas de resolución y handshake TLS</li>
+</ul>
+<h3 id="para-socketeconnectpromx">Para <code>socket.econnectpro.mx</code></h3>
+<ul>
+<li>custom domain regional</li>
+<li>certificado asociado</li>
+<li>mapping a WebSocket API destino</li>
+<li>prueba de conexión WebSocket real</li>
+</ul>
+<h2 id="riesgos-de-migracion">Riesgos de migración</h2>
+<ol>
+<li><strong>Certificado centralizado</strong></li>
+<li>
+<p>un error o expiración afecta ambos dominios</p>
+</li>
+<li>
+<p><strong>EDGE vs REGIONAL</strong></p>
+</li>
+<li>
+<p>requieren validaciones distintas y pueden reaccionar distinto al cutover</p>
+</li>
+<li>
+<p><strong>Alias sin weighted/failover</strong></p>
+</li>
+<li>
+<p>el cambio es binario; no existe una transición gradual documentada</p>
+</li>
+<li>
+<p><strong>Stage ambiguo</strong></p>
+</li>
+<li>el dominio principal apunta a <code>test</code>, lo que obliga a validar semántica antes del cambio</li>
+</ol>
+<h2 id="recomendaciones-operativas">Recomendaciones operativas</h2>
+<ul>
+<li>congelar cambios de domain mapping durante la ventana de migración</li>
+<li>guardar estado “before” exacto:</li>
+<li>dominio</li>
+<li>API ID</li>
+<li>stage</li>
+<li>endpoint type</li>
+<li>target</li>
+<li>validar certificados antes del cambio</li>
+<li>documentar comando/procedimiento exacto de rollback</li>
+</ul>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../01-contexto/" class="btn btn-neutral float-left" title="Contexto"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../03-red/" class="btn btn-neutral float-right" title="Red y conectividad">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../04-auth-api/" class="btn btn-neutral float-left" title="Autenticación y autorización"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../06-cors-binary-api/" class="btn btn-neutral float-right" title="CORS y manejo de binarios">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -351,10 +444,10 @@ Generado: <strong>2026-03-03</strong></p>
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-      <span><a href="../01-contexto/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../04-auth-api/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../03-red/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../06-cors-binary-api/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>
