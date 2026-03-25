@@ -5,15 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Emilio Bravo" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>Observabilidad - Econnect AWS Documentation</title>
+    <title>ELB - Econnect AWS Documentation</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Observabilidad";
-        var mkdocs_page_input_path = "10-observabilidad.md";
+        var mkdocs_page_name = "ELB";
+        var mkdocs_page_input_path = "elb.md";
         var mkdocs_page_url = null;
       </script>
     
@@ -44,7 +44,7 @@
                 </li>
               </ul>
               <p class="caption"><span class="caption-text">EC2</span></p>
-              <ul class="current">
+              <ul>
                   <li class="toctree-l1"><a class="reference internal" href="../index-EC2/">Inicio EC2</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../01-contexto/">Contexto</a>
@@ -65,23 +65,7 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../09-dependencias/">Dependencias</a>
                   </li>
-                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Observabilidad</a>
-    <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#cloudwatch-agent-ec2">CloudWatch Agent (EC2)</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#cloudwatch-logs-log-groups">CloudWatch Logs (log groups)</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#alarmas-cloudwatch">Alarmas (CloudWatch)</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#ec2">EC2</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#gaps-criticos-de-monitoreo">Gaps críticos de monitoreo</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#recomendaciones-operativas-para-cerrar-gaps">Recomendaciones operativas (para cerrar gaps)</a>
-    </li>
-    </ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../10-observabilidad/">Observabilidad</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../11-seguridad/">Seguridad</a>
                   </li>
@@ -156,7 +140,7 @@
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">Otros servicios</span></p>
-              <ul>
+              <ul class="current">
                   <li class="toctree-l1"><a class="reference internal" href="../index-multiple/">Inicio Otros Servicios</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../ses/">SES</a>
@@ -173,7 +157,33 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../route53/">Route 53</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../elb/">ELB</a>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">ELB</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#resumen-de-que-hace-en-econnect">Resumen de qué hace en Econnect</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#inventario-con-tabla">Inventario con tabla</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#load-balancers">Load balancers</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#red">Red</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#target-groups">Target groups</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#arquitectura-flujo">Arquitectura / flujo</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#riesgos-y-gaps">Riesgos y gaps</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#runbook-operativo">Runbook operativo</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#checklist-de-migracion-a-mx-central-1">Checklist de migración a mx-central-1</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#como-validar">Cómo validar</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#como-obtener-la-evidencia">Cómo obtener la evidencia</a>
+    </li>
+    </ul>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../migration-overview/">Resumen de migración</a>
                   </li>
@@ -192,8 +202,8 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
-          <li class="breadcrumb-item">EC2</li>
-      <li class="breadcrumb-item active">Observabilidad</li>
+          <li class="breadcrumb-item">Otros servicios</li>
+      <li class="breadcrumb-item active">ELB</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -202,71 +212,204 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="observabilidad-y-operacion">Observabilidad y operación</h1>
-<blockquote>
-<p>Fuente: <a href="../assets/EC2-Documentacion-Econnect.pdf">assets/EC2-Documentacion-Econnect.pdf</a><br />
-Generado: <strong>2026-03-03</strong></p>
-</blockquote>
-<h2 id="cloudwatch-agent-ec2">CloudWatch Agent (EC2)</h2>
-<p>En <code>us-east-1</code> se observan instancias con CloudWatch Agent reportando métricas:</p>
-<p><strong>Sí reportan métricas (agent corriendo):</strong>
-- <code>i-05ac207409e68b7b2</code> (win_robots)
-- <code>i-0ef1204ed1c03a849</code> (Windows)
-- <code>i-096c5970aa84088af</code> (Mongo-Reports)
-- <code>i-0e2bc974ec12793c1</code> (sa31 c6)</p>
-<p><strong>No detectado / no reporta métricas custom:</strong>
-- <code>i-0fba1627118e40ac9</code> (Mongo-Primary)</p>
-<p><strong>Stopped (no verificable):</strong>
-- SOLUCIONA, windows2, sews</p>
-<p><code>us-east-2</code>: no hay instancias EC2 activas (solo <code>mongo8</code> stopped).</p>
-<p><strong>Qué envía el agent (observado):</strong>
-- Métricas de sistema (Windows: disk/mem; Linux: mem/disk)</p>
-<p><strong>Qué no queda claro:</strong>
-- Envío de <strong>logs de aplicación</strong> desde EC2 (Nginx/app/Mongo/etc.)</p>
-<h2 id="cloudwatch-logs-log-groups">CloudWatch Logs (log groups)</h2>
+                <h1 id="elb">ELB</h1>
+<h2 id="resumen-de-que-hace-en-econnect">Resumen de qué hace en Econnect</h2>
+<p>La capa ELB documentada es exclusivamente <strong>ALB</strong> y concentra la publicación regional de varios servicios en <code>us-east-1</code>.</p>
+<h2 id="inventario-con-tabla">Inventario con tabla</h2>
+<h3 id="load-balancers">Load balancers</h3>
+<table>
+<thead>
+<tr>
+<th>ALB</th>
+<th>DNS</th>
+<th>Listeners</th>
+<th>Estado de backend</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>econnect</code></td>
+<td><code>econnect-192661303.us-east-1.elb.amazonaws.com</code></td>
+<td>443-&gt;<code>ds1</code>, 80-&gt;redirect 443, 15672-&gt;<code>rabit</code></td>
+<td>targets unused</td>
+</tr>
+<tr>
+<td><code>admin</code></td>
+<td><code>admin-42079760.us-east-1.elb.amazonaws.com</code></td>
+<td>80-&gt;redirect 443, 443-&gt;<code>admin</code></td>
+<td>target unused</td>
+</tr>
+<tr>
+<td><code>soluciona31</code></td>
+<td><code>soluciona31-1948772187.us-east-1.elb.amazonaws.com</code></td>
+<td>443-&gt;<code>soluciona31</code>, 80-&gt;redirect 443</td>
+<td>target unused</td>
+</tr>
+<tr>
+<td><code>reportes</code></td>
+<td><code>reportes-1609207215.us-east-1.elb.amazonaws.com</code></td>
+<td>443-&gt;<code>apireportes</code>, 80-&gt;<code>apireportes</code></td>
+<td>target presente</td>
+</tr>
+<tr>
+<td><code>integra24</code></td>
+<td><code>integra24-142907692.us-east-1.elb.amazonaws.com</code></td>
+<td>443-&gt;<code>integra24</code>, 80-&gt;redirect 443</td>
+<td>healthy</td>
+</tr>
+<tr>
+<td><code>apivucem</code></td>
+<td><code>apivucem-1719865756.us-east-1.elb.amazonaws.com</code></td>
+<td>80-&gt;<code>apivucem</code>, 443-&gt;<code>apivucem</code></td>
+<td>healthy</td>
+</tr>
+<tr>
+<td><code>apiSA31</code></td>
+<td><code>apiSA31-1140658120.us-east-1.elb.amazonaws.com</code></td>
+<td>80-&gt;<code>sa31Pro</code>, 443-&gt;<code>sa31Pro</code></td>
+<td>healthy</td>
+</tr>
+</tbody>
+</table>
+<h3 id="red">Red</h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>VPC</td>
+<td><code>vpc-0cda6f6b</code></td>
+</tr>
+<tr>
+<td>Subnets vistas</td>
+<td><code>subnet-eaa0f1c0</code>, <code>subnet-4b87863d</code>, <code>subnet-b1ae9e8c</code>, <code>subnet-eebeecb6</code></td>
+</tr>
+<tr>
+<td>SGs visibles</td>
+<td><code>sg-fc671187</code>, <code>sg-9b3678e4</code></td>
+</tr>
+<tr>
+<td>WAF</td>
+<td>no configurado</td>
+</tr>
+<tr>
+<td>Access logs</td>
+<td>deshabilitados</td>
+</tr>
+<tr>
+<td>Idle timeout</td>
+<td>4000s en la mayoría; <code>apivucem</code> 1800s</td>
+</tr>
+</tbody>
+</table>
+<h3 id="target-groups">Target groups</h3>
+<table>
+<thead>
+<tr>
+<th>TG</th>
+<th>Target</th>
+<th style="text-align: right;">Puerto</th>
+<th>Estado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>admin</code></td>
+<td><code>i-0b3731b503b53cedf</code></td>
+<td style="text-align: right;">8888</td>
+<td>unused</td>
+</tr>
+<tr>
+<td><code>apireportes</code></td>
+<td><code>i-096c5970aa84088af</code></td>
+<td style="text-align: right;">8880</td>
+<td>healthy/presente</td>
+</tr>
+<tr>
+<td><code>apivucem</code></td>
+<td><code>i-096c5970aa84088af</code></td>
+<td style="text-align: right;">8881</td>
+<td>healthy</td>
+</tr>
+<tr>
+<td><code>ds1</code></td>
+<td><code>i-0b3731b503b53cedf</code></td>
+<td style="text-align: right;">8885</td>
+<td>unused</td>
+</tr>
+<tr>
+<td><code>integra24</code></td>
+<td><code>i-0ef1204ed1c03a849</code></td>
+<td style="text-align: right;">80</td>
+<td>healthy</td>
+</tr>
+<tr>
+<td><code>rabit</code></td>
+<td><code>i-0b3731b503b53cedf</code></td>
+<td style="text-align: right;">15672</td>
+<td>unused</td>
+</tr>
+<tr>
+<td><code>sa31Pro</code></td>
+<td><code>i-0e2bc974ec12793c1</code></td>
+<td style="text-align: right;">8882</td>
+<td>healthy</td>
+</tr>
+<tr>
+<td><code>soluciona31</code></td>
+<td><code>i-0b3731b503b53cedf</code></td>
+<td style="text-align: right;">8889</td>
+<td>unused</td>
+</tr>
+</tbody>
+</table>
+<h2 id="arquitectura-flujo">Arquitectura / flujo</h2>
+<p><code>Route 53 -&gt; ALB internet-facing -&gt; target groups instance</code></p>
+<h2 id="riesgos-y-gaps">Riesgos y gaps</h2>
 <ul>
-<li><code>us-east-1</code>: 90+ log groups; alto volumen en <code>vpc_flowlog</code> (~38.7 GB) y muchos log groups de Lambda (procesos PDF/XML/etc.)</li>
-<li><code>us-east-2</code>: ~10 log groups (principalmente Lambda y Glue)</li>
+<li>Todos los ALB evidenciados están en <code>us-east-1</code>.</li>
+<li>La mitad de los target groups visibles están <code>unused</code>.</li>
+<li>No se evidencian access logs ni WAF.</li>
+<li>No se evidenció entry point principal de forma concluyente.</li>
 </ul>
-<p>Fuentes identificadas:
-- VPC Flow Logs ✅
-- Lambda ✅
-- Glue ✅
-- API Gateway ✅/⚠ (verificar)
-- EC2 app logs ❌ (limitados/no detectados)</p>
-<h2 id="alarmas-cloudwatch">Alarmas (CloudWatch)</h2>
-<p>Inventario observado:
-- <strong>Total:</strong> 12 alarmas (todas en <code>us-east-1</code>)
-- Acciones: notifican a <code>Default_CloudWatch_Alarms_Topic</code></p>
-<h3 id="ec2">EC2</h3>
-<ul>
-<li>CPU (4): threshold ≥ 85% (5 min / 1 datapoint)</li>
-<li>Memoria (4): threshold ≥ 85% (5 min / 1 datapoint)</li>
-<li>Disco (4+): ~85% used o ≤15% free (Windows Free Space)</li>
-</ul>
-<p><strong>Estado reportado:</strong> 4 en ALARM (3 disco Windows + 1 memoria en win_robots); resto OK.</p>
-<h3 id="gaps-criticos-de-monitoreo">Gaps críticos de monitoreo</h3>
-<ul>
-<li><strong>No hay alarmas de ALB</strong> (5xx/latency/UnHealthyHostCount).</li>
-<li><strong>No hay alarmas de RDS</strong> (CPU, FreeStorageSpace, FreeableMemory, Connections, etc.).</li>
-<li><strong>No hay alarmas de SQS</strong> (AgeOfOldestMessage, DLQ, etc.).</li>
-<li><strong>No hay alarmas de Lambda</strong> (Errors/Throttles/Duration).</li>
-<li><strong>us-east-2 sin alarmas</strong>.</li>
-</ul>
-<h2 id="recomendaciones-operativas-para-cerrar-gaps">Recomendaciones operativas (para cerrar gaps)</h2>
+<h2 id="runbook-operativo">Runbook operativo</h2>
 <ol>
-<li>Agregar alarmas mínimas para <strong>RDS</strong> (storage/memory/connections).</li>
-<li>Agregar alarmas para <strong>ALB</strong> (5xx, latency, UnHealthyHostCount).</li>
-<li>Agregar alarmas para <strong>SQS</strong> (AgeOfOldestMessage + DLQ).</li>
-<li>Agregar alarmas para <strong>Lambda</strong> (Errors/Throttles/Duration).</li>
-<li>Estandarizar envío de logs de aplicación desde EC2 (CloudWatch Logs o pipeline alterno).</li>
+<li>Confirmar dominio afectado y ALB asociado.</li>
+<li>Revisar listeners 80/443.</li>
+<li>Revisar target health y estado de la instancia.</li>
+<li>Si el target está <code>unused</code>, confirmar si el backend se retiró o el ALB quedó legado.</li>
+<li>Revisar certificados y expiración.</li>
 </ol>
+<h2 id="checklist-de-migracion-a-mx-central-1">Checklist de migración a mx-central-1</h2>
+<ol>
+<li>Inventariar ALB y target groups equivalentes.</li>
+<li>Replicar listeners y certificados.</li>
+<li>Replicar SGs, subnets y health checks.</li>
+<li>Validar backends sanos en región destino.</li>
+<li>Cambiar DNS cuando el destino esté listo.</li>
+<li>Mantener rollback al ALB original.</li>
+</ol>
+<h2 id="como-validar">Cómo validar</h2>
+<pre><code class="language-bash">aws elbv2 describe-load-balancers --region us-east-1
+aws elbv2 describe-listeners --load-balancer-arn &lt;alb-arn&gt; --region us-east-1
+aws elbv2 describe-target-groups --region us-east-1
+aws elbv2 describe-target-health --target-group-arn &lt;tg-arn&gt; --region us-east-1
+</code></pre>
+<h2 id="como-obtener-la-evidencia">Cómo obtener la evidencia</h2>
+<pre><code class="language-bash">aws elbv2 describe-load-balancer-attributes --load-balancer-arn &lt;alb-arn&gt; --region us-east-1
+aws wafv2 list-web-acls --scope REGIONAL --region us-east-1
+aws ec2 describe-security-groups --group-ids sg-fc671187 sg-9b3678e4 --region us-east-1
+</code></pre>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../09-dependencias/" class="btn btn-neutral float-left" title="Dependencias"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../11-seguridad/" class="btn btn-neutral float-right" title="Seguridad">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../route53/" class="btn btn-neutral float-left" title="Route 53"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../migration-overview/" class="btn btn-neutral float-right" title="Resumen de migración">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -289,10 +432,10 @@ Generado: <strong>2026-03-03</strong></p>
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-      <span><a href="../09-dependencias/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../route53/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../11-seguridad/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../migration-overview/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>

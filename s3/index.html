@@ -5,15 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Emilio Bravo" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>Observabilidad - Econnect AWS Documentation</title>
+    <title>S3 - Econnect AWS Documentation</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Observabilidad";
-        var mkdocs_page_input_path = "10-observabilidad.md";
+        var mkdocs_page_name = "S3";
+        var mkdocs_page_input_path = "s3.md";
         var mkdocs_page_url = null;
       </script>
     
@@ -44,7 +44,7 @@
                 </li>
               </ul>
               <p class="caption"><span class="caption-text">EC2</span></p>
-              <ul class="current">
+              <ul>
                   <li class="toctree-l1"><a class="reference internal" href="../index-EC2/">Inicio EC2</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../01-contexto/">Contexto</a>
@@ -65,23 +65,7 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../09-dependencias/">Dependencias</a>
                   </li>
-                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Observabilidad</a>
-    <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#cloudwatch-agent-ec2">CloudWatch Agent (EC2)</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#cloudwatch-logs-log-groups">CloudWatch Logs (log groups)</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#alarmas-cloudwatch">Alarmas (CloudWatch)</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#ec2">EC2</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#gaps-criticos-de-monitoreo">Gaps críticos de monitoreo</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#recomendaciones-operativas-para-cerrar-gaps">Recomendaciones operativas (para cerrar gaps)</a>
-    </li>
-    </ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../10-observabilidad/">Observabilidad</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../11-seguridad/">Seguridad</a>
                   </li>
@@ -156,7 +140,7 @@
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">Otros servicios</span></p>
-              <ul>
+              <ul class="current">
                   <li class="toctree-l1"><a class="reference internal" href="../index-multiple/">Inicio Otros Servicios</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../ses/">SES</a>
@@ -167,7 +151,33 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../eventbridge/">EventBridge</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../s3/">S3</a>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">S3</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#resumen-de-que-hace-en-econnect">Resumen de qué hace en Econnect</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#inventario-con-tabla">Inventario con tabla</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#buckets-por-uso">Buckets por uso</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#buckets-criticos">Buckets críticos</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#replicacion-y-cifrado-evidenciados">Replicación y cifrado evidenciados</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#arquitectura-flujo">Arquitectura / flujo</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#riesgos-y-gaps">Riesgos y gaps</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#runbook-operativo">Runbook operativo</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#checklist-de-migracion-a-mx-central-1">Checklist de migración a mx-central-1</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#como-validar">Cómo validar</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#como-obtener-la-evidencia">Cómo obtener la evidencia</a>
+    </li>
+    </ul>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../cloudfront/">CloudFront</a>
                   </li>
@@ -192,8 +202,8 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
-          <li class="breadcrumb-item">EC2</li>
-      <li class="breadcrumb-item active">Observabilidad</li>
+          <li class="breadcrumb-item">Otros servicios</li>
+      <li class="breadcrumb-item active">S3</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -202,71 +212,216 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="observabilidad-y-operacion">Observabilidad y operación</h1>
-<blockquote>
-<p>Fuente: <a href="../assets/EC2-Documentacion-Econnect.pdf">assets/EC2-Documentacion-Econnect.pdf</a><br />
-Generado: <strong>2026-03-03</strong></p>
-</blockquote>
-<h2 id="cloudwatch-agent-ec2">CloudWatch Agent (EC2)</h2>
-<p>En <code>us-east-1</code> se observan instancias con CloudWatch Agent reportando métricas:</p>
-<p><strong>Sí reportan métricas (agent corriendo):</strong>
-- <code>i-05ac207409e68b7b2</code> (win_robots)
-- <code>i-0ef1204ed1c03a849</code> (Windows)
-- <code>i-096c5970aa84088af</code> (Mongo-Reports)
-- <code>i-0e2bc974ec12793c1</code> (sa31 c6)</p>
-<p><strong>No detectado / no reporta métricas custom:</strong>
-- <code>i-0fba1627118e40ac9</code> (Mongo-Primary)</p>
-<p><strong>Stopped (no verificable):</strong>
-- SOLUCIONA, windows2, sews</p>
-<p><code>us-east-2</code>: no hay instancias EC2 activas (solo <code>mongo8</code> stopped).</p>
-<p><strong>Qué envía el agent (observado):</strong>
-- Métricas de sistema (Windows: disk/mem; Linux: mem/disk)</p>
-<p><strong>Qué no queda claro:</strong>
-- Envío de <strong>logs de aplicación</strong> desde EC2 (Nginx/app/Mongo/etc.)</p>
-<h2 id="cloudwatch-logs-log-groups">CloudWatch Logs (log groups)</h2>
-<ul>
-<li><code>us-east-1</code>: 90+ log groups; alto volumen en <code>vpc_flowlog</code> (~38.7 GB) y muchos log groups de Lambda (procesos PDF/XML/etc.)</li>
-<li><code>us-east-2</code>: ~10 log groups (principalmente Lambda y Glue)</li>
-</ul>
-<p>Fuentes identificadas:
-- VPC Flow Logs ✅
-- Lambda ✅
-- Glue ✅
-- API Gateway ✅/⚠ (verificar)
-- EC2 app logs ❌ (limitados/no detectados)</p>
-<h2 id="alarmas-cloudwatch">Alarmas (CloudWatch)</h2>
-<p>Inventario observado:
-- <strong>Total:</strong> 12 alarmas (todas en <code>us-east-1</code>)
-- Acciones: notifican a <code>Default_CloudWatch_Alarms_Topic</code></p>
-<h3 id="ec2">EC2</h3>
-<ul>
-<li>CPU (4): threshold ≥ 85% (5 min / 1 datapoint)</li>
-<li>Memoria (4): threshold ≥ 85% (5 min / 1 datapoint)</li>
-<li>Disco (4+): ~85% used o ≤15% free (Windows Free Space)</li>
-</ul>
-<p><strong>Estado reportado:</strong> 4 en ALARM (3 disco Windows + 1 memoria en win_robots); resto OK.</p>
-<h3 id="gaps-criticos-de-monitoreo">Gaps críticos de monitoreo</h3>
-<ul>
-<li><strong>No hay alarmas de ALB</strong> (5xx/latency/UnHealthyHostCount).</li>
-<li><strong>No hay alarmas de RDS</strong> (CPU, FreeStorageSpace, FreeableMemory, Connections, etc.).</li>
-<li><strong>No hay alarmas de SQS</strong> (AgeOfOldestMessage, DLQ, etc.).</li>
-<li><strong>No hay alarmas de Lambda</strong> (Errors/Throttles/Duration).</li>
-<li><strong>us-east-2 sin alarmas</strong>.</li>
-</ul>
-<h2 id="recomendaciones-operativas-para-cerrar-gaps">Recomendaciones operativas (para cerrar gaps)</h2>
+                <h1 id="s3">S3</h1>
+<h2 id="resumen-de-que-hace-en-econnect">Resumen de qué hace en Econnect</h2>
+<p>S3 concentra frontend estático, descargas, integraciones SFTP, datos productivos, logs, despliegues y piezas ya orientadas a migración hacia <code>mx-central-1</code>.</p>
+<h2 id="inventario-con-tabla">Inventario con tabla</h2>
+<h3 id="buckets-por-uso">Buckets por uso</h3>
+<table>
+<thead>
+<tr>
+<th>Categoría</th>
+<th>Buckets</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SFTP / integraciones</td>
+<td><code>sftp.agencias</code>, <code>sftp.econnectpro.mx</code>, <code>sftp.rbo910102qj9.econnectpro.mx</code>, <code>carta.porte.econnectpro.mx</code></td>
+</tr>
+<tr>
+<td>Assets / frontend</td>
+<td><code>econnect.com.mx</code>, <code>econnectpro.mx</code>, <code>www.econnectpro.mx</code>, <code>login.econnectpro.mx</code>, <code>emv.econnectpro.mx</code>, <code>descargas.econnectpro.mx</code></td>
+</tr>
+<tr>
+<td>Uploads / descargas</td>
+<td><code>descargas.econnectpro.mx</code>, <code>descargas.econnectpro.mx.2</code>, <code>facturas.abiertas.econectpro.mx</code>, <code>econnect.soia</code></td>
+</tr>
+<tr>
+<td>Logs</td>
+<td><code>aws-cloudtrail-logs-305968097757-8a7643ed</code>, <code>config-bucket-305968097757</code>, <code>qdeveloper-log</code></td>
+</tr>
+<tr>
+<td>Backups / data</td>
+<td><code>awsfacturasdetalladas</code>, <code>bulkproduction.econnect.ds</code>, <code>production.econnect.ds</code>, <code>production.econnect.ds.2</code>, <code>ecnc-prod-s3-batch-reports</code>, <code>ecnc-prod-s3-mx1-manifest</code></td>
+</tr>
+<tr>
+<td>Dev / otros</td>
+<td><code>bulk-policy-migration-305968097757</code>, <code>ecosting</code>, <code>pruebas.powerdevel</code>, <code>serverless-framework-deployments-us-east-1-b1d0b797-f04c</code>, <code>serverless-framework-deployments-us-east-2-efb7910d-6e19</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="buckets-criticos">Buckets críticos</h3>
+<table>
+<thead>
+<tr>
+<th>Nivel</th>
+<th>Bucket</th>
+<th>Motivo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Alto</td>
+<td><code>econnectpro.mx</code></td>
+<td>frontend principal + CRR activa</td>
+</tr>
+<tr>
+<td>Alto</td>
+<td><code>www.econnectpro.mx</code></td>
+<td>entrada principal</td>
+</tr>
+<tr>
+<td>Alto</td>
+<td><code>login.econnectpro.mx</code></td>
+<td>login/autenticación</td>
+</tr>
+<tr>
+<td>Alto</td>
+<td><code>sftp.econnectpro.mx</code></td>
+<td>integraciones SFTP</td>
+</tr>
+<tr>
+<td>Alto</td>
+<td><code>production.econnect.ds</code></td>
+<td>datos productivos</td>
+</tr>
+<tr>
+<td>Alto</td>
+<td><code>descargas.econnectpro.mx</code></td>
+<td>descargas/uploads</td>
+</tr>
+<tr>
+<td>Medio</td>
+<td><code>facturas.abiertas.econectpro.mx</code></td>
+<td>facturación</td>
+</tr>
+<tr>
+<td>Medio</td>
+<td><code>carta.porte.econnectpro.mx</code></td>
+<td>cumplimiento</td>
+</tr>
+<tr>
+<td>Medio</td>
+<td><code>ecnc-prod-s3-mx1-manifest</code></td>
+<td>dependencia en mx-central-1</td>
+</tr>
+</tbody>
+</table>
+<h3 id="replicacion-y-cifrado-evidenciados">Replicación y cifrado evidenciados</h3>
+<table>
+<thead>
+<tr>
+<th>Bucket</th>
+<th>Región</th>
+<th>Versioning</th>
+<th>Replication</th>
+<th>Destino</th>
+<th>Encryption</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>descargas.econnectpro.mx</code></td>
+<td>us-east-1</td>
+<td>Enabled</td>
+<td>Disabled</td>
+<td><code>ecnc-s3-mx1-descargas.econnectpro.mx</code></td>
+<td>SSE-S3</td>
+</tr>
+<tr>
+<td><code>econnectpro.mx</code></td>
+<td>us-east-1</td>
+<td>Enabled</td>
+<td>Enabled</td>
+<td><code>ecnc-s3-econnectpro-frontend</code></td>
+<td>SSE-S3</td>
+</tr>
+<tr>
+<td><code>facturas.abiertas.econectpro.mx</code></td>
+<td>us-east-1</td>
+<td>Enabled</td>
+<td>Disabled</td>
+<td><code>ecnc-s3-mx1-facturas.abiertas.econectpro.mx</code></td>
+<td>SSE-S3</td>
+</tr>
+<tr>
+<td><code>production.econnect.ds</code></td>
+<td>us-east-1</td>
+<td>Enabled</td>
+<td>Enabled</td>
+<td><code>ecnc-s3-mx1-production.econnect.ds</code></td>
+<td>SSE-S3</td>
+</tr>
+<tr>
+<td><code>ecnc-prod-s3-batch-reports</code></td>
+<td>us-east-1</td>
+<td>Not Configured</td>
+<td>No evidenciado</td>
+<td>N/A</td>
+<td>SSE-KMS</td>
+</tr>
+<tr>
+<td><code>ecnc-prod-s3-mx1-manifest</code></td>
+<td>mx-central-1</td>
+<td>Enabled</td>
+<td>N/A</td>
+<td>N/A</td>
+<td>SSE-KMS</td>
+</tr>
+</tbody>
+</table>
+<h2 id="arquitectura-flujo">Arquitectura / flujo</h2>
+<p>S3 soporta al menos cuatro patrones:</p>
 <ol>
-<li>Agregar alarmas mínimas para <strong>RDS</strong> (storage/memory/connections).</li>
-<li>Agregar alarmas para <strong>ALB</strong> (5xx, latency, UnHealthyHostCount).</li>
-<li>Agregar alarmas para <strong>SQS</strong> (AgeOfOldestMessage + DLQ).</li>
-<li>Agregar alarmas para <strong>Lambda</strong> (Errors/Throttles/Duration).</li>
-<li>Estandarizar envío de logs de aplicación desde EC2 (CloudWatch Logs o pipeline alterno).</li>
+<li><strong>frontend estático</strong> detrás de CloudFront,</li>
+<li><strong>integraciones documentales/SFTP</strong>,</li>
+<li><strong>almacenamiento productivo</strong>,</li>
+<li><strong>replicación regional hacia mx-central-1</strong>.</li>
 </ol>
+<h2 id="riesgos-y-gaps">Riesgos y gaps</h2>
+<ul>
+<li>Replicación deshabilitada en buckets que parecen importantes.</li>
+<li>Predomina SSE-S3 en vez de SSE-KMS.</li>
+<li>Muchos buckets con versioning <code>Suspended</code> o <code>Not Configured</code>.</li>
+<li>No se evidenció Public Access Block por bucket.</li>
+<li>El mapa real de acceso por IAM a 22 buckets sigue abierto.</li>
+</ul>
+<h2 id="runbook-operativo">Runbook operativo</h2>
+<ol>
+<li>Identificar bucket afectado y su función.</li>
+<li>Confirmar versioning, cifrado y replicación.</li>
+<li>Revisar bucket policy y access path.</li>
+<li>Confirmar si el problema es de origen, replicación o consumidor.</li>
+<li>Para frontends, revisar también CloudFront.</li>
+</ol>
+<h2 id="checklist-de-migracion-a-mx-central-1">Checklist de migración a mx-central-1</h2>
+<ol>
+<li>Priorizar buckets críticos.</li>
+<li>Confirmar CRR activa donde aplique.</li>
+<li>Completar PAB y lifecycle por bucket.</li>
+<li>Migrar o replicar KMS si se usa SSE-KMS.</li>
+<li>Validar consumidores de frontend y de integración.</li>
+<li>Hacer pruebas de lectura/escritura en la región destino.</li>
+</ol>
+<h2 id="como-validar">Cómo validar</h2>
+<pre><code class="language-bash">aws s3api list-buckets
+aws s3api get-bucket-versioning --bucket econnectpro.mx
+aws s3api get-bucket-replication --bucket production.econnect.ds
+aws s3api get-bucket-encryption --bucket ecnc-prod-s3-mx1-manifest --region mx-central-1
+</code></pre>
+<h2 id="como-obtener-la-evidencia">Cómo obtener la evidencia</h2>
+<pre><code class="language-bash">aws s3api get-bucket-policy --bucket econnectpro.mx
+aws s3api get-public-access-block --bucket econnectpro.mx
+aws s3api get-bucket-lifecycle-configuration --bucket econnectpro.mx
+aws s3api get-bucket-notification-configuration --bucket sftp.econnectpro.mx
+</code></pre>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../09-dependencias/" class="btn btn-neutral float-left" title="Dependencias"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../11-seguridad/" class="btn btn-neutral float-right" title="Seguridad">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../eventbridge/" class="btn btn-neutral float-left" title="EventBridge"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../cloudfront/" class="btn btn-neutral float-right" title="CloudFront">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -289,10 +444,10 @@ Generado: <strong>2026-03-03</strong></p>
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-      <span><a href="../09-dependencias/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../eventbridge/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../11-seguridad/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../cloudfront/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>

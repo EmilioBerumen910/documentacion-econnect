@@ -5,15 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Emilio Bravo" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>Observabilidad - Econnect AWS Documentation</title>
+    <title>Inicio Otros Servicios - Econnect AWS Documentation</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Observabilidad";
-        var mkdocs_page_input_path = "10-observabilidad.md";
+        var mkdocs_page_name = "Inicio Otros Servicios";
+        var mkdocs_page_input_path = "index-multiple.md";
         var mkdocs_page_url = null;
       </script>
     
@@ -44,7 +44,7 @@
                 </li>
               </ul>
               <p class="caption"><span class="caption-text">EC2</span></p>
-              <ul class="current">
+              <ul>
                   <li class="toctree-l1"><a class="reference internal" href="../index-EC2/">Inicio EC2</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../01-contexto/">Contexto</a>
@@ -65,23 +65,7 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../09-dependencias/">Dependencias</a>
                   </li>
-                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Observabilidad</a>
-    <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#cloudwatch-agent-ec2">CloudWatch Agent (EC2)</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#cloudwatch-logs-log-groups">CloudWatch Logs (log groups)</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#alarmas-cloudwatch">Alarmas (CloudWatch)</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#ec2">EC2</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#gaps-criticos-de-monitoreo">Gaps críticos de monitoreo</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#recomendaciones-operativas-para-cerrar-gaps">Recomendaciones operativas (para cerrar gaps)</a>
-    </li>
-    </ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../10-observabilidad/">Observabilidad</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../11-seguridad/">Seguridad</a>
                   </li>
@@ -156,8 +140,20 @@
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">Otros servicios</span></p>
-              <ul>
-                  <li class="toctree-l1"><a class="reference internal" href="../index-multiple/">Inicio Otros Servicios</a>
+              <ul class="current">
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Inicio Otros Servicios</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#resumen">Resumen</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#mapa-funcional-evidenciado">Mapa funcional evidenciado</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#hallazgos-transversales">Hallazgos transversales</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#recomendacion-de-lectura">Recomendación de lectura</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#riesgo-central">Riesgo central</a>
+    </li>
+    </ul>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../ses/">SES</a>
                   </li>
@@ -192,8 +188,8 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
-          <li class="breadcrumb-item">EC2</li>
-      <li class="breadcrumb-item active">Observabilidad</li>
+          <li class="breadcrumb-item">Otros servicios</li>
+      <li class="breadcrumb-item active">Inicio Otros Servicios</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -202,71 +198,86 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="observabilidad-y-operacion">Observabilidad y operación</h1>
-<blockquote>
-<p>Fuente: <a href="../assets/EC2-Documentacion-Econnect.pdf">assets/EC2-Documentacion-Econnect.pdf</a><br />
-Generado: <strong>2026-03-03</strong></p>
-</blockquote>
-<h2 id="cloudwatch-agent-ec2">CloudWatch Agent (EC2)</h2>
-<p>En <code>us-east-1</code> se observan instancias con CloudWatch Agent reportando métricas:</p>
-<p><strong>Sí reportan métricas (agent corriendo):</strong>
-- <code>i-05ac207409e68b7b2</code> (win_robots)
-- <code>i-0ef1204ed1c03a849</code> (Windows)
-- <code>i-096c5970aa84088af</code> (Mongo-Reports)
-- <code>i-0e2bc974ec12793c1</code> (sa31 c6)</p>
-<p><strong>No detectado / no reporta métricas custom:</strong>
-- <code>i-0fba1627118e40ac9</code> (Mongo-Primary)</p>
-<p><strong>Stopped (no verificable):</strong>
-- SOLUCIONA, windows2, sews</p>
-<p><code>us-east-2</code>: no hay instancias EC2 activas (solo <code>mongo8</code> stopped).</p>
-<p><strong>Qué envía el agent (observado):</strong>
-- Métricas de sistema (Windows: disk/mem; Linux: mem/disk)</p>
-<p><strong>Qué no queda claro:</strong>
-- Envío de <strong>logs de aplicación</strong> desde EC2 (Nginx/app/Mongo/etc.)</p>
-<h2 id="cloudwatch-logs-log-groups">CloudWatch Logs (log groups)</h2>
+                <h1 id="inicio-otros-servicios">Inicio Otros Servicios</h1>
+<h2 id="resumen">Resumen</h2>
+<p>El PDF contiene la parte más sólida de la evidencia en los servicios periféricos y de plataforma compartida: <strong>SES, WorkMail, SQS, EventBridge, S3, CloudFront, Route 53 y ELB</strong>. En conjunto, estos servicios describen cómo entra el tráfico, cómo se enruta, dónde vive el contenido, cómo se ejecutan automatizaciones y cómo se manejan las integraciones por correo.</p>
+<h2 id="mapa-funcional-evidenciado">Mapa funcional evidenciado</h2>
+<table>
+<thead>
+<tr>
+<th>Dominio funcional</th>
+<th>Servicios involucrados</th>
+<th>Evidencia principal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Entrada de tráfico</td>
+<td>Route 53, CloudFront, ELB, API Gateway</td>
+<td>Alias, CNAME, ALB DNS, execute-api, dominios públicos</td>
+</tr>
+<tr>
+<td>Frontend estático</td>
+<td>S3, CloudFront</td>
+<td>buckets <code>econnectpro.mx</code>, <code>www.econnectpro.mx</code>, <code>login.econnectpro.mx</code></td>
+</tr>
+<tr>
+<td>Integraciones y documentos</td>
+<td>S3, SQS, Lambda, EventBridge</td>
+<td>colas de documentos, buckets SFTP, reprocesos programados</td>
+</tr>
+<tr>
+<td>Correo corporativo</td>
+<td>WorkMail</td>
+<td>organización <code>procontrol</code>, SMTP/IMAP, autodiscover</td>
+</tr>
+<tr>
+<td>Correo programático</td>
+<td>SES</td>
+<td>identidades, verificación, cuotas, sending enabled/disabled</td>
+</tr>
+<tr>
+<td>Procesos batch</td>
+<td>EventBridge, Lambda, SQS</td>
+<td>rules cron, colas de documentos, funciones de encolado</td>
+</tr>
+<tr>
+<td>Observabilidad de borde</td>
+<td>CloudFront, ELB</td>
+<td>invalidaciones, target health, listeners</td>
+</tr>
+</tbody>
+</table>
+<h2 id="hallazgos-transversales">Hallazgos transversales</h2>
 <ul>
-<li><code>us-east-1</code>: 90+ log groups; alto volumen en <code>vpc_flowlog</code> (~38.7 GB) y muchos log groups de Lambda (procesos PDF/XML/etc.)</li>
-<li><code>us-east-2</code>: ~10 log groups (principalmente Lambda y Glue)</li>
+<li><strong>us-east-1 es la región dominante</strong>. Allí viven ALB, EventBridge operativo, WorkMail, SES y la mayoría de los endpoints regionales.</li>
+<li><strong>CloudFront es global</strong>, pero oculta dependencias de origen regional.</li>
+<li><strong>S3 ya tiene piezas de replicación hacia mx-central-1</strong>, aunque no toda la cobertura está activa.</li>
+<li><strong>No se evidenció WAF</strong> en CloudFront, ALB ni API Gateway.</li>
+<li><strong>La trazabilidad es desigual</strong>: S3 y DNS tienen buen nivel; SQS, Lambda y API Gateway quedan parciales.</li>
 </ul>
-<p>Fuentes identificadas:
-- VPC Flow Logs ✅
-- Lambda ✅
-- Glue ✅
-- API Gateway ✅/⚠ (verificar)
-- EC2 app logs ❌ (limitados/no detectados)</p>
-<h2 id="alarmas-cloudwatch">Alarmas (CloudWatch)</h2>
-<p>Inventario observado:
-- <strong>Total:</strong> 12 alarmas (todas en <code>us-east-1</code>)
-- Acciones: notifican a <code>Default_CloudWatch_Alarms_Topic</code></p>
-<h3 id="ec2">EC2</h3>
-<ul>
-<li>CPU (4): threshold ≥ 85% (5 min / 1 datapoint)</li>
-<li>Memoria (4): threshold ≥ 85% (5 min / 1 datapoint)</li>
-<li>Disco (4+): ~85% used o ≤15% free (Windows Free Space)</li>
-</ul>
-<p><strong>Estado reportado:</strong> 4 en ALARM (3 disco Windows + 1 memoria en win_robots); resto OK.</p>
-<h3 id="gaps-criticos-de-monitoreo">Gaps críticos de monitoreo</h3>
-<ul>
-<li><strong>No hay alarmas de ALB</strong> (5xx/latency/UnHealthyHostCount).</li>
-<li><strong>No hay alarmas de RDS</strong> (CPU, FreeStorageSpace, FreeableMemory, Connections, etc.).</li>
-<li><strong>No hay alarmas de SQS</strong> (AgeOfOldestMessage, DLQ, etc.).</li>
-<li><strong>No hay alarmas de Lambda</strong> (Errors/Throttles/Duration).</li>
-<li><strong>us-east-2 sin alarmas</strong>.</li>
-</ul>
-<h2 id="recomendaciones-operativas-para-cerrar-gaps">Recomendaciones operativas (para cerrar gaps)</h2>
+<h2 id="recomendacion-de-lectura">Recomendación de lectura</h2>
 <ol>
-<li>Agregar alarmas mínimas para <strong>RDS</strong> (storage/memory/connections).</li>
-<li>Agregar alarmas para <strong>ALB</strong> (5xx, latency, UnHealthyHostCount).</li>
-<li>Agregar alarmas para <strong>SQS</strong> (AgeOfOldestMessage + DLQ).</li>
-<li>Agregar alarmas para <strong>Lambda</strong> (Errors/Throttles/Duration).</li>
-<li>Estandarizar envío de logs de aplicación desde EC2 (CloudWatch Logs o pipeline alterno).</li>
+<li><code>route53.md</code> y <code>elb.md</code> para entender entrada y dependencias de red.</li>
+<li><code>s3.md</code> y <code>cloudfront.md</code> para contenido, replicación y edge.</li>
+<li><code>eventbridge.md</code>, <code>sqs.md</code> y <code>ses.md</code> para procesos asíncronos y automatización.</li>
+<li><code>workmail.md</code> para correo corporativo.</li>
+<li><code>migration-overview.md</code> para el plan consolidado.</li>
 </ol>
+<h2 id="riesgo-central">Riesgo central</h2>
+<p>El riesgo más importante no es un servicio aislado, sino la <strong>combinación</strong> de:</p>
+<ul>
+<li>servicios regionales críticos en <code>us-east-1</code>,</li>
+<li>DNS simple sin failover automatizado,</li>
+<li>y gaps de evidencia en compute y APIs.</li>
+</ul>
+<p>Eso significa que el inventario actual sirve para documentar y preparar la migración, pero no para cerrarla sin una validación adicional de los componentes no evidenciados directamente.</p>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../09-dependencias/" class="btn btn-neutral float-left" title="Dependencias"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../11-seguridad/" class="btn btn-neutral float-right" title="Seguridad">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../10-appendix-api/" class="btn btn-neutral float-left" title="Apéndice"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../ses/" class="btn btn-neutral float-right" title="SES">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -289,10 +300,10 @@ Generado: <strong>2026-03-03</strong></p>
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-      <span><a href="../09-dependencias/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../10-appendix-api/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../11-seguridad/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../ses/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>
